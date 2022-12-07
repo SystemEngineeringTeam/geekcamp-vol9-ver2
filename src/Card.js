@@ -41,7 +41,7 @@ export const Card = (props) => {
 
     return(
         <>
-            <div className="card" style={CardStyle}>{props.children}</div>
+            <div draggable="true" className="card" style={CardStyle}>{props.children}</div>
         </>
     )
 };

@@ -26,6 +26,12 @@ export const Header = () =>{
         
         const DisplayCards = document.getElementsByClassName("DisplayCard");
         for(let i=0; i<4; i++){ //DisplayCardを左から順に色をつけていく
+            if(DisplayCards[i].dataset.occupied == "false"){ //カードが無かったら処理を停止
+                setTimeout( () =>{
+                    DisplayCards[i-1].style.backgroundColor = "#3282B8"
+                }, i * 1000) //選んだカードの一番後ろのオレンジ灯火を戻すための処理
+                break;
+            }
             if(i  == 0){ //一個目はすぐに色を変える
                 DisplayCards[i].style.backgroundColor = "orange";
             }else if(i < 3){ //初回、最終回以外の処理はここ
