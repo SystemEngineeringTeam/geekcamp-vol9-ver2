@@ -2,10 +2,6 @@ body{
     margin: 0;
 }
 
-span{
-    background-color: #BBE1FA;
-}
-
 #gridParent{
     height: 600px;
 }
