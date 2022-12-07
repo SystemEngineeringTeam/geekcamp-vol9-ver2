@@ -30,13 +30,13 @@ export const Grid = () =>{
         <div id="gridParent" style={gridStyle}> 
             <div style={column1}>
                 <HeadCard>ヘッド１</HeadCard>
-                <Card num="0">カード0</Card>
-                <Card num="1">カード1</Card>
-                <Card num="2">カード2</Card>
-                <Card num="3">カード3</Card>
-                <Card num="4">カード4</Card>
-                <Card num="5">カード5</Card>
-                <Card num="6">カード6</Card>
+                <Card num="0">C3</Card>
+                <Card num="1">Db3</Card>
+                <Card num="2">D3</Card>
+                <Card num="3">Eb3</Card>
+                <Card num="4">E3</Card>
+                <Card num="5">F3</Card>
+                <Card num="6">Gb3</Card>
             </div>
             <div style={column2}>
                 <HeadCard>ヘッド2</HeadCard>
