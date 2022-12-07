@@ -10,24 +10,24 @@ export const Grid = () =>{
         
     }
 
-    const column1 = {
+    const column1 = { //カード1行目
         gridColumn: "2/3"
     }
-    const column2 = {
+    const column2 = { //カード2行目
         gridColumn: "4/5"
     }
-    const column3 = {
+    const column3 = { //カード3行目
         gridColumn: "6/7"
     }
-    const column4 = {
+    const column4 = { //カード4行目
         gridColumn: "8/9"
     }
-    const column5 = {
+    const column5 = { //カード5行目
         gridColumn: "10/11"
     }
 
     return(
-        <div id="gridParent" style={gridStyle}>
+        <div id="gridParent" style={gridStyle}> 
             <div style={column1}>
                 <HeadCard>ヘッド１</HeadCard>
                 <Card num="0">カード0</Card>
