@@ -2,14 +2,8 @@ body{
     margin: 0;
 }
 
-header{
-    display: flex;
-    height: 160px;
-    width: 1500px;
-    background-color: #497df7a4;
-    font-size: 30px;
-    position: fixed; 
-    top: 0;
+span{
+    background-color: #BBE1FA;
 }
 
 #gridParent{

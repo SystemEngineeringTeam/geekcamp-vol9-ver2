@@ -1,4 +1,14 @@
 export const Header = () =>{
+    const styleHeader = {
+        display: "flex",
+        height: "160px",
+        width: "1500px",
+        backgroundColor: "#497df7a4",
+        fontSize: "30px",
+        position: "fixed" ,
+        top: "0"
+    }
+
     const styleButton ={
         width: "40px",
     }
@@ -49,7 +59,7 @@ export const Header = () =>{
 
     return (
         <>
-            <header>
+            <header style={styleHeader}>
                 <button onClick={playDisplay} style={styleButton}>再生</button>
                 <button onClick={cleanDisplay} style={styleButton}>リセット</button>
                 <div id="display" style={styleDisplay}></div>
