@@ -27,7 +27,7 @@ export const Grid = () =>{
     }
 
     return(
-        <div style={gridStyle}>
+        <div id="gridParent" style={gridStyle}>
             <div style={column1}>
                 <HeadCard>ヘッド１</HeadCard>
                 <Card num="0">カード0</Card>
@@ -35,38 +35,48 @@ export const Grid = () =>{
                 <Card num="2">カード2</Card>
                 <Card num="3">カード3</Card>
                 <Card num="4">カード4</Card>
+                <Card num="5">カード5</Card>
+                <Card num="6">カード6</Card>
             </div>
             <div style={column2}>
                 <HeadCard>ヘッド2</HeadCard>
-                <Card num="5">カード5</Card>
-                <Card num="6">カード6</Card>
                 <Card num="7">カード7</Card>
                 <Card num="8">カード8</Card>
                 <Card num="9">カード9</Card>
-            </div>
-            <div style={column3}>
-                <HeadCard>ヘッド3</HeadCard>
                 <Card num="10">カード10</Card>
                 <Card num="11">カード11</Card>
                 <Card num="12">カード12</Card>
                 <Card num="13">カード13</Card>
-                <Card num="14">カード14</Card>
             </div>
-            <div style={column4}>
-                <HeadCard>ヘッド4</HeadCard>
+            <div style={column3}>
+                <HeadCard>ヘッド3</HeadCard>
+                <Card num="14">カード14</Card>
                 <Card num="15">カード15</Card>
                 <Card num="16">カード16</Card>
                 <Card num="17">カード17</Card>
                 <Card num="18">カード18</Card>
                 <Card num="19">カード19</Card>
-            </div>
-            <div style={column5}>
-                <HeadCard>ヘッド5</HeadCard>
                 <Card num="20">カード20</Card>
+            </div>
+            <div style={column4}>
+                <HeadCard>ヘッド4</HeadCard>
                 <Card num="21">カード21</Card>
                 <Card num="22">カード22</Card>
                 <Card num="23">カード23</Card>
                 <Card num="24">カード24</Card>
+                <Card num="25">カード25</Card>
+                <Card num="26">カード26</Card>
+                <Card num="27">カード27</Card>
+            </div>
+            <div style={column5}>
+                <HeadCard>ヘッド5</HeadCard>
+                <Card num="28">カード28</Card>
+                <Card num="29">カード29</Card>
+                <Card num="30">カード30</Card>
+                <Card num="31">カード31</Card>
+                <Card num="32">カード32</Card>
+                <Card num="33">カード33</Card>
+                <Card num="34">カード34</Card>
             </div>
                 
                 

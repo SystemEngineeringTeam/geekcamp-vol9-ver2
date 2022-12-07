@@ -1,10 +1,14 @@
 import "./App.css"
 import { Grid } from './Grid'
+import { Header } from './Header'
 
 export const App = () => {
     
     return(
-        <Grid/>
+        <>
+            <Header/>
+            <Grid/>
+        </>
     )
 };
 

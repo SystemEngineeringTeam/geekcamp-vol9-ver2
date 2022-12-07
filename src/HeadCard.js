@@ -3,7 +3,7 @@ export const HeadCard = (props) => {
         textAlign: "center",
         border: "solid 1px #0F4C75",
         width: "250px",
-        height: "180px",
+        height: "130px",
         backgroundColor: "#3282B8",
         padding: "1px"
     }
