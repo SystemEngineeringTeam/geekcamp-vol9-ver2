@@ -47,27 +47,9 @@ export const DisplayCard = () =>{
         } 
     }, []);
 
-    useEffect(() => {//ディスプレイカードの枠が埋まったらドラッグ＆ドロップできるようにする このeffectはdata-occupiedの値が変更されたときに実行される
-        const DisplayCards = document.getElementsByClassName("DisplayCard"); //ディスプレイカード4つを取得
-        for(let i=0; i<4; i++){
-            if(DisplayCards[i].dataset.occupied == "true"){ //もし対象のdata-occupiedがtrueなら
-                DisplayCards[i].draggable = true; //枠にカードが置かれたらそこのカードをドラッグできるようにする
-                DisplayCards[i].addEventListener("dragstart", (event) =>{ //ドラッグしたときの設定
-                    event.dataTransfer.setData('text/plain', event.target.innerHTML);
-                })
-            } else{
-                DisplayCards[i].draggable = false; //枠にカードが置かれたらそこのカードをドラッグできるようにする
-                setDisplayCard1("false"); //Header.jsの方のcleanDisplayからoccupiedをfalseにされるのでそれを検知してこちらのstateもfalseにする
-                setDisplayCard2("false");
-                setDisplayCard3("false");
-                setDisplayCard4("false");
-            }
-        }
-        }, [DisplayCard1,DisplayCard2,DisplayCard3,DisplayCard4]) // このeffectはdata-occupiedの値が変更されたときに実行される
-
     return (
         <div className="DisplayCard" style={styleDisplayCard} data-occupied="false">
-            カードをここにドラッグしてドロップ
+            カードをクリックまたはドラッグ＆ドロップ
         </div>
     )
 }

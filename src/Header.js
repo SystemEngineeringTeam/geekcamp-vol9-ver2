@@ -25,7 +25,7 @@ export const Header = () =>{
         display: "grid",
         height: "160px",
         width: "1500px",
-        gridTemplateColumns: "100px 100px 50px 250px 30px 250px 30px 250px 30px 250px",
+        gridTemplateColumns: "100px 100px 50px 250px 40px 250px 40px 250px 40px 250px",
         gridTemplateRows: "160px",
         backgroundColor: "#497df7a4",
         fontSize: "30px",
@@ -33,10 +33,17 @@ export const Header = () =>{
         top: "0"
     }
 
+    const styleButton = {
+        marginTop : "60px",
+        height: "30px",
+        width: "40px",
+        fontSize: "10px",
+    }
+
     const cleanDisplay = () =>{ //表示されている要素を全て消す
         const DisplayCards = document.getElementsByClassName("DisplayCard");
         for(let i=0; i<4; i++){
-            DisplayCards[i].innerHTML = "カードをここにドラッグしてドロップ";
+            DisplayCards[i].innerHTML = "カードをクリックまたはドラッグ&ドロップ";
             DisplayCards[i].dataset.occupied = "false";
             DisplayCards[i].draggable = false;
         }
@@ -75,19 +82,31 @@ export const Header = () =>{
         
     }
 
+    const switchCard = (event) => { //ボタンをクリックして前後を入れ替える
+        const DisplayCards = document.getElementsByClassName("DisplayCard");
+        const id = event.currentTarget.id;
+        const temp_state = DisplayCards[id].dataset.occupied;
+        console.log(temp_state);
+        const temp_html = DisplayCards[id].innerHTML;
+        DisplayCards[id].innerHTML = DisplayCards[Number(id)+1].innerHTML;
+        DisplayCards[id].dataset.occupied = DisplayCards[Number(id)+1].dataset.occupied;
+        DisplayCards[Number(id)+1].innerHTML = temp_html;
+        DisplayCards[Number(id)+1].dataset.occupied = temp_state;
+    }
+
     return (
         <>
             <header style={styleHeader}>
                 <button onClick={playDisplay} >再生 <div>sキー</div></button>
                 <button onClick={cleanDisplay} >リセット <div>cキー</div></button>
                 <span></span>
-                < DisplayCard id="1"/>
-                <span></span>
-                < DisplayCard id="2"/>
-                <span></span>
-                < DisplayCard id="3"/>
-                <span></span>
-                < DisplayCard id="4"/>
+                < DisplayCard />
+                <button id="0" style={styleButton} onClick={switchCard}>←→</button>
+                < DisplayCard />
+                <button id="1" style={styleButton} onClick={switchCard}>←→</button>
+                < DisplayCard />
+                <button id="2" style={styleButton} onClick={switchCard}>←→</button>
+                < DisplayCard />
             </header>
             <div id="adjust"></div>
         </>
