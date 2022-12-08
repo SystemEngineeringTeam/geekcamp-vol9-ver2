@@ -1,4 +1,4 @@
-// import {HeadCard} from "./HeadCard.jsx"
+import HeadCard from "./headCard"
 import Card from "./card"
 
 export const Grid = () =>{
@@ -29,7 +29,7 @@ export const Grid = () =>{
     return(
         <div id="gridParent" style={gridStyle}> 
             <div style={column1}>
-                {/* <HeadCard>ヘッド１</HeadCard> */}
+                <HeadCard>ヘッド１</HeadCard>
                 <Card num={0}>C</Card>
                 <Card num={1}>Db</Card>
                 <Card num={2}>D</Card>
@@ -39,7 +39,7 @@ export const Grid = () =>{
                 <Card num={6}>Gb</Card>
             </div>
             <div style={column2}>
-                {/* <HeadCard>ヘッド2</HeadCard> */}
+                <HeadCard>ヘッド2</HeadCard>
                 <Card num={7}>C</Card>
                 <Card num={8}>C</Card>
                 <Card num={9}>C</Card>
@@ -49,7 +49,7 @@ export const Grid = () =>{
                 <Card num={13}>C</Card>
             </div>
             <div style={column3}>
-                {/* <HeadCard>ヘッド3</HeadCard> */}
+                <HeadCard>ヘッド3</HeadCard>
                 <Card num={14}>C</Card>
                 <Card num={15}>C</Card>
                 <Card num={16}>C</Card>
@@ -59,7 +59,7 @@ export const Grid = () =>{
                 <Card num={20}>C</Card>
             </div>
             <div style={column4}>
-                {/* <HeadCard>ヘッド4</HeadCard> */}
+                <HeadCard>ヘッド4</HeadCard>
                 <Card num={21}>C</Card>
                 <Card num={22}>C</Card>
                 <Card num={23}>C</Card>
@@ -69,7 +69,7 @@ export const Grid = () =>{
                 <Card num={27}>C</Card>
             </div>
             <div style={column5}>
-                {/* <HeadCard>ヘッド5</HeadCard> */}
+                <HeadCard>ヘッド5</HeadCard>
                 <Card num={28}>C</Card>
                 <Card num={29}>C</Card>
                 <Card num={30}>C</Card>
