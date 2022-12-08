@@ -32,7 +32,7 @@ export const Card = (props) => {
     const ClickEvent = () =>{ //カードがクリックされたら、ヘッダーにクリックされたカードの要素名を追加。 ヘッダーを親要素としてspanタグを子要素に加えて追加していく。
         const DisplayCards = document.getElementsByClassName("DisplayCard");
         for(let i=0; i<4; i++){ //htmlのdata属性にはdatasetを参照する必要がある
-            if(DisplayCards[i].dataset.occupied == "false"){
+            if(DisplayCards[i].dataset.occupied === "false"){
                 DisplayCards[i].innerHTML = props.children;
                 DisplayCards[i].dataset.occupied = "true";
                 break;

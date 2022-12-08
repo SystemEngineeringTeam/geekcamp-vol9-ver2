@@ -40,7 +40,7 @@ export const Grid = () =>{
             </div>
             <div style={column2}>
                 <HeadCard>ヘッド2</HeadCard>
-                <Card num="7">C</Card>
+                <Card num="7">Cadd9</Card>
                 <Card num="8">C</Card>
                 <Card num="9">C</Card>
                 <Card num="10">C</Card>
