@@ -5,6 +5,9 @@ export const Header = () =>{
     useEffect( () => {
         document.addEventListener("keydown", keypressPlay);
         document.addEventListener("keydown", keypressClean);
+        document.addEventListener("keydown", keypressSwitch1);
+        document.addEventListener("keydown", keypressSwitch2);
+        document.addEventListener("keydown", keypressSwitch3);
     }, [])
 
     const keypressPlay = (key) => {
@@ -18,6 +21,48 @@ export const Header = () =>{
         if(key.key == 'C' || key.key== 'c'){
             console.log('clean');
             cleanDisplay();
+        }
+    }
+
+    const keypressSwitch1 = (key) => {
+        if(key.key == '1' || key.key== '!'){
+            console.log('switch1');
+            const DisplayCards = document.getElementsByClassName("DisplayCard");
+            const temp_state = DisplayCards[0].dataset.occupied;
+            console.log(temp_state);
+            const temp_html = DisplayCards[0].innerHTML;
+            DisplayCards[0].innerHTML = DisplayCards[Number(0)+1].innerHTML;
+            DisplayCards[0].dataset.occupied = DisplayCards[Number(0)+1].dataset.occupied;
+            DisplayCards[Number(0)+1].innerHTML = temp_html;
+            DisplayCards[Number(0)+1].dataset.occupied = temp_state;
+        }
+    }
+
+    const keypressSwitch2 = (key) => {
+        if(key.key == '2' || key.key== '@'){
+            console.log('switch2');
+            const DisplayCards = document.getElementsByClassName("DisplayCard");
+            const temp_state = DisplayCards[1].dataset.occupied;
+            console.log(temp_state);
+            const temp_html = DisplayCards[1].innerHTML;
+            DisplayCards[1].innerHTML = DisplayCards[Number(1)+1].innerHTML;
+            DisplayCards[1].dataset.occupied = DisplayCards[Number(1)+1].dataset.occupied;
+            DisplayCards[Number(1)+1].innerHTML = temp_html;
+            DisplayCards[Number(1)+1].dataset.occupied = temp_state;
+        }
+    }
+
+    const keypressSwitch3 = (key) => {
+        if(key.key == '3' || key.key== '#'){
+            console.log('switch3');
+            const DisplayCards = document.getElementsByClassName("DisplayCard");
+            const temp_state = DisplayCards[2].dataset.occupied;
+            console.log(temp_state);
+            const temp_html = DisplayCards[2].innerHTML;
+            DisplayCards[2].innerHTML = DisplayCards[Number(2)+1].innerHTML;
+            DisplayCards[2].dataset.occupied = DisplayCards[Number(2)+1].dataset.occupied;
+            DisplayCards[Number(2)+1].innerHTML = temp_html;
+            DisplayCards[Number(2)+1].dataset.occupied = temp_state;
         }
     }
 
@@ -36,7 +81,7 @@ export const Header = () =>{
     const styleButton = {
         marginTop : "60px",
         height: "30px",
-        width: "40px",
+        width: "45px",
         fontSize: "10px",
     }
 
@@ -101,11 +146,11 @@ export const Header = () =>{
                 <button onClick={cleanDisplay} >リセット <div>cキー</div></button>
                 <span></span>
                 < DisplayCard />
-                <button id="0" style={styleButton} onClick={switchCard}>←→</button>
+                <button id="0" style={styleButton} onClick={switchCard}>←→<div>1キー</div></button>
                 < DisplayCard />
-                <button id="1" style={styleButton} onClick={switchCard}>←→</button>
+                <button id="1" style={styleButton} onClick={switchCard}>←→<div>2キー</div></button>
                 < DisplayCard />
-                <button id="2" style={styleButton} onClick={switchCard}>←→</button>
+                <button id="2" style={styleButton} onClick={switchCard}>←→<div>3キー</div></button>
                 < DisplayCard />
             </header>
             <div id="adjust"></div>
