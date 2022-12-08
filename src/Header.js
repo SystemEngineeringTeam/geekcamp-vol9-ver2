@@ -1,6 +1,26 @@
+import { useEffect } from "react";
 import { DisplayCard } from "./DisplayCard";
 
 export const Header = () =>{
+    useEffect( () => {
+        document.addEventListener("keydown", keypressPlay);
+        document.addEventListener("keydown", keypressClean);
+    }, [])
+
+    const keypressPlay = (key) => {
+        if(key.key == 'S' || key.key== 's'){
+            console.log('play');
+            playDisplay();
+        }
+    }
+
+    const keypressClean = (key) => {
+        if(key.key == 'C' || key.key== 'c'){
+            console.log('clean');
+            cleanDisplay();
+        }
+    }
+
     const styleHeader = {
         display: "grid",
         height: "160px",
@@ -58,8 +78,8 @@ export const Header = () =>{
     return (
         <>
             <header style={styleHeader}>
-                <button onClick={playDisplay} >再生</button>
-                <button onClick={cleanDisplay} >リセット</button>
+                <button onClick={playDisplay} >再生 <div>sキー</div></button>
+                <button onClick={cleanDisplay} >リセット <div>cキー</div></button>
                 <span></span>
                 < DisplayCard id="1"/>
                 <span></span>
