@@ -1,6 +1,6 @@
-import "./App.css"
-import { Grid } from './Grid'
-import { Header } from './Header'
+import "./css/App.css"
+import { Grid } from './components/Grid'
+import { Header } from './components/Header'
 
 export const App = () => {
     

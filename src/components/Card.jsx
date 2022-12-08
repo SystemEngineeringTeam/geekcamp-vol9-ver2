@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import { useGetSoundPlayer } from "./hooks/useGetSoundPlayer";
-import { useGetNoteList, usePlay, useStop } from "./hooks/useChordPlayer";
+import { useGetSoundPlayer } from "../hooks/useGetSoundPlayer";
+import { useGetNoteList, usePlay, useStop } from "../hooks/useChordPlayer";
 
 export const Card = (props) => {
     const CardStyle = {

@@ -1,5 +1,5 @@
 import {HeadCard} from "./HeadCard.jsx"
-import {Card} from "./Card.jsx"
+import {Card} from "./Card"
 
 export const Grid = () =>{
     const gridStyle={
