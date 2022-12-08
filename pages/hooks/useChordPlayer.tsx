@@ -1,5 +1,3 @@
-import useSound from "use-sound";
-
 // 連想配列の型定義
 // https://blog.websandbag.com/entry/2020/09/19/184820
 //ルートリスト
@@ -65,6 +63,9 @@ export const useGetNoteList = () => {
     return noteList;
     };
 }
+
+//関数を返す関数
+// https://confrage.jp/typescript-%E3%81%A7%E9%96%A2%E6%95%B0%E3%81%AE%E5%BC%95%E6%95%B0%E3%81%AB%E9%96%A2%E6%95%B0%E3%82%92%E6%B8%A1%E3%81%97%E3%81%A6%E3%81%BF%E3%82%8B/
 //関数2: 引数でプレイするコードを選ぶ関数を渡す
 export const usePlay = (PlayFuncs:(() => void)[]) => {
     return (noteList:number[]) => {
