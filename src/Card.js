@@ -25,6 +25,7 @@ export const Card = (props) => {
             if(DisplayCards[i].dataset.occupied == "false"){
                 DisplayCards[i].innerHTML = props.children;
                 DisplayCards[i].dataset.occupied = "true";
+                DisplayCards[i].draggable = true;
                 break;
             }
         }

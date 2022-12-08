@@ -18,6 +18,7 @@ export const Header = () =>{
         for(let i=0; i<4; i++){
             DisplayCards[i].innerHTML = "カードをここにドラッグしてドロップ";
             DisplayCards[i].dataset.occupied = "false";
+            DisplayCards[i].draggable = false;
         }
         
     }
@@ -60,13 +61,13 @@ export const Header = () =>{
                 <button onClick={playDisplay} >再生</button>
                 <button onClick={cleanDisplay} >リセット</button>
                 <span></span>
-                < DisplayCard/>
+                < DisplayCard id="1"/>
                 <span></span>
-                < DisplayCard/>
+                < DisplayCard id="2"/>
                 <span></span>
-                < DisplayCard/>
+                < DisplayCard id="3"/>
                 <span></span>
-                < DisplayCard/>
+                < DisplayCard id="4"/>
             </header>
             <div id="adjust"></div>
         </>
