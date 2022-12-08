@@ -1,4 +1,6 @@
 import { DisplayCard } from "./DisplayCard";
+import { useGetSoundPlayer } from "./hooks/useGetSoundPlayer";
+import { useGetNoteList, usePlay, useStop } from "./hooks/useChordPlayer";
 
 export const Header = () =>{
     const styleHeader = {
@@ -12,6 +14,11 @@ export const Header = () =>{
         position: "fixed" ,
         top: "0"
     }
+
+    const {PlayFuncs, StopFuncs} = useGetSoundPlayer();
+    const getNoteList = useGetNoteList();
+    const playChord = usePlay(PlayFuncs);
+    const stopChord = useStop(StopFuncs);
 
     const cleanDisplay = () =>{ //表示されている要素を全て消す
         const DisplayCards = document.getElementsByClassName("DisplayCard");
@@ -28,24 +35,31 @@ export const Header = () =>{
         for(let i=0; i<4; i++){ //DisplayCardを左から順に色をつけていく
             if(DisplayCards[i].dataset.occupied == "false"){ //カードが無かったら処理を停止
                 setTimeout( () =>{
-                    DisplayCards[i-1].style.backgroundColor = "#3282B8"
+                    DisplayCards[i-1].style.backgroundColor = "#3282B8";
+                    stopChord(getNoteList(DisplayCards[i-1].innerHTML));
                 }, i * 1000) //選んだカードの一番後ろのオレンジ灯火を戻すための処理
                 break;
             }
             if(i  == 0){ //一個目はすぐに色を変える
                 DisplayCards[i].style.backgroundColor = "orange";
+                playChord(getNoteList(DisplayCards[i].innerHTML))
             }else if(i < 3){ //初回、最終回以外の処理はここ
                 setTimeout( () =>{
                     DisplayCards[i-1].style.backgroundColor = "#3282B8";
+                    stopChord(getNoteList(DisplayCards[i-1].innerHTML))
                     DisplayCards[i].style.backgroundColor = "orange";
+                    playChord(getNoteList(DisplayCards[i].innerHTML))
                 }, i * 1000); //二つ目は１秒、三つ目は２秒待つ... とすることで１秒ごと動作させる
             } else if(i == 3){
                 setTimeout( () =>{
                     DisplayCards[i-1].style.backgroundColor = "#3282B8";
+                    stopChord(getNoteList(DisplayCards[i-1].innerHTML));
                     DisplayCards[i].style.backgroundColor = "orange";
+                    playChord(getNoteList(DisplayCards[i].innerHTML));
                 }, i * 1000); //二つ目は１秒、三つ目は２秒待つ... とすることで１秒ごと動作させる
                 setTimeout( () =>{
-                    DisplayCards[i].style.backgroundColor = "#3282B8";  
+                    DisplayCards[i].style.backgroundColor = "#3282B8";
+                    stopChord(getNoteList(DisplayCards[i].innerHTML));  
                 }, (i+1) * 1000);
             }
             
