@@ -10,7 +10,7 @@ import Gb3 from "./sounds/Gb3.mp3";
 import G3 from "./sounds/G3.mp3";
 import Ab3 from "./sounds/Ab3.mp3";
 import A3 from "./sounds/A3.mp3";
-import Bb3 from "./sounds/Bb3.mp3";//一括代入の方法
+import Bb3 from "./sounds/Bb3.mp3";
 import B3 from "./sounds/B3.mp3"; 
 import C4 from "./sounds/C4.mp3";
 import Db4 from "./sounds/Db4.mp3";
