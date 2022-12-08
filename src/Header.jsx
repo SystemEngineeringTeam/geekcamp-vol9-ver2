@@ -1,5 +1,7 @@
 import { useEffect } from "react";
 import { DisplayCard } from "./DisplayCard";
+import { useGetSoundPlayer } from "./hooks/useGetSoundPlayer";
+import { useGetNoteList, usePlay, useStop } from "./hooks/useChordPlayer";
 
 export const Header = () =>{
     useEffect( () => {
@@ -29,7 +31,6 @@ export const Header = () =>{
             console.log('switch1');
             const DisplayCards = document.getElementsByClassName("DisplayCard");
             const temp_state = DisplayCards[0].dataset.occupied;
-            console.log(temp_state);
             const temp_html = DisplayCards[0].innerHTML;
             DisplayCards[0].innerHTML = DisplayCards[Number(0)+1].innerHTML;
             DisplayCards[0].dataset.occupied = DisplayCards[Number(0)+1].dataset.occupied;
@@ -43,7 +44,6 @@ export const Header = () =>{
             console.log('switch2');
             const DisplayCards = document.getElementsByClassName("DisplayCard");
             const temp_state = DisplayCards[1].dataset.occupied;
-            console.log(temp_state);
             const temp_html = DisplayCards[1].innerHTML;
             DisplayCards[1].innerHTML = DisplayCards[Number(1)+1].innerHTML;
             DisplayCards[1].dataset.occupied = DisplayCards[Number(1)+1].dataset.occupied;
@@ -57,7 +57,6 @@ export const Header = () =>{
             console.log('switch3');
             const DisplayCards = document.getElementsByClassName("DisplayCard");
             const temp_state = DisplayCards[2].dataset.occupied;
-            console.log(temp_state);
             const temp_html = DisplayCards[2].innerHTML;
             DisplayCards[2].innerHTML = DisplayCards[Number(2)+1].innerHTML;
             DisplayCards[2].dataset.occupied = DisplayCards[Number(2)+1].dataset.occupied;
@@ -85,6 +84,11 @@ export const Header = () =>{
         fontSize: "10px",
     }
 
+    const {PlayFuncs, StopFuncs} = useGetSoundPlayer();
+    const getNoteList = useGetNoteList();
+    const playChord = usePlay(PlayFuncs);
+    const stopChord = useStop(StopFuncs);
+
     const cleanDisplay = () =>{ //表示されている要素を全て消す
         const DisplayCards = document.getElementsByClassName("DisplayCard");
         for(let i=0; i<4; i++){
@@ -96,29 +100,36 @@ export const Header = () =>{
     }
 
     const playDisplay = () =>{ //表示されている要素にひとつずつイベントを起こしていく
-        
+        console.log("play")
         const DisplayCards = document.getElementsByClassName("DisplayCard");
         for(let i=0; i<4; i++){ //DisplayCardを左から順に色をつけていく
             if(DisplayCards[i].dataset.occupied == "false"){ //カードが無かったら処理を停止
                 setTimeout( () =>{
                     DisplayCards[i-1].style.backgroundColor = "#3282B8"
+                    stopChord(getNoteList(DisplayCards[i-1].innerHTML));
                 }, i * 1000) //選んだカードの一番後ろのオレンジ灯火を戻すための処理
                 break;
             }
             if(i  == 0){ //一個目はすぐに色を変える
                 DisplayCards[i].style.backgroundColor = "orange";
+                playChord(getNoteList(DisplayCards[i].innerHTML))
             }else if(i < 3){ //初回、最終回以外の処理はここ
                 setTimeout( () =>{
                     DisplayCards[i-1].style.backgroundColor = "#3282B8";
+                    stopChord(getNoteList(DisplayCards[i-1].innerHTML))
                     DisplayCards[i].style.backgroundColor = "orange";    
+                    playChord(getNoteList(DisplayCards[i].innerHTML))
                 }, i * 1000); //二つ目は１秒、三つ目は２秒待つ... とすることで１秒ごと動作させる
             } else if(i == 3){
                 setTimeout( () =>{
                     DisplayCards[i-1].style.backgroundColor = "#3282B8";
+                    stopChord(getNoteList(DisplayCards[i-1].innerHTML));
                     DisplayCards[i].style.backgroundColor = "orange";    
+                    playChord(getNoteList(DisplayCards[i].innerHTML));
                 }, i * 1000); //二つ目は１秒、三つ目は２秒待つ... とすることで１秒ごと動作させる
                 setTimeout( () =>{
                     DisplayCards[i].style.backgroundColor = "#3282B8";    
+                    stopChord(getNoteList(DisplayCards[i].innerHTML)); 
                 }, (i+1) * 1000);
             }
             
