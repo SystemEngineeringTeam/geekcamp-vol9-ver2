@@ -45,7 +45,6 @@ const Chords = { //数字はルートからの半音の距離
 //関数1： ノートリストを返す関数を渡す
 export const useGetNoteList = () => {
     return (chord) => {
-        console.log("getNoteList実行\n");
         let root = chord.slice(0, 2); //先頭2文字
         let structure = chord.slice(1); //先頭以外
         if (root.slice(-1) === "#" || root.slice(-1) === "b") {
@@ -64,7 +63,6 @@ export const useGetNoteList = () => {
 }
 //関数2: 引数でプレイするコードを選ぶ関数を渡す
 export const usePlay = (PlayFuncs) => {
-    console.log("play実行");
     return (noteList) => {
         for (let i = 0; i < noteList.length; i++) {
             PlayFuncs[noteList[i]]();
@@ -74,7 +72,6 @@ export const usePlay = (PlayFuncs) => {
 };
 //関数2: 引数でストップするコードを選ぶ関数を渡す
 export const useStop = (StopFuncs) => {
-    console.log("stop実行");
     return (noteList) => {
         for (let i = 0; i < noteList.length; i++) {
             StopFuncs[noteList[i]]();

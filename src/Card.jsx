@@ -42,9 +42,6 @@ export const Card = (props) => {
 
     useEffect( () => { //初回レンダリング時にカードにaddeventlistnerを設置
         const target = document.getElementsByClassName("card");
-        target[props.num].addEventListener("mouseenter", EnterChangeColor);
-        target[props.num].addEventListener("mouseleave", LeaveChangeColor);
-        target[props.num].addEventListener("click", ClickEvent);
         target[props.num].addEventListener("dragstart", (event) =>{
             event.dataTransfer.setData('text/plain', event.target.innerHTML); //ドラッグしたらドラッグした要素のテキストをdataTransferItemListにぶち込む
         });
@@ -52,7 +49,22 @@ export const Card = (props) => {
 
     return(
         <>
-            <div draggable="true" className="card" style={CardStyle}>{props.children}</div>
+            <button 
+                draggable="true" 
+                className="card" 
+                style={CardStyle} 
+                onClick={()=>{
+                    ClickEvent();
+                }}
+                onMouseEnter={() =>{
+                    EnterChangeColor();
+                }}
+                onMouseLeave={() =>{
+                    LeaveChangeColor();
+                }}
+            >
+                {props.children}
+            </button>
         </>
     )
 };
