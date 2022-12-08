@@ -48,6 +48,7 @@ export const Card = (props) => {
     }, []);
 
     return(
+<<<<<<< HEAD
         <button
             draggable="true"
             className="card"
@@ -64,6 +65,26 @@ export const Card = (props) => {
         >
             {props.children}
         </button>
+=======
+        <>
+            <button 
+                draggable="true" 
+                className="card" 
+                style={CardStyle} 
+                onClick={()=>{
+                    ClickEvent();
+                }}
+                onMouseEnter={() =>{
+                    EnterChangeColor();
+                }}
+                onMouseLeave={() =>{
+                    LeaveChangeColor();
+                }}
+            >
+                {props.children}
+            </button>
+        </>
+>>>>>>> fffe3b4fff85be94cad34e6f3bd8ffa9dc92f02e
     )
 };
 
