@@ -48,7 +48,6 @@ export const Card = (props) => {
     }, []);
 
     return(
-<<<<<<< HEAD
         <button
             draggable="true"
             className="card"
