@@ -41,11 +41,11 @@ export const Grid = () =>{
             <div style={column2}>
                 <HeadCard>ヘッド2</HeadCard>
                 <Card num="7">Cadd9</Card>
-                <Card num="8">C</Card>
-                <Card num="9">C</Card>
-                <Card num="10">C</Card>
-                <Card num="11">C</Card>
-                <Card num="12">C</Card>
+                <Card num="8">C5</Card>
+                <Card num="9">C9</Card>
+                <Card num="10">CM9</Card>
+                <Card num="11">Cm9</Card>
+                <Card num="12">C69</Card>
                 <Card num="13">C</Card>
             </div>
             <div style={column3}>
