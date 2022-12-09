@@ -5,12 +5,15 @@ import { useGetNoteList, usePlay, useStop } from "./hooks/useChordPlayer";
 
 export const Header = () =>{
     useEffect( () => {
-        document.addEventListener("keydown", keypressPlay);
         document.addEventListener("keydown", keypressClean);
         document.addEventListener("keydown", keypressSwitch1);
         document.addEventListener("keydown", keypressSwitch2);
         document.addEventListener("keydown", keypressSwitch3);
     }, [])
+
+    useEffect( () => {
+        document.addEventListener("keydown", keypressPlay);
+    })
 
     const keypressPlay = (key) => {
         if(key.key == 'S' || key.key== 's'){
@@ -100,7 +103,6 @@ export const Header = () =>{
     }
 
     const playDisplay = () =>{ //表示されている要素にひとつずつイベントを起こしていく
-        console.log("play")
         const DisplayCards = document.getElementsByClassName("DisplayCard");
         for(let i=0; i<4; i++){ //DisplayCardを左から順に色をつけていく
             if(DisplayCards[i].dataset.occupied == "false"){ //カードが無かったら処理を停止
