@@ -9,7 +9,6 @@ export const Grid = () =>{
     const getNoteList = useGetNoteList();
     const playChord = usePlay(PlayFuncs);
     const stopChord = useStop(StopFuncs);
-
     const gridStyle={
         display: "grid",
         gridTemplateColumns: "25px 250px 30px 250px 30px 250px 30px 250px 30px 250px",

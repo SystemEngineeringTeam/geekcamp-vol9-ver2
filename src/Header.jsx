@@ -88,7 +88,6 @@ export const Header = () =>{
         width: "45px",
         fontSize: "10px",
     }
-
     const {PlayFuncs, StopFuncs} = useGetSoundPlayer();
     const getNoteList = useGetNoteList();
     const playChord = usePlay(PlayFuncs);
