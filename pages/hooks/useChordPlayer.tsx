@@ -1,5 +1,6 @@
 // 連想配列の型定義
 // https://blog.websandbag.com/entry/2020/09/19/184820
+import { useCallback } from "react";
 //ルートリスト
 const Roots:{[key: string]:number} = {
     "C": 36, 
@@ -89,6 +90,7 @@ const Chords:{[key: string]:number[]} = { //数字はルートからの半音の
 
 //関数1： ノートリストを返す関数を渡す
 export const useGetNoteList = () => {
+    console.log("関数useGetNoteList実行")
     return (chord:string) => {
         let root = chord.slice(0, 2); //先頭2文字
         let structure = chord.slice(1); //先頭以外

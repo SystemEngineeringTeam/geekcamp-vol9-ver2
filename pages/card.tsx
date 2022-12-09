@@ -11,6 +11,7 @@ type Props = {
 }
 
 export default function Card(props:Props){
+    console.log("Cardレンダリング");
     // インラインでのスタイル指定
     // https://qiita.com/Statham/items/05870fd52320a0644acd
     const CardStyle: { [key: string]: string } = {

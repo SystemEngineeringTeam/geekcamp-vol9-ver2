@@ -3,6 +3,7 @@ import { useGetSoundPlayer } from "./hooks/useGetSoundPlayer";
 import { useGetNoteList, usePlay, useStop } from "./hooks/useChordPlayer";
 
 export const Header = () =>{
+    console.log("Headerレンダリング");
     const styleHeader:{[key:string]:string} = {
         display: "grid",
         height: "160px",

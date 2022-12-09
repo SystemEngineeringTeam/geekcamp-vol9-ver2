@@ -5,7 +5,7 @@ import { useGetNoteList, usePlay, useStop } from './hooks/useChordPlayer';
 
 
 export const Grid = () =>{
-
+    console.log("Gridレンダリング");
     const {PlayFuncs, StopFuncs} = useGetSoundPlayer();
     const getNoteList = useGetNoteList();
     const playChord = usePlay(PlayFuncs);
