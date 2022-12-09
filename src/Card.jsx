@@ -1,6 +1,4 @@
 import { useEffect } from "react";
-import { useGetSoundPlayer } from "./hooks/useGetSoundPlayer";
-import { useGetNoteList, usePlay, useStop } from "./hooks/useChordPlayer";
 
 export const Card = (props) => {
     const CardStyle = {
@@ -12,21 +10,16 @@ export const Card = (props) => {
         padding: "1px"
     }
 
-    const {PlayFuncs, StopFuncs} = useGetSoundPlayer();
-    const getNoteList = useGetNoteList();
-    const playChord = usePlay(PlayFuncs);
-    const stopChord = useStop(StopFuncs);
-
     const EnterChangeColor = () =>{ //カード要素にカーソルが入ってきたら背景色をオレンジにするコード
         const target = document.getElementsByClassName("card"); //ここの変数targetには'Grid.js'で使った"Card"コンポーネントをすべて含む配列が入る。
         target[props.num].style.backgroundColor = "orange"; //targetには全ての"Card”コンポーネントが入ってるので'props.num'で識別する。
-        playChord(getNoteList(props.children));
+        props.usePlayChord(props.useGetNoteList(props.children));
 
     }
     const LeaveChangeColor = () =>{ //カード要素からカーソルが離れたら色を元に戻すコード
         const target = document.getElementsByClassName("card");
         target[props.num].style.backgroundColor = "#BBE1FA";
-        stopChord(getNoteList(props.children));
+        props.useStopChord(props.useGetNoteList(props.children));
     }
 
     const ClickEvent = () =>{ //カードがクリックされたら、ヘッダーにクリックされたカードの要素名を追加。 ヘッダーを親要素としてspanタグを子要素に加えて追加していく。

@@ -13,8 +13,10 @@ export const Header = () =>{
 
     useEffect( () => {
         document.addEventListener("keydown", keypressPlay);
-    })
-
+        return (() => { //第2引数をしていしないため、再レンダリングするたびにイベントリスナーを削除する
+            document.removeEventListener("keydown", keypressPlay);
+        }) //←'keypressPlay'は第２引数に何も指定しないと正常に動作する。原因は調査中。
+    },);
     const keypressPlay = (key) => {
         if(key.key == 'S' || key.key== 's'){
             console.log('play');
