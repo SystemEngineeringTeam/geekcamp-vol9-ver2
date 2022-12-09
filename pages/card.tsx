@@ -19,7 +19,7 @@ export default function Card(props:Props){
         width: "250px",
         height: "100px",
         backgroundColor: "#BBE1FA",
-        padding: "1px"
+        padding: "1px",
     }
 
 
@@ -46,12 +46,24 @@ export default function Card(props:Props){
         }
     }
 
+    const muteChords = () => {
+        if(event.shiftKey){//←これで動く
+            const target = document.getElementsByClassName("card") as HTMLCollectionOf<HTMLElement>;
+            target[props.num].style.pointerEvents = "none";
+        }else{
+            const target = document.getElementsByClassName("card") as HTMLCollectionOf<HTMLElement>;
+            target[props.num].style.pointerEvents = "auto";
+        }
+    }
+
 
     useEffect( () => { //初回レンダリング時にカードにaddeventlistnerを設置
         const target = document.getElementsByClassName("card") as HTMLCollectionOf<HTMLElement>;
         target[props.num].addEventListener("dragstart", (event:any) =>{
             event.dataTransfer.setData('text/plain', event.target.innerHTML); //ドラッグしたらドラッグした要素のテキストをdataTransferItemListにぶち込む
         });
+        document.addEventListener("keydown", muteChords)
+        document.addEventListener("keyup", muteChords)
     }, []);
 
     return(
