@@ -90,8 +90,8 @@ const Chords:{[key: string]:number[]} = { //数字はルートからの半音の
 
 //関数1： ノートリストを返す関数を渡す
 export const useGetNoteList = () => {
-    console.log("関数useGetNoteList実行")
-    return (chord:string) => {
+    console.log("関数useGetNoteList実行");
+    return useCallback((chord:string) => {
         let root = chord.slice(0, 2); //先頭2文字
         let structure = chord.slice(1); //先頭以外
         if (root.slice(-1) === "#" || root.slice(-1) === "b") {
@@ -106,25 +106,27 @@ export const useGetNoteList = () => {
             noteList[i] += Roots[root];
         }
     return noteList;
-    };
+    }, []);
 }
 
 //関数を返す関数
 // https://confrage.jp/typescript-%E3%81%A7%E9%96%A2%E6%95%B0%E3%81%AE%E5%BC%95%E6%95%B0%E3%81%AB%E9%96%A2%E6%95%B0%E3%82%92%E6%B8%A1%E3%81%97%E3%81%A6%E3%81%BF%E3%82%8B/
 //関数2: 引数でプレイするコードを選ぶ関数を渡す
 export const usePlay = (PlayFuncs:(() => void)[]) => {
+    console.log("usePlay実行");
     return (noteList:number[]) => {
         for (let i = 0; i < noteList.length; i++) {
             PlayFuncs[noteList[i]]();
         }
-    }
+    };
     
 };
 //関数2: 引数でストップするコードを選ぶ関数を渡す
 export const useStop = (StopFuncs:(() => void)[]) => {
+    console.log("useStop実行");
     return (noteList:number[]) => {
         for (let i = 0; i < noteList.length; i++) {
             StopFuncs[noteList[i]]();
         }
-    }
+    };
 };

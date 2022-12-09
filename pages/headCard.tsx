@@ -1,5 +1,5 @@
 export default function headCard(props: {children: string}){
-    console.log("headCardレンダリング");
+    console.log(`headCard${props.children}レンダリング`);
     const HeadCardStyle:{[key: string]: string} = {
         textAlign: "center",
         border: "solid 1px #0F4C75",
