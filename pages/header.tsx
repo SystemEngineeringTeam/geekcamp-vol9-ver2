@@ -1,8 +1,76 @@
 import  DisplayCard  from "./displayCard";
 import { useGetSoundPlayer } from "./hooks/useGetSoundPlayer";
 import { useGetNoteList, usePlay, useStop } from "./hooks/useChordPlayer";
+import { useEffect } from "react";
 
 export const Header = () =>{
+    useEffect( () => {
+        document.addEventListener("keydown", keypressClean);
+        document.addEventListener("keydown", keypressSwitch1);
+        document.addEventListener("keydown", keypressSwitch2);
+        document.addEventListener("keydown", keypressSwitch3);
+    }, [])
+
+    useEffect( () => {
+        document.addEventListener("keydown", keypressPlay);
+        return (() => { //第2引数をしていしないため、再レンダリングするたびにイベントリスナーを削除する
+            document.removeEventListener("keydown", keypressPlay);
+        }) //←'keypressPlay'は第２引数に何も指定しないと正常に動作する。原因は調査中。
+    },)
+
+    const keypressPlay = (key:any) => {
+        if(key.key == 'S' || key.key== 's'){
+            console.log('play');
+            playDisplay();
+        }
+    }
+
+    const keypressClean = (key:any) => {
+        if(key.key == 'C' || key.key== 'c'){
+            console.log('clean');
+            cleanDisplay();
+        }
+    }
+
+    const keypressSwitch1 = (key:any) => {
+        if(key.key == '1' || key.key== '!'){
+            console.log('switch1');
+            const DisplayCards = document.getElementsByClassName("DisplayCard") as HTMLCollectionOf<HTMLElement>;
+            const temp_state = DisplayCards[0].dataset.occupied;
+            const temp_html = DisplayCards[0].innerHTML;
+            DisplayCards[0].innerHTML = DisplayCards[Number(0)+1].innerHTML;
+            DisplayCards[0].dataset.occupied = DisplayCards[Number(0)+1].dataset.occupied;
+            DisplayCards[Number(0)+1].innerHTML = temp_html;
+            DisplayCards[Number(0)+1].dataset.occupied = temp_state;
+        }
+    }
+
+    const keypressSwitch2 = (key:any) => {
+        if(key.key == '2' || key.key== '@'){
+            console.log('switch2');
+            const DisplayCards = document.getElementsByClassName("DisplayCard") as HTMLCollectionOf<HTMLElement>;
+            const temp_state = DisplayCards[1].dataset.occupied;
+            const temp_html = DisplayCards[1].innerHTML;
+            DisplayCards[1].innerHTML = DisplayCards[Number(1)+1].innerHTML;
+            DisplayCards[1].dataset.occupied = DisplayCards[Number(1)+1].dataset.occupied;
+            DisplayCards[Number(1)+1].innerHTML = temp_html;
+            DisplayCards[Number(1)+1].dataset.occupied = temp_state;
+        }
+    }
+
+    const keypressSwitch3 = (key:any) => {
+        if(key.key == '3' || key.key== '#'){
+            console.log('switch3');
+            const DisplayCards = document.getElementsByClassName("DisplayCard") as HTMLCollectionOf<HTMLElement>;
+            const temp_state = DisplayCards[2].dataset.occupied;
+            const temp_html = DisplayCards[2].innerHTML;
+            DisplayCards[2].innerHTML = DisplayCards[Number(2)+1].innerHTML;
+            DisplayCards[2].dataset.occupied = DisplayCards[Number(2)+1].dataset.occupied;
+            DisplayCards[Number(2)+1].innerHTML = temp_html;
+            DisplayCards[Number(2)+1].dataset.occupied = temp_state;
+        }
+    }
+
     const styleHeader:{[key:string]:string} = {
         display: "grid",
         height: "160px",
@@ -13,6 +81,13 @@ export const Header = () =>{
         fontSize: "30px",
         position: "fixed" ,
         top: "0"
+    }
+
+    const styleButton:{[key:string]:string} = {
+        marginTop : "60px",
+        height: "30px",
+        width: "45px",
+        fontSize: "10px",
     }
 
     const {PlayFuncs, StopFuncs} = useGetSoundPlayer();
@@ -26,7 +101,6 @@ export const Header = () =>{
             DisplayCards[i].innerHTML = "カードをここにドラッグしてドロップ";
             DisplayCards[i].dataset.occupied = "false";
         }
-        
     }
 
     const playDisplay = () =>{ //表示されている要素にひとつずつイベントを起こしていく
@@ -68,18 +142,30 @@ export const Header = () =>{
         
     }
 
+    const switchCard = (event:any) => { //ボタンをクリックして前後を入れ替える
+        const DisplayCards = document.getElementsByClassName("DisplayCard") as HTMLCollectionOf<HTMLElement>;
+        const id = event.currentTarget.id;
+        const temp_state = DisplayCards[id].dataset.occupied;
+        console.log(temp_state);
+        const temp_html = DisplayCards[id].innerHTML;
+        DisplayCards[id].innerHTML = DisplayCards[Number(id)+1].innerHTML;
+        DisplayCards[id].dataset.occupied = DisplayCards[Number(id)+1].dataset.occupied;
+        DisplayCards[Number(id)+1].innerHTML = temp_html;
+        DisplayCards[Number(id)+1].dataset.occupied = temp_state;
+    }
+
     return (
         <>
             <header style={styleHeader}>
-                <button onClick={playDisplay} >再生</button>
-                <button onClick={cleanDisplay} >リセット</button>
+                <button onClick={playDisplay} >再生<div>sキー</div></button>
+                <button onClick={cleanDisplay} >リセット<div>cキー</div></button>
                 <span></span>
                 < DisplayCard/>
-                <span></span>
+                <button id="0" style={styleButton} onClick={switchCard}>←→<div>1キー</div></button>
                 < DisplayCard/>
-                <span></span>
+                <button id="1" style={styleButton} onClick={switchCard}>←→<div>2キー</div></button>
                 < DisplayCard/>
-                <span></span>
+                <button id="2" style={styleButton} onClick={switchCard}>←→<div>3キー</div></button>
                 < DisplayCard/>
             </header>
             <div id="adjust"></div>
