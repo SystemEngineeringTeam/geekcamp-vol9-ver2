@@ -1,5 +1,6 @@
 import { Grid } from "./grid";
 import  Header  from "./header";
+import Loader from 'react-loader-spinner';
 
 export default function StartPage(){
     const startPage:{[key:string]:string} = {
