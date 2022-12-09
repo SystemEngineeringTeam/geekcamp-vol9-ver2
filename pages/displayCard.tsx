@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-export default function DisplayCard(){
+export default function DisplayCard() {
     console.log("DisplayCardレンダリング");
     const styleDisplayCard: { [key: string]: string } = {
         height: "140px",
