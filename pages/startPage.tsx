@@ -35,8 +35,8 @@ export default function StartPage(){
         <>
             <button style={styleButton} onClick={removeStartPage} className="disappered">スタート</button>
             <div style={startPage} className="disappered"></div>
-            <div style={{zIndex: "0",position: "absolute"}}>
-                <Header/>
+            <div style={{zIndex: "0",position: "absolute" , width: "100%"}}>
+                {/* <Header/> */}
                 <Grid/>
             </div>
         </>
