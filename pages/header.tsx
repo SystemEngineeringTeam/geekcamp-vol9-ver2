@@ -75,7 +75,7 @@ export const Header = () =>{
         display: "grid",
         height: "160px",
         width: "1500px",
-        gridTemplateColumns: "100px 100px 50px 250px 30px 250px 30px 250px 30px 250px",
+        gridTemplateColumns: "100px 100px 50px 250px 30px 250px 30px 250px 30px 250px 87px",
         gridTemplateRows: "160px",
         backgroundColor: "#497df7a4",
         fontSize: "30px",
@@ -88,6 +88,22 @@ export const Header = () =>{
         height: "30px",
         width: "45px",
         fontSize: "10px",
+    }
+
+    const styleMenu:{[key:string]:string} = {
+        marginTop : "45px",
+        marginLeft : "10px",
+        height: "70px",
+        width: "50px",
+        fontSize: "10px",
+    }
+
+    const styleOverlay:{[key:string]:string} = {
+        height: "100%",
+        width: "100%",
+        backgroundColor: "gray",
+        opacity: "0.8",
+        zIndex: "1"
     }
 
     const {PlayFuncs, StopFuncs} = useGetSoundPlayer();
@@ -108,7 +124,11 @@ export const Header = () =>{
         const DisplayCards = document.getElementsByClassName("DisplayCard") as HTMLCollectionOf<HTMLElement>;
         for(let i=0; i<4; i++){ //DisplayCardを左から順に色をつけていく
             if(DisplayCards[i].dataset.occupied == "false"){ //カードが無かったら処理を停止
+                if(DisplayCards[i-1] == undefined){
+                    break;
+                }
                 setTimeout( () =>{
+                    console.log(DisplayCards[i-1])
                     DisplayCards[i-1].style.backgroundColor = "#3282B8";
                     stopChord(getNoteList(DisplayCards[i-1].innerHTML));
                 }, i * 1000) //選んだカードの一番後ろのオレンジ灯火を戻すための処理
