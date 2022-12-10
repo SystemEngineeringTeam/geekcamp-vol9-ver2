@@ -31,9 +31,14 @@ export default function Card(props:Props){
 
     }
     const LeaveChangeColor = () =>{ //カード要素からカーソルが離れたら色を元に戻すコード
-        const target = document.getElementsByClassName("card") as HTMLCollectionOf<HTMLElement>;
-        target[props.num].style.backgroundColor = "#BBE1FA";
-        props.useStopChord(props.useGetNoteList(props.children));
+        if(event.shiftKey){
+            const target = document.getElementsByClassName("card") as HTMLCollectionOf<HTMLElement>;
+            target[props.num].style.backgroundColor = "#BBE1FA";
+        }else{
+            const target = document.getElementsByClassName("card") as HTMLCollectionOf<HTMLElement>;
+            target[props.num].style.backgroundColor = "#BBE1FA";
+            props.useStopChord(props.useGetNoteList(props.children));
+        }
     }
 
     const ClickEvent = () =>{ //カードがクリックされたら、ヘッダーにクリックされたカードの要素名を追加。 ヘッダーを親要素としてspanタグを子要素に加えて追加していく。
