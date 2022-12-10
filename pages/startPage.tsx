@@ -1,6 +1,7 @@
 import { Grid } from "./grid";
 import  Header  from "./header";
 import Loader from 'react-loader-spinner';
+import { Button } from 'react-bootstrap';
 
 export default function StartPage(){
     const startPage:{[key:string]:string} = {
@@ -33,7 +34,7 @@ export default function StartPage(){
 
     return( 
         <>
-            <button style={styleButton} onClick={removeStartPage} className="disappered">スタート</button>
+            <Button variant="primary" style={styleButton} onClick={removeStartPage} className="disappered">スタート</Button>
             <div style={startPage} className="disappered"></div>
             <div style={{zIndex: "0",position: "absolute" , width: "100%"}}>
                 {/* <Header/> */}

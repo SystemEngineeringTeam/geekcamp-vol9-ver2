@@ -1,6 +1,7 @@
 import { memo, useEffect } from "react";
 import { useGetSoundPlayer } from "./hooks/useGetSoundPlayer";
 import { useGetNoteList, usePlay, useStop } from "./hooks/useChordPlayer";
+import { Button } from 'react-bootstrap';
 
 type Props = {
     children : string
@@ -80,7 +81,8 @@ export default memo( function Card(props:Props){
 
     return(
         <>
-            <button
+            <Button
+                variant="text-center"
                 draggable="true"
                 className="card"
                 style={CardStyle}
@@ -95,7 +97,7 @@ export default memo( function Card(props:Props){
                 }}
             >
                 {props.children}
-            </button>
+            </Button>
 
             <hr style={LineLayout}/>
         </>
