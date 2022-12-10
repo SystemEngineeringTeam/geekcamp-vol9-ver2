@@ -11,6 +11,7 @@ type Props = {
 }
 
 export default function Card(props:Props){
+    console.log(`Card${props.num}レンダリング`);
     // インラインでのスタイル指定
     // https://qiita.com/Statham/items/05870fd52320a0644acd
     const CardStyle: { [key: string]: string } = {
@@ -21,7 +22,7 @@ export default function Card(props:Props){
         backgroundColor: "#BBE1FA",
         padding: "1px",
     }
-
+    
 
     const EnterChangeColor = () =>{ //カード要素にカーソルが入ってきたら背景色をオレンジにするコード
         const target = document.getElementsByClassName("card") as HTMLCollectionOf<HTMLElement>; //ここの変数targetには'Grid.js'で使った"Card"コンポーネントをすべて含む配列が入る。

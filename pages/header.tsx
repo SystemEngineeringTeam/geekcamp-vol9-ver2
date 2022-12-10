@@ -4,6 +4,9 @@ import { useGetNoteList, usePlay, useStop } from "./hooks/useChordPlayer";
 import { useEffect } from "react";
 
 export const Header = () =>{
+
+    console.log("Headerレンダリング");
+
     useEffect( () => {
         document.addEventListener("keydown", keypressClean);
         document.addEventListener("keydown", keypressSwitch1);
