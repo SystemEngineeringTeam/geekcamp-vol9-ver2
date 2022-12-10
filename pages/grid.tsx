@@ -16,13 +16,11 @@ export const Grid = () =>{
         flexFlow: "row",
         gap: "calc(10 / 430 * 100%)",
 
-
         alignItems: "center",
 
         width: "100%",
 
-        padding: "0px",
-        margin: "32px",
+        padding: "32px",
     }
 
     const column = { //カード1行目
