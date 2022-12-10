@@ -1,25 +1,12 @@
 import  DisplayCard  from "./displayCard";
 import { useGetSoundPlayer } from "./hooks/useGetSoundPlayer";
 import { useGetNoteList, usePlay, useStop } from "./hooks/useChordPlayer";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
+import { useKey } from "react-use";
 
 export const Header = () =>{
 
     console.log("Headerレンダリング");
-
-    useEffect( () => {
-        document.addEventListener("keydown", keypressClean);
-        document.addEventListener("keydown", keypressSwitch1);
-        document.addEventListener("keydown", keypressSwitch2);
-        document.addEventListener("keydown", keypressSwitch3);
-    }, [])
-
-    useEffect( () => {
-        document.addEventListener("keydown", keypressPlay);
-        return (() => { //第2引数をしていしないため、再レンダリングするたびにイベントリスナーを削除する
-            document.removeEventListener("keydown", keypressPlay);
-        }) //←'keypressPlay'は第２引数に何も指定しないと正常に動作する。原因は調査中。
-    },)
 
     const keypressPlay = (key:any) => {
         if(key.key == 'S' || key.key== 's'){
@@ -74,6 +61,18 @@ export const Header = () =>{
         }
     }
 
+    useEffect( () => {
+        document.addEventListener("keydown", keypressPlay);
+        return (() => { //第2引数をしていしないため、再レンダリングするたびにイベントリスナーを削除する
+            document.removeEventListener("keydown", keypressPlay);
+        }) //←'keypressPlay'は第２引数に何も指定しないと正常に動作する。原因は調査中。
+    },)
+
+    useKey("c", keypressClean);
+    useKey("1", keypressSwitch1);
+    useKey("2", keypressSwitch2);
+    useKey("3", keypressSwitch3);
+
     const styleHeader:{[key:string]:string} = {
         display: "grid",
         height: "160px",
@@ -91,22 +90,6 @@ export const Header = () =>{
         height: "30px",
         width: "45px",
         fontSize: "10px",
-    }
-
-    const styleMenu:{[key:string]:string} = {
-        marginTop : "45px",
-        marginLeft : "10px",
-        height: "70px",
-        width: "50px",
-        fontSize: "10px",
-    }
-
-    const styleOverlay:{[key:string]:string} = {
-        height: "100%",
-        width: "100%",
-        backgroundColor: "gray",
-        opacity: "0.8",
-        zIndex: "1"
     }
 
     const {PlayFuncs, StopFuncs} = useGetSoundPlayer();
