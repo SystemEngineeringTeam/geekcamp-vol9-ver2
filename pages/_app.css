@@ -1,0 +1,11 @@
+body{
+    margin: 0;
+}
+
+#gridParent{
+    height: 600px;
+}
+
+#adjust{
+    height: 170px;
+}
