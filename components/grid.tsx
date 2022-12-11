@@ -130,12 +130,69 @@ export const Grid = () =>{
         <div id="gridParent" style={gridStyle}> 
             <div style={Ccolor}>
                 <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={0}>C</Card>
-                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={1}>C7</Card>
-                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={2}>C7sus4</Card>
-                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={3}>Cm</Card>
-                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={4}>Cm7-5</Card>
-                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={5}>CmM7</Card>
-                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={6}>Cm6</Card>
+                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={1}>C6</Card>
+                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={2}>CM7</Card>
+                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={3}>CM9</Card>
+                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={4}>CM11</Card>
+                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={5}>CM7(#5)</Card>
+                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={6}>CM7(#11)</Card>
+                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={7}>CM9(#11)</Card>
+                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={8}>C(b5)</Card>
+                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={9}>C5</Card>
+                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={10}>C69</Card>
+                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={11}>C69(#11)</Card>
+                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={12}>Cm</Card>
+                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={13}>Cm6</Card>
+                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={14}>Cm69</Card>
+                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={15}>CmM7</Card>
+                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={16}>CmM9</Card>
+                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={17}>Cmadd9</Card>
+                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={18}>C7</Card>
+                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={19}>C9</Card>
+                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={20}>C11</Card>
+                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={21}>C13</Card>
+                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={22}>C7(b5)</Card>
+                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={23}>C7(b5,b9)</Card>
+                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={24}>C7(b5,#9)</Card>
+                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={25}>C7(b5,b9,13)</Card>
+                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={26}>C7(b9)</Card>
+                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={27}>C7(b9,11)</Card>
+                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={28}>C7(b9,13)</Card>
+                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={29}>C7(b9,b13)</Card>
+                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={30}>C7(#9)</Card>
+                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={31}>C7(#9,13)</Card>
+                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={32}>C7(#9,b13)</Card>
+                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={33}>C7(13)</Card>
+                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={34}>C7(#11)</Card>
+                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={35}>C9(b5)</Card>
+                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={36}>C9(b5,13)</Card>
+                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={37}>C9(#11)</Card>
+                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={38}>C9(b5)</Card>
+                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={39}>C9(b5,13)</Card>
+                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={40}>C9(#11)</Card>
+                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={41}>Cadd9</Card>
+                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={42}>Cadd2</Card>
+                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={43}>Cadd4</Card>
+                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={44}>Cdim</Card>
+                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={45}>Cdim7</Card>
+                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={46}>Csus4</Card>
+                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={47}>C7sus4</Card>
+                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={48}>C9sus4</Card>
+                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={49}>Caug</Card>
+                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={50}>Cmaug</Card>
+                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={51}>Caug7</Card>
+                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={52}>Caug7(b9)</Card>
+                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={53}>Caug9</Card>
+                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={54}>Caug9(#11)</Card>
+                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={55}>Cm7</Card>
+                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={56}>Cm9</Card>
+                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={57}>Cm7(b9)</Card>
+                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={58}>Cm7(11)</Card>
+                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={59}>Cm9(11)</Card>
+                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={60}>Cm7(13)</Card>
+                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={61}>Cm7(b5)</Card>
+                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={62}>Cm7(b5,11)</Card>
+                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={63}>Cm7(b5,b13)</Card>
             </div>
             <div style={Dbcolor}>
                 <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={7}>D</Card>
@@ -236,9 +293,6 @@ export const Grid = () =>{
                 <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={33}>GmM7</Card>
                 <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={34}>Gm6</Card>
             </div>
-                
-                
-            
         </div>
     )
 }

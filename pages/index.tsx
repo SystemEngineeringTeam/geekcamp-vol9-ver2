@@ -11,6 +11,9 @@ export default function Home() {
     
     return (
     <>
+        <Head>
+            <title>ChordCards</title>
+        </Head>
         <StartPage/>
     </>
     )
