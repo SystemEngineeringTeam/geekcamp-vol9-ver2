@@ -7,16 +7,10 @@ import { render } from 'react-dom';
 import  StartPage  from "./startPage";
 
 export default function Home() {
-    useEffect(()=>{
-        touchToStart();
-    }, [])
-
-    function touchToStart() : void{
-        const body = document.getElementsByTagName('body') as HTMLCollectionOf<HTMLElement>;
-    }
-  return (
+    
+    return (
     <>
-      <StartPage/>
+        <StartPage/>
     </>
-  )
+    )
 }

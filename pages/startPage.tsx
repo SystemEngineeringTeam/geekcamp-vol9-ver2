@@ -1,6 +1,6 @@
 import { Grid } from "./grid";
 import  Header  from "./header";
-import Loader from 'react-loader-spinner';
+import { useState, useRef } from "react";
 
 export default function StartPage(){
     const startPage:{[key:string]:string} = {
@@ -24,17 +24,18 @@ export default function StartPage(){
         position: "absolute"
     }
 
+    const buttonEL = useRef<HTMLButtonElement>(null);
+    const startPageEL = useRef<HTMLInputElement>(null);
+
     const removeStartPage = () : void => {
-        const target = document.getElementsByClassName("disappered") as HTMLCollectionOf<HTMLElement>;
-        for(let i:number = 0; i<2; i++){
-            target[i].style.display = "none";
-        }
+        buttonEL.current!.style.display = 'none';
+        startPageEL.current!.style.display = 'none';
     }
 
     return( 
         <>
-            <button style={styleButton} onClick={removeStartPage} className="disappered">スタート</button>
-            <div style={startPage} className="disappered"></div>
+            <button style={styleButton} ref={buttonEL} onClick={removeStartPage} className="disappered">スタート</button>
+            <div style={startPage} ref={startPageEL} className="disappered"></div>
             <div style={{zIndex: "0",position: "absolute"}}>
                 <Header/>
                 <Grid/>
