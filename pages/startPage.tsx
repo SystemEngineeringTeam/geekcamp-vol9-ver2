@@ -3,6 +3,7 @@ import  Header  from "./header";
 import Loader from 'react-loader-spinner';
 import { Player, PlayerEvent } from "@lottiefiles/react-lottie-player";
 import { useRef } from "react";
+import { Button } from 'react-bootstrap';
 
 export default function StartPage(){
     const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -63,6 +64,7 @@ export default function StartPage(){
 
     return( 
         <>
+
             <Player
             autoplay
             loop
@@ -72,7 +74,9 @@ export default function StartPage(){
             ref={playerRef}
             onEvent={endLoading}
             />
-            <button style={styleButton} onClick={removeStartPage} className="disappered">スタート</button>
+
+            <Button variant="primary" style={styleButton} onClick={removeStartPage} className="disappered">スタート</Button>
+
             <div style={startPage} className="disappered"></div>
             <div style={{zIndex: "0",position: "absolute" , width: "100%"}}>
                 {/* <Header/> */}
