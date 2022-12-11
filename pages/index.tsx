@@ -12,7 +12,7 @@ export default function Home() {
     return (
     <>
         <Head>
-            <title>SoundCard</title>
+            <title>ChordCards</title>
         </Head>
         <StartPage/>
     </>
