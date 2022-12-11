@@ -11,6 +11,9 @@ export default function Home() {
     
     return (
     <>
+        <Head>
+            <title>SoundCard</title>
+        </Head>
         <StartPage/>
     </>
     )
