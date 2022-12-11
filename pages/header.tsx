@@ -3,6 +3,7 @@ import  DisplayCard  from "./displayCard";
 import { useGetSoundPlayer } from "./hooks/useGetSoundPlayer";
 import { useGetNoteList, usePlay, useStop } from "./hooks/useChordPlayer";
 import { useEffect, useRef } from "react";
+import { Button } from 'react-bootstrap';
 
 export const Header = () =>{
 
@@ -79,24 +80,6 @@ export const Header = () =>{
         }) //第２引数に[]を指定すると動作しないバグが発生する。原因は調査中。eventlistenerが重複するから？
     },)
 
-    const styleHeader:{[key:string]:string} = {
-        display: "grid",
-        height: "160px",
-        width: "1500px",
-        gridTemplateColumns: "100px 100px 50px 250px 30px 250px 30px 250px 30px 250px 87px",
-        gridTemplateRows: "160px",
-        backgroundColor: "#497df7a4",
-        fontSize: "30px",
-        position: "fixed" ,
-        top: "0"
-    }
-
-    const styleButton:{[key:string]:string} = {
-        marginTop : "60px",
-        height: "30px",
-        width: "45px",
-        fontSize: "10px",
-    }
 
     const {PlayFuncs, StopFuncs} = useGetSoundPlayer();
     const getNoteList = useGetNoteList();
@@ -105,8 +88,7 @@ export const Header = () =>{
 
     const cleanDisplay = () =>{ //表示されている要素を全て消す
         for(let i=0; i<4; i++){
-            console.log("test:" + DisplayCards[i]);
-            DisplayCards[i]!.innerHTML = "カードをここにドラッグしてドロップ";
+            DisplayCards[i]!.innerHTML = "";
             DisplayCards[i]!.dataset.occupied = "false";
         }
         
@@ -120,7 +102,7 @@ export const Header = () =>{
                 }
                 setTimeout( () =>{
                     console.log(DisplayCards[i-1])
-                    DisplayCards[i-1]!.style.backgroundColor = "#3282B8";
+                    DisplayCards[i-1]!.style.backgroundColor = "#FFFFFF";
                     stopChord(getNoteList(DisplayCards[i-1]!.innerHTML));
                 }, i * 1000) //選んだカードの一番後ろのオレンジ灯火を戻すための処理
                 break;
@@ -130,20 +112,20 @@ export const Header = () =>{
                 playChord(getNoteList(DisplayCards[i]!.innerHTML))
             }else if(i < 3){ //初回、最終回以外の処理はここ
                 setTimeout( () =>{
-                    DisplayCards[i-1]!.style.backgroundColor = "#3282B8";
+                    DisplayCards[i-1]!.style.backgroundColor = "#FFFFFF";
                     stopChord(getNoteList(DisplayCards[i-1]!.innerHTML))
                     DisplayCards[i]!.style.backgroundColor = "orange";
                     playChord(getNoteList(DisplayCards[i]!.innerHTML))
                 }, i * 1000); //二つ目は１秒、三つ目は２秒待つ... とすることで１秒ごと動作させる
             } else if(i == 3){
                 setTimeout( () =>{
-                    DisplayCards[i-1]!.style.backgroundColor = "#3282B8";
+                    DisplayCards[i-1]!.style.backgroundColor = "#FFFFFF";
                     stopChord(getNoteList(DisplayCards[i-1]!.innerHTML));
                     DisplayCards[i]!.style.backgroundColor = "orange";
                     playChord(getNoteList(DisplayCards[i]!.innerHTML));
                 }, i * 1000); //二つ目は１秒、三つ目は２秒待つ... とすることで１秒ごと動作させる
                 setTimeout( () =>{
-                    DisplayCards[i]!.style.backgroundColor = "#3282B8";
+                    DisplayCards[i]!.style.backgroundColor = "#FFFFFF";
                     stopChord(getNoteList(DisplayCards[i]!.innerHTML));  
                 }, (i+1) * 1000);
             }
@@ -164,20 +146,38 @@ export const Header = () =>{
         DisplayCards[Number(id)+1]!.dataset.occupied = temp_state;
     }
 
+    
+
+    const styleHeader:{[key:string]:string} = {
+        height: "auto",
+        width: "350px",
+        padding: "10px",
+        backgroundColor: "#5D99C6",
+        // position: "fixed",
+    }
+
+    const styleButton:{[key:string]:string} = {
+        width: "120px",
+        fontSize: "10px",
+        margin: "10px",
+    }
+
     return (
         <>
-            <header style={styleHeader}>
-                <button onClick={playDisplay} >再生<div>sキー</div></button>
-                <button onClick={cleanDisplay} >リセット<div>cキー</div></button>
+            <div style={styleHeader}>
+                <p className="text-light font-size-1">SoundCard</p>
+                <span></span>
+                <Button variant="success" style={styleButton} onClick={playDisplay} >再生<div>sキー</div></Button>
+                <Button variant="danger" style={styleButton} onClick={cleanDisplay} >リセット<div>cキー</div></Button>
                 <span></span>
                 < DisplayCard ref={displayCardEl1}/>
-                <button id="0" style={styleButton} onClick={switchCard}>←→<div>1キー</div></button>
+                <Button id="0" style={styleButton} onClick={switchCard}>←→<div>1キー</div></Button>
                 < DisplayCard ref={displayCardEl2}/>
-                <button id="1" style={styleButton} onClick={switchCard}>←→<div>2キー</div></button>
+                <Button id="1" style={styleButton} onClick={switchCard}>←→<div>2キー</div></Button>
                 < DisplayCard ref={displayCardEl3}/>
-                <button id="2" style={styleButton} onClick={switchCard}>←→<div>3キー</div></button>
+                <Button id="2" style={styleButton} onClick={switchCard}>←→<div>3キー</div></Button>
                 < DisplayCard ref={displayCardEl4}/>
-            </header>
+            </div>
             <div id="adjust"></div>
         </>
     )

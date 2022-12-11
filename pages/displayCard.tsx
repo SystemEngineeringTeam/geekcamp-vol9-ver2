@@ -6,11 +6,14 @@ export default forwardRef(function DisplayCard(props, ref){
     const displayCardEl = useRef<HTMLInputElement>(null);
     useImperativeHandle(ref, () => displayCardEl.current!); //forweredrefとuseRefを併用
     const styleDisplayCard: { [key: string]: string } = {
-        height: "140px",
-        backgroundColor: "#3282B8",
+        height: "80px",
+        width: "120px",
+        backgroundColor: "#FFFFFF",
         margin: "10px",
         fontSize: "25px",
         textAlign: "center",
+        boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
+        borderRadius:" 8px",
     }
     
     useEffect( () => { //初回レンダリング時に各ディスプレイカードにdragoverのaddeventlistnerを設置
@@ -38,7 +41,6 @@ export default forwardRef(function DisplayCard(props, ref){
 
     return (
         <div ref={displayCardEl} className="DisplayCard" style={styleDisplayCard} data-occupied="false">
-            カードをここにドラッグしてドロップ
         </div>
     )
 })
