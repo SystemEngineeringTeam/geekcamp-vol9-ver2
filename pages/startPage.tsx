@@ -1,8 +1,7 @@
 import { Grid } from "./grid";
 import  Header  from "./header";
-import Loader from 'react-loader-spinner';
+import { useState, useRef } from "react";
 import { Player, PlayerEvent } from "@lottiefiles/react-lottie-player";
-import { useRef } from "react";
 import { Button } from 'react-bootstrap';
 
 export default function StartPage(){
@@ -48,6 +47,9 @@ export default function StartPage(){
         zIndex: "2",
         position: "absolute"
     }
+
+    const buttonEL = useRef<HTMLButtonElement>(null);
+    const startPageEL = useRef<HTMLInputElement>(null);
     
     //ロードアイコン
     const loadingStyle:{[key:string]:string} = {
