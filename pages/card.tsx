@@ -1,6 +1,7 @@
 import { memo, useEffect } from "react";
 import { useGetSoundPlayer } from "./hooks/useGetSoundPlayer";
 import { useGetNoteList, usePlay, useStop } from "./hooks/useChordPlayer";
+import { Button } from 'react-bootstrap';
 
 type Props = {
     children : string
@@ -15,12 +16,18 @@ export default memo( function Card(props:Props){
     // インラインでのスタイル指定
     // https://qiita.com/Statham/items/05870fd52320a0644acd
     const CardStyle: { [key: string]: string } = {
-        textAlign: "center",
-        border: "1px solid #0F4C75",
-        width: "250px",
-        height: "100px",
-        backgroundColor: "#BBE1FA",
-        padding: "1px",
+        width: "100%",
+        height: "69px",
+        paddingTop: "8px",
+        paddingBottom: "8px",
+        backgroundColor: "#FFFFFF",
+        borderWidth: "0px",
+    }
+
+    const LineLayout: { [key: string]: string } = {
+        border: "4px solid #757575",
+        borderRadius: "4px",
+        margin : "0px 16px",
     }
     
 
@@ -33,10 +40,10 @@ export default memo( function Card(props:Props){
     const LeaveChangeColor = (event:React.MouseEvent<HTMLButtonElement, MouseEvent>) =>{ //カード要素からカーソルが離れたら色を元に戻すコード
         if(event.shiftKey){
             const target = document.getElementsByClassName("card") as HTMLCollectionOf<HTMLElement>;
-            target[props.num].style.backgroundColor = "#BBE1FA";
+            target[props.num].style.backgroundColor = "#FFFFFF";
         }else{
             const target = document.getElementsByClassName("card") as HTMLCollectionOf<HTMLElement>;
-            target[props.num].style.backgroundColor = "#BBE1FA";
+            target[props.num].style.backgroundColor = "#FFFFFF";
             props.useStopChord(props.useGetNoteList(props.children));
         }
     }
@@ -73,22 +80,26 @@ export default memo( function Card(props:Props){
     }, []);
 
     return(
-        <button
-            draggable="true"
-            className="card"
-            style={CardStyle}
-            onClick={() => {
-                ClickEvent();
-            }}
-            onMouseEnter={() => {
-                EnterChangeColor();
-            }}
-            onMouseLeave={(event:React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-                LeaveChangeColor(event);
-            }}
-        >
-            {props.children}
-        </button>
+        <>
+            <Button
+                variant="text-center"
+                draggable="true"
+                className="card"
+                style={CardStyle}
+                onClick={() => {
+                    ClickEvent();
+                }}
+                onMouseEnter={() => {
+                    EnterChangeColor();
+                }}
+                onMouseLeave={(event:React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+                    LeaveChangeColor(event);
+                }}
+            >
+                {props.children}
+            </Button>
 
+            <hr style={LineLayout}/>
+        </>
     )
 });
