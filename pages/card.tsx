@@ -37,7 +37,7 @@ export default memo( function Card(props:Props){
         props.usePlayChord(props.useGetNoteList(props.children));
 
     }
-    const LeaveChangeColor = () =>{ //カード要素からカーソルが離れたら色を元に戻すコード
+    const LeaveChangeColor = (event:React.MouseEvent<HTMLButtonElement, MouseEvent>) =>{ //カード要素からカーソルが離れたら色を元に戻すコード
         if(event.shiftKey){
             const target = document.getElementsByClassName("card") as HTMLCollectionOf<HTMLElement>;
             target[props.num].style.backgroundColor = "#FFFFFF";
@@ -59,7 +59,7 @@ export default memo( function Card(props:Props){
         }
     }
 
-    const muteChords = () => {
+    const muteChords = (event: KeyboardEvent) => {
         if(event.shiftKey){//←これで動く
             const target = document.getElementsByClassName("card") as HTMLCollectionOf<HTMLElement>;
             target[props.num].style.pointerEvents = "none";
@@ -92,8 +92,8 @@ export default memo( function Card(props:Props){
                 onMouseEnter={() => {
                     EnterChangeColor();
                 }}
-                onMouseLeave={() => {
-                    LeaveChangeColor();
+                onMouseLeave={(event:React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+                    LeaveChangeColor(event);
                 }}
             >
                 {props.children}

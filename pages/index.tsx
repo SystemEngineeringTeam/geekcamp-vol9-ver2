@@ -8,16 +8,10 @@ import  StartPage  from "./startPage";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function Home() {
-    useEffect(()=>{
-        touchToStart();
-    }, [])
-
-    function touchToStart() : void{
-        const body = document.getElementsByTagName('body') as HTMLCollectionOf<HTMLElement>;
-    }
-  return (
+    
+    return (
     <>
-      <StartPage/>
+        <StartPage/>
     </>
-  )
+    )
 }
