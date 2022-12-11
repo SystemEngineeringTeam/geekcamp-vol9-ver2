@@ -1,6 +1,6 @@
 import { memo, useEffect } from "react";
-import { useGetSoundPlayer } from "./hooks/useGetSoundPlayer";
-import { useGetNoteList, usePlay, useStop } from "./hooks/useChordPlayer";
+import { useGetSoundPlayer } from "../hooks/useGetSoundPlayer";
+import { useGetNoteList, usePlay, useStop } from "../hooks/useChordPlayer";
 import { Button } from 'react-bootstrap';
 
 type Props = {

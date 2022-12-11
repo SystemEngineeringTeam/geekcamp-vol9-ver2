@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import  DisplayCard  from "./displayCard";
-import { useGetSoundPlayer } from "./hooks/useGetSoundPlayer";
-import { useGetNoteList, usePlay, useStop } from "./hooks/useChordPlayer";
+import { useGetSoundPlayer } from "../hooks/useGetSoundPlayer";
+import { useGetNoteList, usePlay, useStop } from "../hooks/useChordPlayer";
 import { useEffect, useRef } from "react";
 import { Button } from 'react-bootstrap';
 
