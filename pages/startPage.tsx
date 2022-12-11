@@ -47,9 +47,6 @@ export default function StartPage(){
         zIndex: "2",
         position: "absolute"
     }
-
-    const buttonEL = useRef<HTMLButtonElement>(null);
-    const startPageEL = useRef<HTMLInputElement>(null);
     
     //ロードアイコン
     const loadingStyle:{[key:string]:string} = {
