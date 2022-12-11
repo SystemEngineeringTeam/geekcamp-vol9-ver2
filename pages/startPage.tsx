@@ -9,20 +9,24 @@ export default function StartPage(){
     const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
     const playerRef = useRef<Player>(null);
-
+    const buttonEL = useRef<HTMLButtonElement>(null);
+    const startPageEL = useRef<HTMLInputElement>(null);
     //レンダリング後(ロード後)の処理
     const endLoading = (event:PlayerEvent) => {
         if (event === "play") {
             (async () => {
+                buttonEL.current!.style.display = 'none';//ボタン非表示
                 await sleep(5000); //５秒表示
                 const loadingIcon = document.getElementsByClassName("loading") as HTMLCollectionOf<HTMLElement>;
                 playerRef.current!.stop();
-                loadingIcon[0].style.display = "none"; //ロードアイコンを消す
+                loadingIcon[0].style.display = "none"; //ロードアイコン非表示
+                buttonEL.current!.style.display = 'inline'; //ボタン表示
                 
             })();
         }
     }
     
+    //スタート背景
     const startPage:{[key:string]:string} = {
         height: "100%",
         width: "100%",
@@ -33,6 +37,7 @@ export default function StartPage(){
         
     }
 
+    //スタートボタン
     const styleButton:{[key:string]:string} = {
         height: "50px",
         width: "100px",
@@ -44,22 +49,22 @@ export default function StartPage(){
         position: "absolute"
     }
     
+    //ロードアイコン
     const loadingStyle:{[key:string]:string} = {
-        height: "500px",
-        width: "500px",
+        height: "800px",
+        width: "800px",
         top: "50%",
         left: "50%",
-        marginTop: "-250px",
-        marginLeft: "-250px",
+        marginTop: "-400px",
+        marginLeft: "-400px",
         position: "absolute",
         zIndex: "3",
     };
 
+    //ボタン押下
     const removeStartPage = () : void => {
-        const target = document.getElementsByClassName("disappered") as HTMLCollectionOf<HTMLElement>;
-        for(let i:number = 0; i<2; i++){
-            target[i].style.display = "none";
-        }
+        buttonEL.current!.style.display = 'none';
+        startPageEL.current!.style.display = 'none';
     }
 
     return( 
@@ -75,9 +80,20 @@ export default function StartPage(){
             onEvent={endLoading}
             />
 
-            <Button variant="primary" style={styleButton} onClick={removeStartPage} className="disappered">スタート</Button>
+            <Button variant="primary"
+            style={styleButton} 
+            ref={buttonEL}
+            onClick={removeStartPage}
+            className="disappered"
+            id="startButton">
+                START
+            </Button>
 
-            <div style={startPage} className="disappered"></div>
+            <div style={startPage}
+            ref={startPageEL}
+            className="disappered"
+            ></div>
+            
             <div style={{zIndex: "0",position: "absolute" , width: "100%"}}>
                 {/* <Header/> */}
                 <Grid/>
