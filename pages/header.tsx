@@ -84,7 +84,7 @@ export const Header = () =>{
     const cleanDisplay = () =>{ //表示されている要素を全て消す
         const DisplayCards = document.getElementsByClassName("DisplayCard") as HTMLCollectionOf<HTMLElement>;
         for(let i=0; i<4; i++){
-            DisplayCards[i].innerHTML = "カードをここにドラッグしてドロップ";
+            DisplayCards[i].innerHTML = "";
             DisplayCards[i].dataset.occupied = "false";
         }
     }
@@ -99,7 +99,7 @@ export const Header = () =>{
                 }
                 setTimeout( () =>{
                     console.log(DisplayCards[i-1])
-                    DisplayCards[i-1].style.backgroundColor = "#3282B8";
+                    DisplayCards[i-1].style.backgroundColor = "#FFFFFF";
                     stopChord(getNoteList(DisplayCards[i-1].innerHTML));
                 }, i * 1000) //選んだカードの一番後ろのオレンジ灯火を戻すための処理
                 break;
@@ -109,20 +109,20 @@ export const Header = () =>{
                 playChord(getNoteList(DisplayCards[i].innerHTML))
             }else if(i < 3){ //初回、最終回以外の処理はここ
                 setTimeout( () =>{
-                    DisplayCards[i-1].style.backgroundColor = "#3282B8";
+                    DisplayCards[i-1].style.backgroundColor = "#FFFFFF";
                     stopChord(getNoteList(DisplayCards[i-1].innerHTML))
                     DisplayCards[i].style.backgroundColor = "orange";
                     playChord(getNoteList(DisplayCards[i].innerHTML))
                 }, i * 1000); //二つ目は１秒、三つ目は２秒待つ... とすることで１秒ごと動作させる
             } else if(i == 3){
                 setTimeout( () =>{
-                    DisplayCards[i-1].style.backgroundColor = "#3282B8";
+                    DisplayCards[i-1].style.backgroundColor = "#FFFFFF";
                     stopChord(getNoteList(DisplayCards[i-1].innerHTML));
                     DisplayCards[i].style.backgroundColor = "orange";
                     playChord(getNoteList(DisplayCards[i].innerHTML));
                 }, i * 1000); //二つ目は１秒、三つ目は２秒待つ... とすることで１秒ごと動作させる
                 setTimeout( () =>{
-                    DisplayCards[i].style.backgroundColor = "#3282B8";
+                    DisplayCards[i].style.backgroundColor = "#FFFFFF";
                     stopChord(getNoteList(DisplayCards[i].innerHTML));  
                 }, (i+1) * 1000);
             }
@@ -162,8 +162,9 @@ export const Header = () =>{
         <>
             <div style={styleHeader}>
                 <p className="text-light font-size-1">SoundCard</p>
-                {/* <button onClick={playDisplay} >再生<div>sキー</div></button> */}
-                {/* <button onClick={cleanDisplay} >リセット<div>cキー</div></button> */}
+                <span></span>
+                <Button variant="success" style={styleButton} onClick={playDisplay} >再生<div>sキー</div></Button>
+                <Button variant="danger" style={styleButton} onClick={cleanDisplay} >リセット<div>cキー</div></Button>
                 <span></span>
                 < DisplayCard/>
                 <Button id="0" style={styleButton} onClick={switchCard}>←→<div>1キー</div></Button>
@@ -172,6 +173,8 @@ export const Header = () =>{
                 < DisplayCard/>
                 <Button id="2" style={styleButton} onClick={switchCard}>←→<div>3キー</div></Button>
                 < DisplayCard/>
+
+                
             </div>
             <div id="adjust"></div>
         </>
