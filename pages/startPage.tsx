@@ -24,12 +24,12 @@ export default function StartPage(){
         position: "absolute"
     }
 
-    const buttonEL = useRef(null);
-    const startPageEL = useRef(null);
+    const buttonEL = useRef<HTMLButtonElement>(null);
+    const startPageEL = useRef<HTMLInputElement>(null);
 
     const removeStartPage = () : void => {
-        buttonEL.current.style.display = 'none';
-        startPageEL.current.style.display = 'none';
+        buttonEL.current!.style.display = 'none';
+        startPageEL.current!.style.display = 'none';
     }
 
     return( 
