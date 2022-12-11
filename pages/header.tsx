@@ -153,9 +153,9 @@ export const Header = () =>{
     }
 
     const styleButton:{[key:string]:string} = {
-        marginTop : "60px",
         width: "120px",
         fontSize: "10px",
+        margin: "10px",
     }
 
     return (
@@ -166,11 +166,11 @@ export const Header = () =>{
                 {/* <button onClick={cleanDisplay} >リセット<div>cキー</div></button> */}
                 <span></span>
                 < DisplayCard/>
-                {/* <Button id="0" style={styleButton} onClick={switchCard}>←→<div>1キー</div></Button> */}
+                <Button id="0" style={styleButton} onClick={switchCard}>←→<div>1キー</div></Button>
                 < DisplayCard/>
-                {/* <Button id="1" style={styleButton} onClick={switchCard}>←→<div>2キー</div></Button> */}
+                <Button id="1" style={styleButton} onClick={switchCard}>←→<div>2キー</div></Button>
                 < DisplayCard/>
-                {/* <Button id="2" style={styleButton} onClick={switchCard}>←→<div>3キー</div></Button> */}
+                <Button id="2" style={styleButton} onClick={switchCard}>←→<div>3キー</div></Button>
                 < DisplayCard/>
             </div>
             <div id="adjust"></div>
