@@ -36,8 +36,8 @@ export default function StartPage(){
         <>
             <Button variant="primary" style={styleButton} onClick={removeStartPage} className="disappered">スタート</Button>
             <div style={startPage} className="disappered"></div>
-            <div style={{zIndex: "0",position: "absolute" , width: "100%"}}>
-                {/* <Header/> */}
+            <div className="d-flex flex-row w-100" style={{zIndex: "0",position: "absolute" , width: "100%"}}>
+                <Header/>
                 <Grid/>
             </div>
         </>

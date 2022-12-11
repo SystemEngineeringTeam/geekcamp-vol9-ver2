@@ -2,6 +2,7 @@ import  DisplayCard  from "./displayCard";
 import { useGetSoundPlayer } from "./hooks/useGetSoundPlayer";
 import { useGetNoteList, usePlay, useStop } from "./hooks/useChordPlayer";
 import { useEffect } from "react";
+import { Button } from 'react-bootstrap';
 
 export const Header = () =>{
 
@@ -74,40 +75,6 @@ export const Header = () =>{
         }
     }
 
-    const styleHeader:{[key:string]:string} = {
-        display: "grid",
-        height: "160px",
-        width: "1500px",
-        gridTemplateColumns: "100px 100px 50px 250px 30px 250px 30px 250px 30px 250px 87px",
-        gridTemplateRows: "160px",
-        backgroundColor: "#497df7a4",
-        fontSize: "30px",
-        position: "fixed" ,
-        top: "0"
-    }
-
-    const styleButton:{[key:string]:string} = {
-        marginTop : "60px",
-        height: "30px",
-        width: "45px",
-        fontSize: "10px",
-    }
-
-    const styleMenu:{[key:string]:string} = {
-        marginTop : "45px",
-        marginLeft : "10px",
-        height: "70px",
-        width: "50px",
-        fontSize: "10px",
-    }
-
-    const styleOverlay:{[key:string]:string} = {
-        height: "100%",
-        width: "100%",
-        backgroundColor: "gray",
-        opacity: "0.8",
-        zIndex: "1"
-    }
 
     const {PlayFuncs, StopFuncs} = useGetSoundPlayer();
     const getNoteList = useGetNoteList();
@@ -177,20 +144,35 @@ export const Header = () =>{
         DisplayCards[Number(id)+1].dataset.occupied = temp_state;
     }
 
+    const styleHeader:{[key:string]:string} = {
+        height: "auto",
+        width: "350px",
+        padding: "10px",
+        backgroundColor: "#5D99C6",
+        // position: "fixed",
+    }
+
+    const styleButton:{[key:string]:string} = {
+        marginTop : "60px",
+        width: "120px",
+        fontSize: "10px",
+    }
+
     return (
         <>
-            <header style={styleHeader}>
-                <button onClick={playDisplay} >再生<div>sキー</div></button>
-                <button onClick={cleanDisplay} >リセット<div>cキー</div></button>
+            <div style={styleHeader}>
+                <p className="text-light font-size-1">SoundCard</p>
+                {/* <button onClick={playDisplay} >再生<div>sキー</div></button> */}
+                {/* <button onClick={cleanDisplay} >リセット<div>cキー</div></button> */}
                 <span></span>
                 < DisplayCard/>
-                <button id="0" style={styleButton} onClick={switchCard}>←→<div>1キー</div></button>
+                {/* <Button id="0" style={styleButton} onClick={switchCard}>←→<div>1キー</div></Button> */}
                 < DisplayCard/>
-                <button id="1" style={styleButton} onClick={switchCard}>←→<div>2キー</div></button>
+                {/* <Button id="1" style={styleButton} onClick={switchCard}>←→<div>2キー</div></Button> */}
                 < DisplayCard/>
-                <button id="2" style={styleButton} onClick={switchCard}>←→<div>3キー</div></button>
+                {/* <Button id="2" style={styleButton} onClick={switchCard}>←→<div>3キー</div></Button> */}
                 < DisplayCard/>
-            </header>
+            </div>
             <div id="adjust"></div>
         </>
     )
