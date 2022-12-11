@@ -11,6 +11,7 @@ type Props = {
     useStopChord : (noteList: number[]) => void
 }
 
+
 export default memo( function Card(props:Props){
     console.log(`Card${props.num}レンダリング`);
     // インラインでのスタイル指定
@@ -20,8 +21,8 @@ export default memo( function Card(props:Props){
         height: "69px",
         paddingTop: "8px",
         paddingBottom: "8px",
-        backgroundColor: "#FFFFFF",
         borderWidth: "0px",
+        backgroundColor: "#FFFFFF00"
     }
 
     const LineLayout: { [key: string]: string } = {
@@ -40,10 +41,10 @@ export default memo( function Card(props:Props){
     const LeaveChangeColor = (event:React.MouseEvent<HTMLButtonElement, MouseEvent>) =>{ //カード要素からカーソルが離れたら色を元に戻すコード
         if(event.shiftKey){
             const target = document.getElementsByClassName("card") as HTMLCollectionOf<HTMLElement>;
-            target[props.num].style.backgroundColor = "#FFFFFF";
+            target[props.num].style.backgroundColor = "#FFFFFF00";
         }else{
             const target = document.getElementsByClassName("card") as HTMLCollectionOf<HTMLElement>;
-            target[props.num].style.backgroundColor = "#FFFFFF";
+            target[props.num].style.backgroundColor = "#FFFFFF00";
             props.useStopChord(props.useGetNoteList(props.children));
         }
     }

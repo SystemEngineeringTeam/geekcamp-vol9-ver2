@@ -23,20 +23,112 @@ export const Grid = () =>{
         padding: "32px",
     }
 
-    const column = { //カード1行目
+    const Ccolor = { //0
         width: "210px",
         height: "5000px",
-
-
-        background: "#FFFFFF",
+        background: "#FFE0E0",
+        boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
+        borderRadius:" 31px",
+        paddingTop: "40px",
+        backgroundColor: "#FFE0E0"
+    }
+    const Dbcolor = { //1
+        width: "210px",
+        height: "5000px",
+        background: "#FFF0E0",
+        boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
+        borderRadius:" 31px",
+        paddingTop: "40px",
+        color: "#"
+    }
+    const Dcolor = { //2
+        width: "210px",
+        height: "5000px",
+        background: "#FFFFE0",
+        boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
+        borderRadius:" 31px",
+        paddingTop: "40px",
+    }
+    const Ebcolor = { //3
+        width: "210px",
+        height: "5000px",
+        background: "#EFFFE0",
+        boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
+        borderRadius:" 31px",
+        paddingTop: "40px",
+        color: "#EFFFE0"
+    }
+    const Ecolor = { //4
+        width: "210px",
+        height: "5000px",
+        background: "#E0FFE0",
+        boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
+        borderRadius:" 31px",
+        paddingTop: "40px",
+    }
+    const Fcolor = { //5
+        width: "210px",
+        height: "5000px",
+        background: "#E0FFF0",
+        boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
+        borderRadius:" 31px",
+        paddingTop: "40px",
+    }
+    const Gbcolor = { //6
+        width: "210px",
+        height: "5000px",
+        background: "#E0FFFF",
+        boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
+        borderRadius:" 31px",
+        paddingTop: "40px",
+    }
+    const Gcolor = { //7
+        width: "210px",
+        height: "5000px",
+        background: "#E0F0FF",
+        boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
+        borderRadius:" 31px",
+        paddingTop: "40px",
+    }
+    const Abcolor = { //8
+        width: "210px",
+        height: "5000px",
+        background: "#E0E0FF",
+        boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
+        borderRadius:" 31px",
+        paddingTop: "40px",
+    }
+    const Acolor = { //9
+        width: "210px",
+        height: "5000px",
+        background: "#EFE0FF",
+        boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
+        borderRadius:" 31px",
+        paddingTop: "40px",
+    }
+    const Bbcolor = { //10
+        width: "210px",
+        height: "5000px",
+        background: "#FFE0FF",
+        boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
+        borderRadius:" 31px",
+        paddingTop: "40px",
+    }
+    const Bcolor = { //11
+        width: "210px",
+        height: "5000px",
+        background: "#FFE0F0",
         boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
         borderRadius:" 31px",
         paddingTop: "40px",
     }
 
+    
+
+    //numはいじってないので注意
     return(
-        <div id="gridParent" style={gridStyle}>
-            <div style={column}>
+        <div id="gridParent" style={gridStyle}> 
+            <div style={Ccolor}>
                 {/* C */}
                 <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={0}>C</Card>
                 <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={1}>C6</Card>
@@ -103,9 +195,9 @@ export const Grid = () =>{
                 <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={62}>Cm7(b5,11)</Card>
                 <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={63}>Cm7(b5,b13)</Card>
             </div>
-            <div style={column}>
-                {/* C# */}
-                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={64}>C#</Card>
+            <div style={Dbcolor}>
+                 {/* C# */}
+                 <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={64}>C#</Card>
                 <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={65}>C#6</Card>
                 <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={66}>C#M7</Card>
                 <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={67}>C#M9</Card>
@@ -170,7 +262,7 @@ export const Grid = () =>{
                 <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={126}>C#m7(b5,11)</Card>
                 <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={127}>C#m7(b5,b13)</Card>
             </div>
-            <div style={column}>
+            <div style={Dcolor}>
                 {/* D */}
                 <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={128}>D</Card>
                 <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={129}>D6</Card>
@@ -237,8 +329,8 @@ export const Grid = () =>{
                 <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={190}>Dm7(b5,11)</Card>
                 <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={191}>Dm7(b5,b13)</Card>
             </div>
-            <div style={column}>
-                {/* D# */}
+            <div style={Ebcolor}>
+                 {/* D# */}
                 <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={192}>D#</Card>
                 <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={193}>D#6</Card>
                 <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={194}>D#M7</Card>
@@ -304,7 +396,7 @@ export const Grid = () =>{
                 <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={254}>D#m7(b5,11)</Card>
                 <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={255}>D#m7(b5,b13)</Card>
             </div>
-            <div style={column}>
+            <div style={Ecolor}>
                 {/* E */}
                 <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={256}>E</Card>
                 <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={257}>E6</Card>
@@ -371,7 +463,7 @@ export const Grid = () =>{
                 <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={318}>Em7(b5,11)</Card>
                 <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={319}>Em7(b5,b13)</Card>
             </div>
-            <div style={column}>
+            <div style={Fcolor}>
                 {/* F */}
                 <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={320}>F</Card>
                 <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={321}>F6</Card>
@@ -438,7 +530,7 @@ export const Grid = () =>{
                 <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={382}>Fm7(b5,11)</Card>
                 <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={383}>Fm7(b5,b13)</Card>
             </div>
-            <div style={column}>
+            <div style={Gbcolor}>
                 {/* F# */}
                 <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={384}>F#</Card>
                 <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={385}>F#6</Card>
@@ -505,7 +597,7 @@ export const Grid = () =>{
                 <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={446}>F#m7(b5,11)</Card>
                 <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={447}>F#m7(b5,b13)</Card>
             </div>
-            <div style={column}>
+            <div style={Gcolor}>
                 {/* G */}
                 <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={448}>G</Card>
                 <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={449}>G6</Card>
@@ -572,7 +664,7 @@ export const Grid = () =>{
                 <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={510}>Gm7(b5,11)</Card>
                 <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={511}>Gm7(b5,b13)</Card>
             </div>
-            <div style={column}>
+            <div style={Abcolor}>
                 {/* G# */}
                 <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={512}>G#</Card>
                 <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={513}>G#6</Card>
@@ -639,7 +731,7 @@ export const Grid = () =>{
                 <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={574}>G#m7(b5,11)</Card>
                 <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={575}>G#m7(b5,b13)</Card>
             </div>
-            <div style={column}>
+            <div style={Acolor}>
                 {/* A */}
                 <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={576}>A</Card>
                 <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={577}>A6</Card>
@@ -706,7 +798,7 @@ export const Grid = () =>{
                 <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={638}>Am7(b5,11)</Card>
                 <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={639}>Am7(b5,b13)</Card>
             </div>
-            <div style={column}>
+            <div style={Bbcolor}>
                 {/* A# */}
                 <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={640}>A#</Card>
                 <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={641}>A#6</Card>
@@ -773,7 +865,7 @@ export const Grid = () =>{
                 <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={702}>A#m7(b5,11)</Card>
                 <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={703}>A#m7(b5,b13)</Card>
             </div>
-            <div style={column}>
+            <div style={Bcolor}>
                 {/* B */}
                 <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={704}>B</Card>
                 <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={705}>B6</Card>
