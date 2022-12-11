@@ -41,7 +41,6 @@ export default forwardRef(function DisplayCard(props, ref){
 
     return (
         <div ref={displayCardEl} className="DisplayCard" style={styleDisplayCard} data-occupied="false">
-            カードをここにドラッグしてドロップ
         </div>
     )
 })

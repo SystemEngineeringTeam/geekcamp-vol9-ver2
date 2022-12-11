@@ -70,31 +70,42 @@ export default function StartPage(){
         <>
 
             <Player
-            autoplay
-            loop
-            className="loading"
-            src="https://assets1.lottiefiles.com/datafiles/DlRM2jtACyr4IX1u6l5rqtW1QWZKLCkNoBIXWeyH/loading.json"
-            style={loadingStyle}
-            ref={playerRef}
-            onEvent={endLoading}
+                autoplay
+                loop
+                className="loading"
+                src="https://assets1.lottiefiles.com/datafiles/DlRM2jtACyr4IX1u6l5rqtW1QWZKLCkNoBIXWeyH/loading.json"
+                style={
+                    loadingStyle
+                }
+                ref={
+                    playerRef
+                }
+                onEvent={
+                    endLoading
+                }
             />
 
-            <Button variant="primary"
-            style={styleButton} 
-            ref={buttonEL}
-            onClick={removeStartPage}
-            className="disappered"
-            id="startButton">
+            <Button 
+                variant="primary"
+                style={
+                    styleButton
+                } 
+                ref={
+                    buttonEL
+                }
+                onClick={
+                    removeStartPage
+                }
+                className="disappered"
+                id="startButton"
+            >
                 START
             </Button>
 
-            <div style={startPage}
-            ref={startPageEL}
-            className="disappered"
-            ></div>
+            <div style={startPage} ref={startPageEL} className="disappered"></div>
             
-            <div style={{zIndex: "0",position: "absolute" , width: "100%"}}>
-                {/* <Header/> */}
+            <div className="d-flex flex-row w-100" style={{zIndex: "0",position: "absolute" , width: "100%"}}>
+                <Header/>
                 <Grid/>
             </div>
         </>

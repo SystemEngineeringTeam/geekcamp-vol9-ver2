@@ -171,11 +171,11 @@ export const Header = () =>{
                 <Button variant="danger" style={styleButton} onClick={cleanDisplay} >リセット<div>cキー</div></Button>
                 <span></span>
                 < DisplayCard ref={displayCardEl1}/>
-                <button id="0" style={styleButton} onClick={switchCard}>←→<div>1キー</div></button>
+                <Button id="0" style={styleButton} onClick={switchCard}>←→<div>1キー</div></Button>
                 < DisplayCard ref={displayCardEl2}/>
-                <button id="1" style={styleButton} onClick={switchCard}>←→<div>2キー</div></button>
+                <Button id="1" style={styleButton} onClick={switchCard}>←→<div>2キー</div></Button>
                 < DisplayCard ref={displayCardEl3}/>
-                <button id="2" style={styleButton} onClick={switchCard}>←→<div>3キー</div></button>
+                <Button id="2" style={styleButton} onClick={switchCard}>←→<div>3キー</div></Button>
                 < DisplayCard ref={displayCardEl4}/>
             </div>
             <div id="adjust"></div>
