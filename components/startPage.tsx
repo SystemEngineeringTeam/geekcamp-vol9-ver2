@@ -30,7 +30,7 @@ export default function StartPage(){
         height: "100%",
         width: "100%",
         zIndex: "1",
-        position: "absolute",
+        position: "fixed",
         backgroundColor: "#FFEBC1",
         opacity: "0.9"
         
