@@ -1,4 +1,3 @@
-import HeadCard from "./headCard"
 import Card from "./card"
 import { useGetSoundPlayer } from "../hooks/useGetSoundPlayer";
 import { useGetNoteList, usePlay, useStop } from '../hooks/useChordPlayer';
