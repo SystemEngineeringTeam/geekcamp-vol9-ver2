@@ -12,7 +12,8 @@ type Props = {
 }
 
 
-export default memo( function Card(props:Props){
+export default function Card(props:Props){
+
     console.log(`Card${props.num}レンダリング`);
     // インラインでのスタイル指定
     // https://qiita.com/Statham/items/05870fd52320a0644acd
@@ -103,4 +104,4 @@ export default memo( function Card(props:Props){
             <hr style={LineLayout}/>
         </>
     )
-});
+};
