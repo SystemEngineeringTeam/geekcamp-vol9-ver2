@@ -108,7 +108,7 @@ export default function StartPage(){
             
             <div className="d-flex flex-row w-100" style={{zIndex: "0",position: "absolute" , width: "100%"}}>
                 <UpperHeader setMode={setMode}/>
-                <Header mode={mode}/>
+                <Header/>
                 <Grid mode={mode}/>
             </div>
         </>

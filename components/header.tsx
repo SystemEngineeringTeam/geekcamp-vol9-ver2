@@ -149,7 +149,7 @@ export const Header = () =>{
     
 
     const styleHeader:{[key:string]:string} = {
-        height: "auto",
+        height: "750px",
         width: "150px",
         padding: "10px",
         backgroundColor: "#5D99C6",
@@ -158,9 +158,11 @@ export const Header = () =>{
     }
 
     const styleButton:{[key:string]:string} = {
+        position: "relative",
+        top: "20px",
+        left: "4px",
         width: "120px",
         fontSize: "10px",
-        margin: "10px",
     }
 
     return (

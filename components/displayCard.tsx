@@ -6,6 +6,9 @@ export default forwardRef(function DisplayCard(props, ref){
     const displayCardEl = useRef<HTMLInputElement>(null);
     useImperativeHandle(ref, () => displayCardEl.current!); //forweredrefとuseRefを併用
     const styleDisplayCard: { [key: string]: string } = {
+        position: "relative",
+        top: "20px",
+        left: "-7px",
         height: "80px",
         width: "120px",
         backgroundColor: "#FFFFFF",
