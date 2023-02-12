@@ -11,14 +11,13 @@ export const Grid = () =>{
     const stopChord = useStop(StopFuncs);
 
     const gridStyle:{ [key: string]: string } ={
+        position: "relative",
+        left: "150px",
         display: "flex",
         flexFlow: "row",
         gap: "calc(10 / 430 * 100%)",
-
         alignItems: "center",
-
         width: "100%",
-
         padding: "32px",
     }
 

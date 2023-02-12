@@ -150,10 +150,11 @@ export const Header = () =>{
 
     const styleHeader:{[key:string]:string} = {
         height: "auto",
-        width: "350px",
+        width: "150px",
         padding: "10px",
         backgroundColor: "#5D99C6",
-        // position: "fixed",
+        position: "fixed",
+        zIndex: "1"
     }
 
     const styleButton:{[key:string]:string} = {
