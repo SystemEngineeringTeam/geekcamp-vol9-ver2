@@ -3,7 +3,7 @@ import { useGetSoundPlayer } from "../hooks/useGetSoundPlayer";
 import { useGetNoteList, usePlay, useStop } from '../hooks/useChordPlayer';
 
 
-export const Grid = () =>{
+export const Grid = (props:any) =>{
     console.log("Gridレンダリング");
     const {PlayFuncs, StopFuncs} = useGetSoundPlayer();
     const getNoteList = useGetNoteList();
@@ -11,7 +11,8 @@ export const Grid = () =>{
     const stopChord = useStop(StopFuncs);
 
     const gridStyle:{ [key: string]: string } ={
-        position: "relative",
+        position: "absolute",
+        top: "40px",
         left: "150px",
         display: "flex",
         flexFlow: "row",
@@ -124,6 +125,13 @@ export const Grid = () =>{
     
 
     //numはいじってないので注意
+
+    if(props.mode == 0){ //モード０のとき表示
+        gridStyle["display"] = "flex"
+    }
+    else{ //モード1のとき非表示
+        gridStyle["display"] = "none"
+    }
     return(
         <div id="gridParent" style={gridStyle}> 
             <div style={Ccolor}>
