@@ -1,12 +1,13 @@
 import { Grid } from "./grid";
 import  Header  from "./header";
 import UpperHeader from "./upperHeader";
+import Piano from "./piano";
 import { useState, useRef } from "react";
 import { Player, PlayerEvent } from "@lottiefiles/react-lottie-player";
 import { Button } from 'react-bootstrap';
 
 export default function StartPage(){
-    const [mode, setMode] = useState(0); // 0:辞書モード, 1:座標モード upperHeaderとgridとcorrdinateに渡す upperHeaderでsetしてその状態によってgrid, coordinateの状態を管理する
+    const [mode, setMode] = useState(0); // 0:辞書モード, 1:座標モード upperHeaderとgridとpianoに渡す upperHeaderでsetしてその状態によってgrid, Pianoの状態を管理する
     const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
     const playerRef = useRef<Player>(null);
@@ -110,6 +111,7 @@ export default function StartPage(){
                 <UpperHeader setMode={setMode}/>
                 <Header/>
                 <Grid mode={mode}/>
+                <Piano mode={mode}/>
             </div>
         </>
         

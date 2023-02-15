@@ -126,11 +126,14 @@ export const Grid = (props:any) =>{
 
     //numはいじってないので注意
 
-    if(props.mode == 0){ //モード０のとき表示
-        gridStyle["display"] = "flex"
+    if(props.mode == 0){ //モード０のとき表示 typeof(window)処理についてはcoordinate.tsxの方を参照してください
+        gridStyle["display"] = "flex";
+        if(typeof(window) === "object"){
+            document.body.style.backgroundColor = "#D6E1FF";
+        }
     }
     else{ //モード1のとき非表示
-        gridStyle["display"] = "none"
+        gridStyle["display"] = "none";
     }
     return(
         <div id="gridParent" style={gridStyle}> 

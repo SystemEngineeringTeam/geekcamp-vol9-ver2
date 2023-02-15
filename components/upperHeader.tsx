@@ -33,7 +33,7 @@ export default function UpperHeader(props:any){
     return(
         <div style={upperHeaderStyle}>
             <button onClick={clickedDictMode} style={dictButtonStyle}>コード辞書</button>
-            <button onClick={clickedCoordMode} style={coordButtonStyle}>コード座標</button>
+            <button onClick={clickedCoordMode} style={coordButtonStyle}>ピアノ(仮)</button>
         </div>
     )
 }
