@@ -7,7 +7,7 @@ import { Button } from 'react-bootstrap';
 import PianoPage from "./pianoPage";
 
 export default function StartPage(){
-    const [mode, setMode] = useState(0); // 0:辞書モード, 1:座標モード upperHeaderとgridとpianoに渡す upperHeaderでsetしてその状態によってgrid, Pianoの状態を管理する
+    const [mode, setMode] = useState(0); // 0:辞書モード, 1:ピアノモード upperHeaderとgridとpianoに渡す upperHeaderでsetしてその状態によってgrid, Pianoの状態を管理する
     const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
     const playerRef = useRef<Player>(null);
