@@ -149,24 +149,26 @@ export const Header = () =>{
     
 
     const styleHeader:{[key:string]:string} = {
-        height: "auto",
-        width: "350px",
+        height: "750px",
+        width: "150px",
         padding: "10px",
         backgroundColor: "#5D99C6",
-        // position: "fixed",
+        position: "fixed",
+        zIndex: "1"
     }
 
     const styleButton:{[key:string]:string} = {
+        position: "relative",
+        top: "20px",
+        left: "4px",
         width: "120px",
         fontSize: "10px",
-        margin: "10px",
     }
 
     return (
         <>
             <div style={styleHeader}>
                 <p className="text-light font-size-1">ChordCards</p>
-                <span></span>
                 <Button variant="success" style={styleButton} onClick={playDisplay} >再生<div>sキー</div></Button>
                 <Button variant="danger" style={styleButton} onClick={cleanDisplay} >リセット<div>cキー</div></Button>
                 <span></span>

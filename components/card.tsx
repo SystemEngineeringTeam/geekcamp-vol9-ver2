@@ -1,4 +1,4 @@
-import { memo, useEffect } from "react";
+import { memo, useEffect, useState } from "react";
 import { useGetSoundPlayer } from "../hooks/useGetSoundPlayer";
 import { useGetNoteList, usePlay, useStop } from "../hooks/useChordPlayer";
 import { Button } from 'react-bootstrap';
@@ -12,11 +12,14 @@ type Props = {
 }
 
 
-export default memo( function Card(props:Props){
+export default function Card(props:Props){
+
+    const [isHovered, setIsHovered] = useState(false);
+
     console.log(`Card${props.num}レンダリング`);
     // インラインでのスタイル指定
     // https://qiita.com/Statham/items/05870fd52320a0644acd
-    const CardStyle: { [key: string]: string } = {
+    const NotHoveredCardStyle: { [key: string]: string } = { //マウスカーソルが上にないときのカードのスタイル
         width: "100%",
         height: "69px",
         paddingTop: "8px",
@@ -25,28 +28,19 @@ export default memo( function Card(props:Props){
         backgroundColor: "#FFFFFF00"
     }
 
+    const HoveredCardStyle: { [key: string]: string } = { //マウスカーソルが上にあるときのカードのスタイル
+        width: "100%",
+        height: "69px",
+        paddingTop: "8px",
+        paddingBottom: "8px",
+        borderWidth: "0px",
+        backgroundColor: "orange"
+    }
+
     const LineLayout: { [key: string]: string } = {
         border: "4px solid #757575",
         borderRadius: "4px",
         margin : "0px 16px",
-    }
-    
-
-    const EnterChangeColor = () =>{ //カード要素にカーソルが入ってきたら背景色をオレンジにするコード
-        const target = document.getElementsByClassName("card") as HTMLCollectionOf<HTMLElement>; //ここの変数targetには'Grid.js'で使った"Card"コンポーネントをすべて含む配列が入る。
-        target[props.num].style.backgroundColor = "orange"; //targetには全ての"Card”コンポーネントが入ってるので'props.num'で識別する。
-        props.usePlayChord(props.useGetNoteList(props.children));
-
-    }
-    const LeaveChangeColor = (event:React.MouseEvent<HTMLButtonElement, MouseEvent>) =>{ //カード要素からカーソルが離れたら色を元に戻すコード
-        if(event.shiftKey){
-            const target = document.getElementsByClassName("card") as HTMLCollectionOf<HTMLElement>;
-            target[props.num].style.backgroundColor = "#FFFFFF00";
-        }else{
-            const target = document.getElementsByClassName("card") as HTMLCollectionOf<HTMLElement>;
-            target[props.num].style.backgroundColor = "#FFFFFF00";
-            props.useStopChord(props.useGetNoteList(props.children));
-        }
     }
 
     const ClickEvent = () =>{ //カードがクリックされたら、ヘッダーにクリックされたカードの要素名を追加。 ヘッダーを親要素としてspanタグを子要素に加えて追加していく。
@@ -60,11 +54,11 @@ export default memo( function Card(props:Props){
         }
     }
 
-    const muteChords = (event: KeyboardEvent) => {
-        if(event.shiftKey){//←これで動く
+    const muteChords = (event: KeyboardEvent) => {//キーボードが押された時に実行される
+        if(event.shiftKey){//shiftキーが押されてたら
             const target = document.getElementsByClassName("card") as HTMLCollectionOf<HTMLElement>;
             target[props.num].style.pointerEvents = "none";
-        }else{
+        }else{//shiftキーが押されてなかったら↑でnoneになったものをautoに戻す
             const target = document.getElementsByClassName("card") as HTMLCollectionOf<HTMLElement>;
             target[props.num].style.pointerEvents = "auto";
         }
@@ -77,30 +71,50 @@ export default memo( function Card(props:Props){
             event.dataTransfer.setData('text/plain', event.target.innerHTML); //ドラッグしたらドラッグした要素のテキストをdataTransferItemListにぶち込む
         });
         document.addEventListener("keydown", muteChords)
-        document.addEventListener("keyup", muteChords)
+        document.addEventListener("keyup", muteChords) //keyupの時にも判定しないとpointerEventsがnoneになったままでイベントに反応しないままになってしまう
     }, []);
 
-    return(
-        <>
-            <Button
-                variant="text-center"
-                draggable="true"
-                className="card"
-                style={CardStyle}
-                onClick={() => {
-                    ClickEvent();
-                }}
-                onMouseEnter={() => {
-                    EnterChangeColor();
-                }}
-                onMouseLeave={(event:React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-                    LeaveChangeColor(event);
-                }}
-            >
-                {props.children}
-            </Button>
-
-            <hr style={LineLayout}/>
-        </>
-    )
-});
+    if(!isHovered){ //マウスカーソルがカードの上にないときの処理
+        return(
+            <>
+                <Button
+                    variant="text-center"
+                    draggable="true"
+                    className="card"
+                    style={NotHoveredCardStyle}
+                    onMouseEnter={() => {
+                        setIsHovered(true);//マウスカーソルが上に来たらisHoveredをtrueにする
+                        props.usePlayChord(props.useGetNoteList(props.children));//音を再生する
+                    }}
+                >
+                    {props.children}
+                </Button>
+    
+                <hr style={LineLayout}/>
+            </>
+        )
+    }else{ //マウスカーソルがカードの上にいるときの処理
+        return(
+            <>
+                <Button
+                    variant="text-center"
+                    draggable="true"
+                    className="card"
+                    style={HoveredCardStyle}
+                    onClick={() => {
+                        ClickEvent();
+                    }}
+                    onMouseLeave={() => {
+                        setIsHovered(false);//マウスカーソルがいなくなったらisHoveredをfalseにする
+                        props.useStopChord(props.useGetNoteList(props.children)); //再生した音を止める
+                    }}
+                >
+                    {props.children}
+                </Button>
+    
+                <hr style={LineLayout}/>
+            </>
+        )
+    }
+    
+};

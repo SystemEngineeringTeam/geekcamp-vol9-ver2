@@ -13,6 +13,10 @@ export default function Home() {
     <>
         <Head>
             <title>ChordCards</title>
+            <link rel="preconnect" href="https://fonts.googleapis.com" />
+            <link rel="preconnect" href="https://fonts.gstatic.com" />
+            <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@700&display=swap" rel="stylesheet" />
+
         </Head>
         <StartPage/>
     </>

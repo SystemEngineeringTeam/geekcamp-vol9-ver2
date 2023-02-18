@@ -1,10 +1,9 @@
-import HeadCard from "./headCard"
 import Card from "./card"
 import { useGetSoundPlayer } from "../hooks/useGetSoundPlayer";
 import { useGetNoteList, usePlay, useStop } from '../hooks/useChordPlayer';
 
 
-export const Grid = () =>{
+export const Grid = (props:any) =>{
     console.log("Gridレンダリング");
     const {PlayFuncs, StopFuncs} = useGetSoundPlayer();
     const getNoteList = useGetNoteList();
@@ -12,14 +11,14 @@ export const Grid = () =>{
     const stopChord = useStop(StopFuncs);
 
     const gridStyle:{ [key: string]: string } ={
+        position: "absolute",
+        top: "40px",
+        left: "150px",
         display: "flex",
         flexFlow: "row",
         gap: "calc(10 / 430 * 100%)",
-
         alignItems: "center",
-
         width: "100%",
-
         padding: "32px",
     }
 
@@ -126,6 +125,16 @@ export const Grid = () =>{
     
 
     //numはいじってないので注意
+
+    if(props.mode == 0){ //モード０のとき表示 typeof(window)処理についてはcoordinate.tsxの方を参照してください
+        gridStyle["display"] = "flex";
+        if(typeof(window) === "object"){
+            document.body.style.backgroundColor = "#D6E1FF";
+        }
+    }
+    else{ //モード1のとき非表示
+        gridStyle["display"] = "none";
+    }
     return(
         <div id="gridParent" style={gridStyle}> 
             <div style={Ccolor}>

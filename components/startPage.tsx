@@ -1,10 +1,13 @@
 import { Grid } from "./grid";
 import  Header  from "./header";
+import UpperHeader from "./upperHeader";
 import { useState, useRef } from "react";
 import { Player, PlayerEvent } from "@lottiefiles/react-lottie-player";
 import { Button } from 'react-bootstrap';
+import PianoPage from "./pianoPage";
 
 export default function StartPage(){
+    const [mode, setMode] = useState(0); // 0:辞書モード, 1:ピアノモード upperHeaderとgridとpianoに渡す upperHeaderでsetしてその状態によってgrid, Pianoの状態を管理する
     const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
     const playerRef = useRef<Player>(null);
@@ -30,7 +33,7 @@ export default function StartPage(){
         height: "100%",
         width: "100%",
         zIndex: "1",
-        position: "absolute",
+        position: "fixed",
         backgroundColor: "#FFEBC1",
         opacity: "0.9"
         
@@ -105,8 +108,10 @@ export default function StartPage(){
             <div style={startPage} ref={startPageEL} className="disappered"></div>
             
             <div className="d-flex flex-row w-100" style={{zIndex: "0",position: "absolute" , width: "100%"}}>
+                <UpperHeader setMode={setMode}/>
                 <Header/>
-                <Grid/>
+                <Grid mode={mode}/>
+                <PianoPage mode={mode}/>
             </div>
         </>
         
