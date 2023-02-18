@@ -110,7 +110,8 @@ export default function PianoPage(props){ //鍵盤を押すことでコードを
         isTempSelectedArr.sort(); //昇順ソート
         // if (isTempSelectedArr.length > prevArr.length)
             isTempSelectedArr.forEach((dist) => PlayFuncs[dist]()); //再生
-        prevArrRef.current = [...isTempSelectedArr];console.log("今の音: " + isTempSelectedArr);
+        prevArrRef.current = [...isTempSelectedArr];
+        console.log("今の音: " + isTempSelectedArr);
 
     }, [isTempSelectedArr]);
 

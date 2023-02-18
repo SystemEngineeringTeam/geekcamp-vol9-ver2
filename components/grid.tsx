@@ -206,7 +206,7 @@ export const Grid = (props:any) =>{
             </div>
             <div style={Dbcolor}>
                  {/* C# */}
-                 <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={64}>C#</Card>
+                <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={64}>C#</Card>
                 <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={65}>C#6</Card>
                 <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={66}>C#M7</Card>
                 <Card useGetNoteList={getNoteList} usePlayChord={playChord} useStopChord={stopChord} num={67}>C#M9</Card>
