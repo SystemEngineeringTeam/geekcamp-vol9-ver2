@@ -169,7 +169,6 @@ export const Header = () =>{
         <>
             <div style={styleHeader}>
                 <p className="text-light font-size-1">ChordCards</p>
-                <span></span>
                 <Button variant="success" style={styleButton} onClick={playDisplay} >再生<div>sキー</div></Button>
                 <Button variant="danger" style={styleButton} onClick={cleanDisplay} >リセット<div>cキー</div></Button>
                 <span></span>

@@ -5,7 +5,7 @@ export default function UpperHeader(props:any){
         width: "100%",
         height: "60px",
         left: "150px",
-        zIndex: "1"
+        zIndex: "99"
     }
     const dictButtonStyle:{[key:string]:string} = {
         width: "100px",
