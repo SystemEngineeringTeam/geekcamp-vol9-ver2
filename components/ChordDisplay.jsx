@@ -330,44 +330,6 @@ export const ChordDisplay = (props) => {
         lineHeight: "100px", /* 重なり回避用 */
     };
 
-    hitChords.forEach((chord, i) => {
-        //----コードによって表示する背景を変える↓--------
-        if(chord.includes("C")) mainChordsStyle["backgroundColor"] = "#FFE0E0";
-        else if (chord.includes("C#")) mainChordsStyle["backgroundColor"] = "#FFF0E0";
-        else if (chord.includes("D")) mainChordsStyle["backgroundColor"] = "#FFFFE0";
-        else if (chord.includes("D#")) mainChordsStyle["backgroundColor"] = "#EFFFE0";
-        else if (chord.includes("E")) mainChordsStyle["backgroundColor"] = "#E0FFE0";
-        else if (chord.includes("F")) mainChordsStyle["backgroundColor"] = "#E0FFF0";
-        else if (chord.includes("F#")) mainChordsStyle["backgroundColor"] = "#E0FFFF";
-        else if (chord.includes("G")) mainChordsStyle["backgroundColor"] = "#E0F0FF";
-        else if (chord.includes("G#")) mainChordsStyle["backgroundColor"] = "#E0E0FF";
-        else if (chord.includes("A")) mainChordsStyle["backgroundColor"] = "#EFE0FF";
-        else if (chord.includes("A#")) mainChordsStyle["backgroundColor"] = "#FFE0FF";
-        else if (chord.includes("B")) mainChordsStyle["backgroundColor"] = "#FFE0F0";
-        //----コードによって表示する背景を変える↑--------
-        const elem = <span key={i} 
-                            class="main" 
-                            style={mainChordsStyle}
-                            className="main"
-                            onMouseEnter={(e) => {
-                                                e.currentTarget.style.backgroundColor = "orange";
-                                                tempSelect(chord);
-                                            }
-                            }
-                            onMouseLeave={(e) => {
-                                            e.currentTarget.style.backgroundColor = judge_color(e.currentTarget.innerHTML);
-                                            cancelTempSelect(chord);
-                                        }
-                            }
-                            onDoubleClick={() => registChord(chord)}
-                        >{chord}</span>
-        hitElemArr.push(elem);
-        if ((i + 1) % 5 === 0) {
-            const br = <br />;
-            hitElemArr.push(br);
-        }
-    });
-
     function judge_color(nameOfChord){ //コードの名前(string)を代入するとコードに対応する色(string)を返す
         if(nameOfChord.includes("C")) return "#FFE0E0";
         else if (nameOfChord.includes("C#")) return "#FFF0E0";
@@ -383,13 +345,38 @@ export const ChordDisplay = (props) => {
         else if (nameOfChord.includes("B")) return "#FFE0F0";
     }
 
+    hitChords.forEach((chord, i) => {
+        //----コードによって表示する背景を変える↓--------
+        mainChordsStyle["backgroundColor"] = judge_color(chord);
+        const elem = <span key={i} 
+                            class="main" 
+                            style={mainChordsStyle}
+                            className="main"
+                            onMouseEnter={(e) => { //カーソルが上にあるとき色を変える
+                                                e.currentTarget.style.backgroundColor = "orange";
+                                                tempSelect(chord);
+                                            }
+                            }
+                            onMouseLeave={(e) => { //カーソルがはずれたら色を元に戻す
+                                            e.currentTarget.style.backgroundColor = judge_color(e.currentTarget.innerHTML);
+                                            cancelTempSelect(chord);
+                                        }
+                            }
+                            onDoubleClick={() => registChord(chord)}
+                        >{chord}</span>
+        hitElemArr.push(elem);
+        if ((i + 1) % 5 === 0) {
+            const br = <br />;
+            hitElemArr.push(br);
+        }
+    });
+
     const subChordsStyle = {
     };
 
     preChords.map(s => s.split(":")).forEach((splited_element, i) => { //splited_elementの中はString型のarray [重複数, 推測コード名]
         //----コードによって表示する背景を変える↓--------
         subChordsStyle["backgroundColor"] = judge_color(splited_element[1]);
-        //----コードによって表示する背景を変える↑--------
         const elem = <span key={i}
                             className="sub"
                             onMouseEnter={(e) => {
