@@ -40,7 +40,7 @@ export const Keyboard = memo(() => {
     let className;
     let left;
     const elemArr = [];
-    const whitewidth = 42; //とりあえず書く
+    const whitewidth = 40; //とりあえず書く //元42
     const blackwidth = 27; //width + 2
     const blackoffsets = Array(5).fill(blackwidth)
         .map((w, i) => i > 1 ? (w / i) : (w - w / (4 - i))); //黒鍵ずらし
