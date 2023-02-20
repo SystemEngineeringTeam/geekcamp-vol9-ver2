@@ -2,7 +2,7 @@ import { memo, useEffect, useState, useContext } from "react";
 import { useGetSoundPlayer } from "../hooks/useGetSoundPlayer";
 import { useGetNoteList, usePlay, useStop } from "../hooks/useChordPlayer";
 import { Button } from 'react-bootstrap';
-import { LinedDistsContext } from "./grid";
+import { LinedDistsContext } from "./startPage";
 
 // type Props = {
 //     children : string

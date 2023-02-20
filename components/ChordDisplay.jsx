@@ -245,7 +245,6 @@ export const ChordDisplay = (props) => {
                         //第一ソート(重複数-降順)
                         if (s1.split(":")[0] > s2.split(":")[0]) return -1;
                         if (s1.split(":")[0] < s2.split(":")[0]) return 1;
-                        
                         return 1;
                     }) //一致数降順ソート
                     .map(s =>`${s.split(":")[0]}:${Roots[originRoot]}${Chords[s.split(":")[1]]}`) //連想配列にkeyを与えてコードを取り出す //3:CM7

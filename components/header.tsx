@@ -1,13 +1,17 @@
-import React, { Component } from 'react'
+import React, { Component, useContext } from 'react'
 import  DisplayCard  from "./displayCard";
 import { useGetSoundPlayer } from "../hooks/useGetSoundPlayer";
 import { useGetNoteList, usePlay, useStop } from "../hooks/useChordPlayer";
 import { useEffect, useRef } from "react";
 import { Button } from 'react-bootstrap';
+import { LinedDistsContext } from "./startPage";
 
-export const Header = () =>{
-
+export const Header = () => {
     console.log("Headerレンダリング");
+
+
+    // const { linedDistsArr, setLinedDistsArr } = useContext(LinedDistsContext);
+    
 
     const displayCardEl1 = useRef<HTMLInputElement>(null);//displaycardにアクセスするためのRef
     const displayCardEl2 = useRef<HTMLInputElement>(null);//displaycardにアクセスするためのRef
@@ -94,6 +98,7 @@ export const Header = () =>{
         
     }
 
+    //音鳴らしてるのはここ
     const playDisplay = () =>{ //表示されている要素にひとつずつイベントを起こしていく
         for(let i=0; i<4; i++){ //DisplayCardを左から順に色をつけていく
             if(DisplayCards[i]!.dataset.occupied == "false"){ //カードが無かったら処理を停止
@@ -107,7 +112,7 @@ export const Header = () =>{
                 }, i * 1000) //選んだカードの一番後ろのオレンジ灯火を戻すための処理
                 break;
             }
-            if(i  == 0){ //一個目はすぐに色を変える
+            if(i == 0){ //一個目はすぐに色を変える
                 DisplayCards[i]!.style.backgroundColor = "orange";
                 playChord(getNoteList(DisplayCards[i]!.innerHTML))
             }else if(i < 3){ //初回、最終回以外の処理はここ

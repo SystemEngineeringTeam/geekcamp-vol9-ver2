@@ -15,6 +15,6 @@
     "jsx": "preserve",
     "incremental": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "components/card.jsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "components/card.jsx", "components/header.jsx"],
   "exclude": ["node_modules"],                             /* A series of entries which re-map imports to lookup locations relative to the 'baseUrl'. */
 }

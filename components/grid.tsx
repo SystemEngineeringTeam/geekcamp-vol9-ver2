@@ -4,11 +4,8 @@ import { useGetNoteList, usePlay, useStop } from '../hooks/useChordPlayer';
 import { createContext, useState } from "react";
 
 
-export const LinedDistsContext = createContext({});
-
 export const Grid = (props:any) => {
     console.log("Gridレンダリング");
-    const [ linedDistsArr, setLinedDistsArr ] = useState([]); //再生欄コード一覧(dists)
     const {PlayFuncs, StopFuncs} = useGetSoundPlayer();
     const getNoteList = useGetNoteList();
     const playChord = usePlay(PlayFuncs);
@@ -258,12 +255,9 @@ export const Grid = (props:any) => {
     CardArr.map(e => e);
 
     return (
-        <LinedDistsContext.Provider value={{linedDistsArr, setLinedDistsArr}}>
-            <div id="gridParent" style={gridStyle}>
-            {CardArr.map(e => e)}
-            </div>
-        </LinedDistsContext.Provider>
-        
+        <div id="gridParent" style={gridStyle}>
+        {CardArr.map(e => e)}
+        </div>
     );
         
         // <div id="gridParent" style={gridStyle}> 
