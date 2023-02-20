@@ -16,7 +16,7 @@ export default function Card(props:Props){
 
     const [isHovered, setIsHovered] = useState(false);
 
-    console.log(`Card${props.num}レンダリング`);
+    // console.log(`Card${props.num}レンダリング`);
     // インラインでのスタイル指定
     // https://qiita.com/Statham/items/05870fd52320a0644acd
     const NotHoveredCardStyle: { [key: string]: string } = { //マウスカーソルが上にないときのカードのスタイル
