@@ -319,7 +319,7 @@ export const ChordDisplay = (props) => {
     console.log("予測: " + preChords);
 
     //表示配列生成
-    const hitElemArr = []; //こっちが機能してない？
+    const hitElemArr = [];
     const preElemArr = [];
 
     const mainChordsStyle = {
@@ -331,6 +331,20 @@ export const ChordDisplay = (props) => {
         boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
         lineHeight: "100px", /* 重なり回避用 */
     };
+
+    //cardよりコピペ
+    const addToDisplay = (chord) =>{ //カードがクリックされたら、ヘッダーにクリックされたカードの要素名を追加。 ヘッダーを親要素としてspanタグを子要素に加えて追加していく。
+        const DisplayCards = document.getElementsByClassName("DisplayCard");
+        for(let i=0; i<4; i++){ //htmlのdata属性にはdatasetを参照する必要がある
+            if(DisplayCards[i].dataset.occupied == "false"){
+                // DisplayCards[i].innerHTML = props.children;
+                DisplayCards[i].innerHTML = chord;
+                DisplayCards[i].dataset.occupied = "true";
+                break;
+            }
+        }
+    }
+
 
     hitChords.forEach((chord, i) => {
         //----コードによって表示する背景を変える↓--------
@@ -362,6 +376,7 @@ export const ChordDisplay = (props) => {
                                         }
                             }
                             onDoubleClick={() => registChord(chord)}
+                            onClick={() => addToDisplay(chord)}
                         >{chord}</span>
         hitElemArr.push(elem);
         if ((i + 1) % 5 === 0) {
@@ -405,6 +420,7 @@ export const ChordDisplay = (props) => {
                                             }
                             }
                             onDoubleClick={() => registChord(splited_element[1])}
+                            onClick={() => addToDisplay(splited_element[1])}
                             style={subChordsStyle}>
                         <div style={{height: "30px"}}>
                             {splited_element[1]}
