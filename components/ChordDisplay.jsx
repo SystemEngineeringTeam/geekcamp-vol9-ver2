@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-loop-func */
-import { KeySelectedContext } from "./pianoPage"
+import { KeySelectedContext } from "./startPage"
 import { KeyTempSelectedContext } from "./startPage"
 import { IsTempContext } from "./pianoPage"
 import { useEffect, useContext, useState } from "react";

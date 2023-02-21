@@ -2,7 +2,7 @@
 import { Key } from "./Key";
 import { memo, useContext } from "react";
 import { useRef, useEffect } from "react";
-import { KeySelectedContext } from "./pianoPage";
+import { KeySelectedContext } from "./startPage";
 import { KeyTempSelectedContext } from "./startPage";
 import { useGetSoundPlayer } from "../hooks/useGetSoundPlayer";
 

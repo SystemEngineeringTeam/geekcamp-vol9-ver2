@@ -5,14 +5,15 @@ import { useGetNoteList, usePlay, useStop } from "../hooks/useChordPlayer";
 import { useEffect, useRef } from "react";
 import { Button } from 'react-bootstrap';
 import { LinedDistsContext } from "./startPage";
-import { KeyTempSelectedContext } from "./startPage";
+// import { KeyTempSelectedContext } from "./startPage";
+import { KeySelectedContext } from "./startPage";
 
 
 export const Header = () => {
     console.log("Headerレンダリング");
 
     const { linedDistsArr, setLinedDistsArr } = useContext(LinedDistsContext);
-    const { isTempSelectedArr, setIsTempSelectedArr} = useContext(KeyTempSelectedContext); //仮
+    const { isSelectedArr, setIsSelectedArr } = useContext(KeySelectedContext); //本
 
     const displayCardEl1 = useRef/* <HTMLInputElement> */(null);//displaycardにアクセスするためのRef
     const displayCardEl2 = useRef/* <HTMLInputElement> */(null);//displaycardにアクセスするためのRef
@@ -103,8 +104,8 @@ export const Header = () => {
     }
 
     //音鳴らしてるのはここ
-    const playDisplay = () =>{ //表示されている要素にひとつずつイベントを起こしていく
-        for(let i=0; i<4; i++){ //DisplayCardを左から順に色をつけていく
+    const playDisplay = () => { //表示されている要素にひとつずつイベントを起こしていく
+        for(let i=0; i<4; i++) { //DisplayCardを左から順に色をつけていく
             if(DisplayCards[i]/* ! */.dataset.occupied == "false"){ //カードが無かったら処理を停止
                 if(DisplayCards[i-1] == undefined){
                     break;
@@ -113,36 +114,40 @@ export const Header = () => {
                     // console.log(DisplayCards[i-1])
                     DisplayCards[i-1]/* ! */.style.backgroundColor = "#FFFFFF";
                     // stopChord(getNoteList(DisplayCards[i-1]/* ! */.innerHTML));
-                    linedDistsArr[i-1].forEach(dist => StopFuncs[dist]());
+                    // linedDistsArr[i-1].forEach(dist => StopFuncs[dist]());
+                    
                 }, i * 1000) //選んだカードの一番後ろのオレンジ灯火を戻すための処理
                 break;
             }
             if(i == 0){ //一個目はすぐに色を変える
                 DisplayCards[i]/* ! */.style.backgroundColor = "orange";
                 // playChord(getNoteList(DisplayCards[i]/* ! */.innerHTML))
-                linedDistsArr[i].forEach(dist => PlayFuncs[dist]());
+                // linedDistsArr[i].forEach(dist => PlayFuncs[dist]());
+                setIsSelectedArr(() => [...linedDistsArr[i]]);
             }else if(i < 3){ //初回、最終回以外の処理はここ
                 setTimeout( () =>{
                     DisplayCards[i-1]/* ! */.style.backgroundColor = "#FFFFFF";
                     // stopChord(getNoteList(DisplayCards[i-1]/* ! */.innerHTML))
-                    linedDistsArr[i-1].forEach(dist => StopFuncs[dist]());
+                    // linedDistsArr[i-1].forEach(dist => StopFuncs[dist]());
                     DisplayCards[i]/* ! */.style.backgroundColor = "orange";
                     // playChord(getNoteList(DisplayCards[i]/* ! */.innerHTML))
-                    linedDistsArr[i].forEach(dist => PlayFuncs[dist]());
+                    // linedDistsArr[i].forEach(dist => PlayFuncs[dist]());
+                    setIsSelectedArr(() => [...linedDistsArr[i]]);
                 }, i * 1000); //二つ目は１秒、三つ目は２秒待つ... とすることで１秒ごと動作させる
             } else if(i == 3){
                 setTimeout( () =>{
                     DisplayCards[i-1]/* ! */.style.backgroundColor = "#FFFFFF";
                     // stopChord(getNoteList(DisplayCards[i-1]/* ! */.innerHTML));
-                    linedDistsArr[i-1].forEach(dist => StopFuncs[dist]());
+                    // linedDistsArr[i-1].forEach(dist => StopFuncs[dist]());
                     DisplayCards[i]/* ! */.style.backgroundColor = "orange";
                     // playChord(getNoteList(DisplayCards[i]/* ! */.innerHTML));
-                    linedDistsArr[i].forEach(dist => PlayFuncs[dist]());
+                    // linedDistsArr[i].forEach(dist => PlayFuncs[dist]());
+                    setIsSelectedArr(() => [...linedDistsArr[i]]);
                 }, i * 1000); //二つ目は１秒、三つ目は２秒待つ... とすることで１秒ごと動作させる
                 setTimeout( () =>{
                     DisplayCards[i]/* ! */.style.backgroundColor = "#FFFFFF";
                     // stopChord(getNoteList(DisplayCards[i]/* ! */.innerHTML)); 
-                    linedDistsArr[i].forEach(dist => StopFuncs[dist]()); 
+                    // linedDistsArr[i].forEach(dist => StopFuncs[dist]()); 
                 }, (i+1) * 1000);
             }
             

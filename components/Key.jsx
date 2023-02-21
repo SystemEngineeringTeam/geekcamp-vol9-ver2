@@ -1,5 +1,5 @@
 import { useState, memo, useContext, useEffect } from "react";
-import { KeySelectedContext } from "./pianoPage"
+import { KeySelectedContext } from "./startPage"
 import { KeyTempSelectedContext } from "./startPage"
 import { IsTempContext } from "./pianoPage"
 

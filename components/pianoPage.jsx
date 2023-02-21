@@ -4,12 +4,9 @@ import { Keyboard } from './Keyboard'
 import { ChordDisplay } from './ChordDisplay'
 import { useState, useEffect, createContext, useRef } from "react";
 
-export const KeySelectedContext = createContext({});
 export const IsTempContext = createContext({});
 
 export default function PianoPage(props){ //鍵盤を押すことでコードを検索できるようにする機能を実装する
-    const [isSelectedArr, setIsSelectedArr] = useState([]);
-    
     const [ isTemp, setIsTemp ] = useState(false); //false:本有効 true:仮有効
     const pianoPageStyle = { //cssを指定するためのオブジェクトを用意しておく。
         position: "absolute",
@@ -65,19 +62,17 @@ export default function PianoPage(props){ //鍵盤を押すことでコードを
     
 
     return(
-        <KeySelectedContext.Provider value={{isSelectedArr, setIsSelectedArr}}>
-            <IsTempContext.Provider value={{isTemp, setIsTemp}}>
-                <div id="pianoPage" style={pianoPageStyle}>
-                    <div id="keyboardArea" style={keyboardAreaStyle}>
-                        <div id="keyboardSection" style={keyboardSectionStyle}>
-                            <Keyboard />
-                        </div>
-                    </div>
-                    <div id="predictChordArea" style={predictChordAreaStyle}>
-                    <ChordDisplay />
+        <IsTempContext.Provider value={{isTemp, setIsTemp}}>
+            <div id="pianoPage" style={pianoPageStyle}>
+                <div id="keyboardArea" style={keyboardAreaStyle}>
+                    <div id="keyboardSection" style={keyboardSectionStyle}>
+                        <Keyboard />
                     </div>
                 </div>
-            </IsTempContext.Provider>
-        </KeySelectedContext.Provider>
+                <div id="predictChordArea" style={predictChordAreaStyle}>
+                <ChordDisplay />
+                </div>
+            </div>
+        </IsTempContext.Provider>
     )
 }
