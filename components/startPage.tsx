@@ -7,10 +7,12 @@ import { Button } from 'react-bootstrap';
 import PianoPage from "./pianoPage";
 
 export const LinedDistsContext = createContext({});
+export const KeyTempSelectedContext = createContext({});
 
 export default function StartPage(){
     const [mode, setMode] = useState(0); // 0:辞書モード, 1:ピアノモード upperHeaderとgridとpianoに渡す upperHeaderでsetしてその状態によってgrid, Pianoの状態を管理する
     const [ linedDistsArr, setLinedDistsArr ] = useState([]); //再生欄コード一覧(dists)
+    const [isTempSelectedArr, setIsTempSelectedArr] = useState([]);
     const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
     const playerRef = useRef<Player>(null);
@@ -74,50 +76,51 @@ export default function StartPage(){
 
     return( 
         <>
-            <LinedDistsContext.Provider value={{linedDistsArr, setLinedDistsArr}}>
-                <Player
-                    autoplay
-                    loop
-                    className="loading"
-                    src="https://assets1.lottiefiles.com/datafiles/DlRM2jtACyr4IX1u6l5rqtW1QWZKLCkNoBIXWeyH/loading.json"
-                    style={
-                        loadingStyle
-                    }
-                    ref={
-                        playerRef
-                    }
-                    onEvent={
-                        endLoading
-                    }
-                />
+            <KeyTempSelectedContext.Provider value={{isTempSelectedArr, setIsTempSelectedArr}}>
+                <LinedDistsContext.Provider value={{linedDistsArr, setLinedDistsArr}}>
+                    <Player
+                        autoplay
+                        loop
+                        className="loading"
+                        src="https://assets1.lottiefiles.com/datafiles/DlRM2jtACyr4IX1u6l5rqtW1QWZKLCkNoBIXWeyH/loading.json"
+                        style={
+                            loadingStyle
+                        }
+                        ref={
+                            playerRef
+                        }
+                        onEvent={
+                            endLoading
+                        }
+                    />
 
-                <Button 
-                    variant="primary"
-                    style={
-                        styleButton
-                    } 
-                    ref={
-                        buttonEL
-                    }
-                    onClick={
-                        removeStartPage
-                    }
-                    className="disappered"
-                    id="startButton"
-                >
-                    START
-                </Button>
+                    <Button 
+                        variant="primary"
+                        style={
+                            styleButton
+                        } 
+                        ref={
+                            buttonEL
+                        }
+                        onClick={
+                            removeStartPage
+                        }
+                        className="disappered"
+                        id="startButton"
+                    >
+                        START
+                    </Button>
 
-                <div style={startPage} ref={startPageEL} className="disappered"></div>
-                
-                <div className="d-flex flex-row w-100" style={{zIndex: "0",position: "absolute" , width: "100%"}}>
-                    <UpperHeader setMode={setMode}/>
-                    <Header/>
-                    <Grid mode={mode}/>
-                    <PianoPage mode={mode}/>
-                </div>
-            </LinedDistsContext.Provider>
-            
+                    <div style={startPage} ref={startPageEL} className="disappered"></div>
+                    
+                    <div className="d-flex flex-row w-100" style={{zIndex: "0",position: "absolute" , width: "100%"}}>
+                        <UpperHeader setMode={setMode}/>
+                        <Header/>
+                        <Grid mode={mode}/>
+                        <PianoPage mode={mode}/>
+                    </div>
+                </LinedDistsContext.Provider>
+            </KeyTempSelectedContext.Provider>
         </>
         
     )

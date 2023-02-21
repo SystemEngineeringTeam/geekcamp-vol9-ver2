@@ -1,17 +1,17 @@
 import { useState, memo, useContext, useEffect } from "react";
 import { KeySelectedContext } from "./pianoPage"
-import { KeyTempSelectedContext } from "./pianoPage"
+import { KeyTempSelectedContext } from "./startPage"
 import { IsTempContext } from "./pianoPage"
 
 export const Key = memo((props) => {
     const {keyname, className, dist, style} = props;
     // let {} = props;
-    console.log("keyレンダリング");
+    // console.log("keyレンダリング");
     const [isselect, setIsselect] = useState(false);
     
     //select系
-    const { isSelectedArr, setIsSelectedArr } = useContext(KeySelectedContext);
-    const { isTempSelectedArr, setIsTempSelectedArr} = useContext(KeyTempSelectedContext); //仮
+    const { isSelectedArr, setIsSelectedArr } = useContext(KeySelectedContext); //本
+    const { isTempSelectedArr, setIsTempSelectedArr } = useContext(KeyTempSelectedContext); //仮
     const { isTemp, setIsTemp } = useContext(IsTempContext); //false:本有効 true:仮有効
     
 

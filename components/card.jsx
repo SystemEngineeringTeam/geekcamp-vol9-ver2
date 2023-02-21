@@ -20,6 +20,28 @@ export default function Card(props/*:Props*/){
     const { linedDistsArr, setLinedDistsArr } = useContext(LinedDistsContext);
 
 
+    //ルーツ
+    const Roots = {
+        "C": 36, 
+        "C#": 37,
+        "Db": 37,
+        "D": 38,
+        "D#": 39,
+        "Eb": 39,
+        "E": 40,
+        "F": 41,
+        "F#": 42,
+        "Gb": 42,
+        "G": 43,
+        "G#": 44,
+        "Ab": 44,
+        "A": 45,
+        "A#": 46,
+        "Bb": 46,
+        "B": 47, //全12個
+    };
+
+
     //ディスツ
     const Dists = { //数字はルートからの半音の距離、上の逆バージョン
         "": [0, 4, 7], //C
@@ -143,7 +165,7 @@ export default function Card(props/*:Props*/){
         }
         //テスト
         const { root:thisRoot, structure:thisStruct } = splitChord(props.children);
-        setLinedDistsArr((prev) => [...prev, Dists[thisStruct]]);
+        setLinedDistsArr((prev) => [...prev, Dists[thisStruct].map(dist => dist + Roots[thisRoot])]);
         console.log(linedDistsArr) //ここに押した順番にdist配列が追加される。
     }
 

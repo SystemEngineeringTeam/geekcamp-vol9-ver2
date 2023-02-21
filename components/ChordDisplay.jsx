@@ -1,12 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-loop-func */
 import { KeySelectedContext } from "./pianoPage"
-import { KeyTempSelectedContext } from "./pianoPage"
+import { KeyTempSelectedContext } from "./startPage"
 import { IsTempContext } from "./pianoPage"
 import { useEffect, useContext, useState } from "react";
+import { LinedDistsContext } from "./startPage";
 
 export const ChordDisplay = (props) => {
     console.log("MainDisplayレンダリング");
+
+    const { linedDistsArr, setLinedDistsArr } = useContext(LinedDistsContext);
 
     //ルートリスト
     const Roots = [
@@ -314,8 +317,8 @@ export const ChordDisplay = (props) => {
 
 
     //正常
-    console.log("検索結果: " + hitChords);
-    console.log("予測: " + preChords);
+    // console.log("検索結果: " + hitChords);
+    // console.log("予測: " + preChords);
 
     //表示配列生成
     const hitElemArr = [];
@@ -342,6 +345,8 @@ export const ChordDisplay = (props) => {
                 break;
             }
         }
+        //setLinedDistsArr((prev) => [...prev, Dists[thisStruct].map(dist => dist + Roots[thisRoot])]);
+        setLinedDistsArr((prev) => [...prev, isTempSelectedArr]);
     }
 
 
