@@ -3,7 +3,7 @@ import { useGetSoundPlayer } from "../hooks/useGetSoundPlayer";
 import { useGetNoteList, usePlay, useStop } from "../hooks/useChordPlayer";
 import { Button } from 'react-bootstrap';
 import { LinedDistsContext } from "./startPage";
-import { SortChordArrContext } from "./startPage";
+// import { SortChordArrContext } from "./startPage";
 
 // type Props = {
 //     children : string
@@ -19,7 +19,7 @@ export default function Card(props/*:Props*/){
     const [isHovered, setIsHovered] = useState(false);
 
     const { linedDistsArr, setLinedDistsArr } = useContext(LinedDistsContext);
-    const { sortChordArr, setSortChordArr } = useContext(SortChordArrContext);
+    // const { sortChordArr, setSortChordArr } = useContext(SortChordArrContext);
 
     //ルーツ
     const Roots = {
@@ -173,9 +173,7 @@ export default function Card(props/*:Props*/){
             prev[props.children] = Dists[thisStruct].map(dist => dist + Roots[thisRoot]);
             return prev;
         });
-        setSortChordArr((prev) => [...prev, props.children]);
-        console.log(linedDistsArr) //ここに押した順番にdist配列が追加される。
-        console.log(sortChordArr);
+        // setSortChordArr((prev) => [...prev, props.children]);
     }
 
     const muteChords = (event/*: KeyboardEvent*/) => {//キーボードが押された時に実行される

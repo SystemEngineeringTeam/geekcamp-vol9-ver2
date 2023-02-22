@@ -18,11 +18,29 @@ export const Header = () => {
     const { isSelectedArr, setIsSelectedArr } = useContext(KeySelectedContext); //本
     
 
+    const styleDisplayCardDummy/* : { [key: string]: string }  */= {
+        position: "relative",
+        top: "20px",
+        left: "-7px",
+        height: "80px",
+        width: "120px",
+        backgroundColor: "#FFFFFF",
+        margin: "10px",
+        fontSize: "25px",
+        textAlign: "center",
+        boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
+        borderRadius:" 8px",
+        opacity: "0"
+    }
+
+
     const displayCardEl1 = useRef/* <HTMLInputElement> */(null);//displaycardにアクセスするためのRef
     const displayCardEl2 = useRef/* <HTMLInputElement> */(null);//displaycardにアクセスするためのRef
     const displayCardEl3 = useRef/* <HTMLInputElement> */(null);//displaycardにアクセスするためのRef
     const displayCardEl4 = useRef/* <HTMLInputElement> */(null);//displaycardにアクセスするためのRef
     const DisplayCards = [displayCardEl1.current, displayCardEl2.current, displayCardEl3.current, displayCardEl4.current];
+
+
 
     const keypressPlay = (key/* :any */) => {
         if(key.key == 'S' || key.key== 's'){
@@ -140,6 +158,7 @@ export const Header = () => {
                 < DisplayCard ref={displayCardEl2}/>
                 < DisplayCard ref={displayCardEl3}/>
                 < DisplayCard ref={displayCardEl4}/>
+                <li><div style={styleDisplayCardDummy}></div></li> {/* ダミー */}
                 </ul>
             </div>
             <div id="adjust"></div>

@@ -335,7 +335,7 @@ export const ChordDisplay = (props) => {
     };
 
     //cardよりコピペ
-    const addToDisplay = (chord) =>{ //カードがクリックされたら、ヘッダーにクリックされたカードの要素名を追加。 ヘッダーを親要素としてspanタグを子要素に加えて追加していく。
+    const addToDisplay = (chord) => { //カードがクリックされたら、ヘッダーにクリックされたカードの要素名を追加。 ヘッダーを親要素としてspanタグを子要素に加えて追加していく。
         const DisplayCards = document.getElementsByClassName("DisplayCard");
         for(let i=0; i<4; i++){ //htmlのdata属性にはdatasetを参照する必要がある
             if(DisplayCards[i].dataset.occupied == "false"){
@@ -346,7 +346,11 @@ export const ChordDisplay = (props) => {
             }
         }
         //setLinedDistsArr((prev) => [...prev, Dists[thisStruct].map(dist => dist + Roots[thisRoot])]);
-        setLinedDistsArr((prev) => [...prev, isTempSelectedArr]);
+        // setLinedDistsArr((prev) => [...prev, isTempSelectedArr]);
+        setLinedDistsArr((prev) => {
+            prev[chord] = [...isTempSelectedArr];
+            return prev;
+        });
     }
 
 

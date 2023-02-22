@@ -79,5 +79,5 @@ export default forwardRef(function DisplayCard(props, ref){
             <div ref={displayCardEl} className="DisplayCard" style={styleDisplayCard} data-occupied="false" draggable="true">
             </div>
         </li>
-    )
+    );
 })
