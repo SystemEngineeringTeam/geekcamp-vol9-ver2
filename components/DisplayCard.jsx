@@ -76,7 +76,8 @@ export default forwardRef(function DisplayCard(props, ref){
 
     return (
         <li>
-            <div ref={displayCardEl} className="DisplayCard" style={styleDisplayCard} data-occupied="false" draggable="true">
+            <div ref={displayCardEl} className="DisplayCard" style={styleDisplayCard} draggable="true">
+                {props.children}
             </div>
         </li>
     );

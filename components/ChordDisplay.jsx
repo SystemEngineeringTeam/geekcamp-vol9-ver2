@@ -336,15 +336,13 @@ export const ChordDisplay = (props) => {
 
     //cardよりコピペ
     const addToDisplay = (chord) => { //カードがクリックされたら、ヘッダーにクリックされたカードの要素名を追加。 ヘッダーを親要素としてspanタグを子要素に加えて追加していく。
-        const DisplayCards = document.getElementsByClassName("DisplayCard");
-        for(let i=0; i<4; i++){ //htmlのdata属性にはdatasetを参照する必要がある
-            if(DisplayCards[i].dataset.occupied == "false"){
-                // DisplayCards[i].innerHTML = props.children;
-                DisplayCards[i].innerHTML = chord;
-                DisplayCards[i].dataset.occupied = "true";
-                break;
-            }
-        }
+        const targetOfHeader = document.getElementById("lined-chords"); 
+        const childrenNum = targetOfHeader.childElementCount; //カードをクリックした時点で、ディスプレイに表示されている要素数を数える
+        const createDiv = document.createElement("div"); //ヘッダーに表示する文字ごとにdiv要素を作る 
+        createDiv.className = "DisplayCards"; //クラス名をDisplayCardsにしてcssでデザインを指定.
+        createDiv.innerHTML = chord;
+        console.log("コード名" + chord);
+        targetOfHeader.appendChild(createDiv); //header要素に子要素として作ったspanを追加
         //setLinedDistsArr((prev) => [...prev, Dists[thisStruct].map(dist => dist + Roots[thisRoot])]);
         // setLinedDistsArr((prev) => [...prev, isTempSelectedArr]);
         setLinedDistsArr((prev) => {

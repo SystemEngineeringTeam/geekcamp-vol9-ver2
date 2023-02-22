@@ -1,8 +1,10 @@
-import { memo, useEffect, useState, useContext } from "react";
+import { memo, useEffect, useState, useContext, createElement } from "react";
 import { useGetSoundPlayer } from "../hooks/useGetSoundPlayer";
 import { useGetNoteList, usePlay, useStop } from "../hooks/useChordPlayer";
 import { Button } from 'react-bootstrap';
 import { LinedDistsContext } from "./startPage";
+import DisplayCard from "./DisplayCard";
+import { ReactDOM } from "react";
 // import { SortChordArrContext } from "./startPage";
 
 // type Props = {
@@ -155,15 +157,14 @@ export default function Card(props/*:Props*/){
         return { root, structure };
     }
 
-    const ClickEvent = () => { //カードがクリックされたら、ヘッダーにクリックされたカードの要素名を追加。 ヘッダーを親要素としてspanタグを子要素に加えて追加していく。
-        const DisplayCards = document.getElementsByClassName("DisplayCard") /*as HTMLCollectionOf<HTMLElement>*/;
-        for(let i=0; i<4; i++){ //htmlのdata属性にはdatasetを参照する必要がある
-            if(DisplayCards[i].dataset.occupied == "false"){
-                DisplayCards[i].innerHTML = props.children;
-                DisplayCards[i].dataset.occupied = "true";
-                break;
-            }
-        }
+    const ClickEvent = () => { //カードがクリックされたら、ヘッダーにクリックされたカードの要素名を追加。
+        const targetOfHeader = document.getElementById("lined-chords"); 
+        const childrenNum = targetOfHeader.childElementCount; //カードをクリックした時点で、ディスプレイに表示されている要素数を数える
+        const createDiv = document.createElement("div"); //ヘッダーに表示する文字ごとにdiv要素を作る 
+        createDiv.className = "DisplayCards"; //クラス名をDisplayCardsにしてcssでデザインを指定
+        createDiv.innerHTML = props.children;
+        targetOfHeader.appendChild(createDiv); //header要素に子要素として作ったspanを追加
+
         //テスト
         const { root:thisRoot, structure:thisStruct } = splitChord(props.children);
         // linedDistsArr[props.children] = Dists[thisStruct].map(dist => dist + Roots[thisRoot])

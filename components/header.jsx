@@ -22,7 +22,7 @@ export const Header = () => {
         position: "relative",
         top: "20px",
         left: "-7px",
-        height: "80px",
+        height: "30px",
         width: "120px",
         backgroundColor: "#FFFFFF",
         margin: "10px",
@@ -32,15 +32,6 @@ export const Header = () => {
         borderRadius:" 8px",
         opacity: "0"
     }
-
-
-    const displayCardEl1 = useRef/* <HTMLInputElement> */(null);//displaycardにアクセスするためのRef
-    const displayCardEl2 = useRef/* <HTMLInputElement> */(null);//displaycardにアクセスするためのRef
-    const displayCardEl3 = useRef/* <HTMLInputElement> */(null);//displaycardにアクセスするためのRef
-    const displayCardEl4 = useRef/* <HTMLInputElement> */(null);//displaycardにアクセスするためのRef
-    const DisplayCards = [displayCardEl1.current, displayCardEl2.current, displayCardEl3.current, displayCardEl4.current];
-
-
 
     const keypressPlay = (key/* :any */) => {
         if(key.key == 'S' || key.key== 's'){
@@ -62,6 +53,7 @@ export const Header = () => {
             // document.addEventListener("keydown", keypressSwitch1);
             // document.addEventListener("keydown", keypressSwitch2);
             // document.addEventListener("keydown", keypressSwitch3);
+            
         return (() => { //第2引数をしていしないため、再レンダリングするたびにイベントリスナーを削除する
             document.removeEventListener("keydown", keypressPlay);
             document.removeEventListener("keydown", keypressClean);
@@ -74,9 +66,10 @@ export const Header = () => {
     
 
     const cleanDisplay = () =>{ //表示されている要素を全て消す
-        for(let i=0; i<4; i++){
-            DisplayCards[i]/* ! */.innerHTML = "";
-            DisplayCards[i]/* ! */.dataset.occupied = "false";
+        const nowIndexArr = document.getElementsByClassName("DisplayCards"); //今の順番を取得
+        const NumOfDisplayCrads = nowIndexArr.length; //今のディスプレイカードの枚数を保持する
+        for(let i=0; i<NumOfDisplayCrads; i++){
+            nowIndexArr[0].remove(); //一番上の要素を消すと、一個下の要素が一番上になる。つまり[0]を消し続ければ良い
         }
         setLinedDistsArr(() => []);
         setLinedDistsArr(() => []);
@@ -85,24 +78,16 @@ export const Header = () => {
 
     //音鳴らしてるのはここ
     const playDisplay = () => { //表示されている要素にひとつずつイベントを起こしていく
-        const nowIndexArr = document.getElementsByClassName("DisplayCard"); //今の順番を取得
-        for(let i=0; i<4; i++) { //DisplayCardを左から順に色をつけていく
-            if(nowIndexArr[i]/* ! */.dataset.occupied == "false"){ //カードが無かったら処理を停止
-                if(nowIndexArr[i-1] == undefined){
-                    break;
-                }
-                setTimeout( () =>{
-                    nowIndexArr[i-1]/* ! */.style.backgroundColor = "#FFFFFF";
-                }, i * 1000) //選んだカードの一番後ろのオレンジ灯火を戻すための処理
-                break;
-            }
+        const nowIndexArr = document.getElementsByClassName("DisplayCards"); //今の順番を取得
+        const NumOfDisplayCrads = nowIndexArr.length; //今のディスプレイカードの枚数を保持する
+        for(let i=0; i<NumOfDisplayCrads; i++) { //DisplayCardを上から順に取得して処理をしていく
             if(i == 0){ //一個目はすぐに色を変える
-                nowIndexArr[i]/* ! */.style.backgroundColor = "orange";
+                nowIndexArr[i].style.backgroundColor = "orange";
                 // setIsSelectedArr(() => [...linedDistsArr[i]]);
                 // setIsSelectedArr(() => [...linedDistsArr[nowIndexArr[i].innerHTML]]);
                 setIsSelectedArr(() => [...linedDistsArr[nowIndexArr[i].innerHTML]]);
                 console.log();
-            }else if(i < 3){ //初回、最終回以外の処理はここ
+            }else if(i < NumOfDisplayCrads-1){ //初回、最終回以外の処理はここ
                 setTimeout( () =>{
                     nowIndexArr[i-1]/* ! */.style.backgroundColor = "#FFFFFF";
                     nowIndexArr[i]/* ! */.style.backgroundColor = "orange";
@@ -110,7 +95,7 @@ export const Header = () => {
                     // setIsSelectedArr(() => [...linedDistsArr[nowIndexArr[i].innerHTML]]);
                     setIsSelectedArr(() => [...linedDistsArr[nowIndexArr[i].innerHTML]]);
                 }, i * 1000); //二つ目は１秒、三つ目は２秒待つ... とすることで１秒ごと動作させる
-            } else if(i == 3){
+            } else{ //一番後ろのディスプレイカードの処理
                 setTimeout( () =>{
                     nowIndexArr[i-1]/* ! */.style.backgroundColor = "#FFFFFF";
                     nowIndexArr[i]/* ! */.style.backgroundColor = "orange";
@@ -127,14 +112,16 @@ export const Header = () => {
         }
         
     }
+
+    
     
 
     const styleHeader/* :{[key:string]:string} */ = {
-        height: "750px",
+        height: "5420px",
         width: "150px",
         padding: "10px",
         backgroundColor: "#5D99C6",
-        position: "fixed",
+        position: "absolute",
         zIndex: "1"
     }
 
@@ -145,6 +132,8 @@ export const Header = () => {
         width: "120px",
         fontSize: "10px",
     }
+    
+    
 
     return (
         <>
@@ -154,11 +143,7 @@ export const Header = () => {
                 <Button variant="danger" style={styleButton} onClick={cleanDisplay} >リセット<div>cキー</div></Button>
                 <span></span>
                 <ul id="lined-chords">
-                < DisplayCard ref={displayCardEl1}/>
-                < DisplayCard ref={displayCardEl2}/>
-                < DisplayCard ref={displayCardEl3}/>
-                < DisplayCard ref={displayCardEl4}/>
-                <li><div style={styleDisplayCardDummy}></div></li> {/* ダミー */}
+                <div style={styleDisplayCardDummy}></div> {/* ダミー */}
                 </ul>
             </div>
             <div id="adjust"></div>
