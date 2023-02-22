@@ -71,9 +71,6 @@ export default forwardRef(function DisplayCard(props, ref){
         };
     }
 
-    
-
-
 
 
 

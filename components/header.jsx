@@ -7,13 +7,16 @@ import { Button } from 'react-bootstrap';
 import { LinedDistsContext } from "./startPage";
 // import { KeyTempSelectedContext } from "./startPage";
 import { KeySelectedContext } from "./startPage";
+// import { SortChordArrContext } from "./startPage";
 
 
 export const Header = () => {
     console.log("Headerレンダリング");
-
+    const {PlayFuncs, StopFuncs} = useGetSoundPlayer();
     const { linedDistsArr, setLinedDistsArr } = useContext(LinedDistsContext);
+    // const { sortChordArr, setSortChordArr } = useContext(SortChordArrContext);
     const { isSelectedArr, setIsSelectedArr } = useContext(KeySelectedContext); //本
+    
 
     const displayCardEl1 = useRef/* <HTMLInputElement> */(null);//displaycardにアクセスするためのRef
     const displayCardEl2 = useRef/* <HTMLInputElement> */(null);//displaycardにアクセスするためのRef
@@ -35,61 +38,22 @@ export const Header = () => {
         }
     }
 
-    // const keypressSwitch1 = (key/* :any */) => {
-    //     if(key.key == '1' || key.key== '/* ! */'){
-    //         console.log('switch1');
-    //         const temp_state = DisplayCards[0]?.dataset.occupied;
-    //         const temp_html = DisplayCards[0]?.innerHTML;
-    //         DisplayCards[0]/* ! */.innerHTML = DisplayCards[1]?.innerHTML || "";
-    //         DisplayCards[0]/* ! */.dataset.occupied = DisplayCards[1]?.dataset.occupied;
-    //         DisplayCards[1]/* ! */.innerHTML = temp_html || "";
-    //         DisplayCards[1]/* ! */.dataset.occupied = temp_state;
-    //     }
-    // }
-
-    // const keypressSwitch2 = (key/* :any */) => {
-    //     if(key.key == '2' || key.key== '@'){
-    //         console.log('switch2');
-    //         const temp_state = DisplayCards[1]?.dataset.occupied;
-    //         const temp_html = DisplayCards[1]?.innerHTML;
-    //         DisplayCards[1]/* ! */.innerHTML = DisplayCards[Number(1)+1]?.innerHTML || "";
-    //         DisplayCards[1]/* ! */.dataset.occupied = DisplayCards[Number(1)+1]?.dataset.occupied;
-    //         DisplayCards[Number(1)+1]/* ! */.innerHTML = temp_html || "";
-    //         DisplayCards[Number(1)+1]/* ! */.dataset.occupied = temp_state;
-    //     }
-    // }
-
-    // const keypressSwitch3 = (key/* :any */) => {
-    //     if(key.key == '3' || key.key== '#'){
-    //         console.log('switch3');
-    //         const temp_state = DisplayCards[2]?.dataset.occupied;
-    //         const temp_html = DisplayCards[2]?.innerHTML;
-    //         DisplayCards[2]/* ! */.innerHTML = DisplayCards[Number(2)+1]?.innerHTML || "";
-    //         DisplayCards[2]/* ! */.dataset.occupied = DisplayCards[Number(2)+1]?.dataset.occupied;
-    //         DisplayCards[Number(2)+1]/* ! */.innerHTML = temp_html || "";
-    //         DisplayCards[Number(2)+1]/* ! */.dataset.occupied = temp_state;
-    //     }
-    // }
-
     useEffect( () => {
             document.addEventListener("keydown", keypressPlay);
             document.addEventListener("keydown", keypressClean);
-            document.addEventListener("keydown", keypressSwitch1);
-            document.addEventListener("keydown", keypressSwitch2);
-            document.addEventListener("keydown", keypressSwitch3);
+            // document.addEventListener("keydown", keypressSwitch1);
+            // document.addEventListener("keydown", keypressSwitch2);
+            // document.addEventListener("keydown", keypressSwitch3);
         return (() => { //第2引数をしていしないため、再レンダリングするたびにイベントリスナーを削除する
             document.removeEventListener("keydown", keypressPlay);
             document.removeEventListener("keydown", keypressClean);
-            document.removeEventListener("keydown", keypressSwitch1);
-            document.removeEventListener("keydown", keypressSwitch2);
-            document.removeEventListener("keydown", keypressSwitch3);
+            // document.removeEventListener("keydown", keypressSwitch1);
+            // document.removeEventListener("keydown", keypressSwitch2);
+            // document.removeEventListener("keydown", keypressSwitch3);
         }) //第２引数に[]を指定すると動作しないバグが発生する。原因は調査中。eventlistenerが重複するから？
     },)
 
     
-
-
-    const {PlayFuncs, StopFuncs} = useGetSoundPlayer();
 
     const cleanDisplay = () =>{ //表示されている要素を全て消す
         for(let i=0; i<4; i++){
@@ -97,38 +61,47 @@ export const Header = () => {
             DisplayCards[i]/* ! */.dataset.occupied = "false";
         }
         setLinedDistsArr(() => []);
+        setLinedDistsArr(() => []);
         
     }
 
     //音鳴らしてるのはここ
     const playDisplay = () => { //表示されている要素にひとつずつイベントを起こしていく
+        const nowIndexArr = document.getElementsByClassName("DisplayCard"); //今の順番を取得
         for(let i=0; i<4; i++) { //DisplayCardを左から順に色をつけていく
-            if(DisplayCards[i]/* ! */.dataset.occupied == "false"){ //カードが無かったら処理を停止
-                if(DisplayCards[i-1] == undefined){
+            if(nowIndexArr[i]/* ! */.dataset.occupied == "false"){ //カードが無かったら処理を停止
+                if(nowIndexArr[i-1] == undefined){
                     break;
                 }
                 setTimeout( () =>{
-                    DisplayCards[i-1]/* ! */.style.backgroundColor = "#FFFFFF";
+                    nowIndexArr[i-1]/* ! */.style.backgroundColor = "#FFFFFF";
                 }, i * 1000) //選んだカードの一番後ろのオレンジ灯火を戻すための処理
                 break;
             }
             if(i == 0){ //一個目はすぐに色を変える
-                DisplayCards[i]/* ! */.style.backgroundColor = "orange";
-                setIsSelectedArr(() => [...linedDistsArr[i]]);
+                nowIndexArr[i]/* ! */.style.backgroundColor = "orange";
+                // setIsSelectedArr(() => [...linedDistsArr[i]]);
+                // setIsSelectedArr(() => [...linedDistsArr[nowIndexArr[i].innerHTML]]);
+                setIsSelectedArr(() => [...linedDistsArr[nowIndexArr[i].innerHTML]]);
+                console.log();
             }else if(i < 3){ //初回、最終回以外の処理はここ
                 setTimeout( () =>{
-                    DisplayCards[i-1]/* ! */.style.backgroundColor = "#FFFFFF";
-                    DisplayCards[i]/* ! */.style.backgroundColor = "orange";
-                    setIsSelectedArr(() => [...linedDistsArr[i]]);
+                    nowIndexArr[i-1]/* ! */.style.backgroundColor = "#FFFFFF";
+                    nowIndexArr[i]/* ! */.style.backgroundColor = "orange";
+                    // setIsSelectedArr(() => [...linedDistsArr[i]]);
+                    // setIsSelectedArr(() => [...linedDistsArr[nowIndexArr[i].innerHTML]]);
+                    setIsSelectedArr(() => [...linedDistsArr[nowIndexArr[i].innerHTML]]);
                 }, i * 1000); //二つ目は１秒、三つ目は２秒待つ... とすることで１秒ごと動作させる
             } else if(i == 3){
                 setTimeout( () =>{
-                    DisplayCards[i-1]/* ! */.style.backgroundColor = "#FFFFFF";
-                    DisplayCards[i]/* ! */.style.backgroundColor = "orange";
-                    setIsSelectedArr(() => [...linedDistsArr[i]]);
+                    nowIndexArr[i-1]/* ! */.style.backgroundColor = "#FFFFFF";
+                    nowIndexArr[i]/* ! */.style.backgroundColor = "orange";
+                    // setIsSelectedArr(() => [...linedDistsArr[i]]);
+                    // setIsSelectedArr(() => [...linedDistsArr[nowIndexArr[i].innerHTML]]);
+                    setIsSelectedArr(() => [...linedDistsArr[nowIndexArr[i].innerHTML]]);
                 }, i * 1000); //二つ目は１秒、三つ目は２秒待つ... とすることで１秒ごと動作させる
                 setTimeout( () =>{
-                    DisplayCards[i]/* ! */.style.backgroundColor = "#FFFFFF";
+                    nowIndexArr[i]/* ! */.style.backgroundColor = "#FFFFFF";
                 }, (i+1) * 1000);
             }
             
@@ -136,18 +109,6 @@ export const Header = () => {
         }
         
     }
-
-    // const switchCard = (event/* :any */) => { //ボタンをクリックして前後を入れ替える
-    //     const id = event.currentTarget.id;
-    //     const temp_state = DisplayCards[id]?.dataset.occupied;
-    //     console.log(temp_state);
-    //     const temp_html = DisplayCards[id]/* ! */.innerHTML;
-    //     DisplayCards[id]/* ! */.innerHTML = DisplayCards[Number(id)+1]?.innerHTML || "";
-    //     DisplayCards[id]/* ! */.dataset.occupied = DisplayCards[Number(id)+1]?.dataset.occupied;
-    //     DisplayCards[Number(id)+1]/* ! */.innerHTML = temp_html;
-    //     DisplayCards[Number(id)+1]/* ! */.dataset.occupied = temp_state;
-    // }
-
     
 
     const styleHeader/* :{[key:string]:string} */ = {
