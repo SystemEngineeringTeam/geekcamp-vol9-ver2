@@ -1,5 +1,5 @@
 import React, { Component, useContext } from 'react'
-import  DisplayCard  from "./displayCard";
+import  DisplayCard  from "./DisplayCard";
 import { useGetSoundPlayer } from "../hooks/useGetSoundPlayer";
 import { useGetNoteList, usePlay, useStop } from "../hooks/useChordPlayer";
 import { useEffect, useRef } from "react";
@@ -193,13 +193,12 @@ export const Header = () => {
                 <Button variant="success" style={styleButton} onClick={playDisplay} >再生<div>sキー</div></Button>
                 <Button variant="danger" style={styleButton} onClick={cleanDisplay} >リセット<div>cキー</div></Button>
                 <span></span>
+                <ul id="lined-chords">
                 < DisplayCard ref={displayCardEl1}/>
-                <Button id="0" style={styleButton} onClick={switchCard}>←→<div>1キー</div></Button>
                 < DisplayCard ref={displayCardEl2}/>
-                <Button id="1" style={styleButton} onClick={switchCard}>←→<div>2キー</div></Button>
                 < DisplayCard ref={displayCardEl3}/>
-                <Button id="2" style={styleButton} onClick={switchCard}>←→<div>3キー</div></Button>
                 < DisplayCard ref={displayCardEl4}/>
+                </ul>
             </div>
             <div id="adjust"></div>
         </>
