@@ -35,41 +35,41 @@ export const Header = () => {
         }
     }
 
-    const keypressSwitch1 = (key/* :any */) => {
-        if(key.key == '1' || key.key== '/* ! */'){
-            console.log('switch1');
-            const temp_state = DisplayCards[0]?.dataset.occupied;
-            const temp_html = DisplayCards[0]?.innerHTML;
-            DisplayCards[0]/* ! */.innerHTML = DisplayCards[1]?.innerHTML || "";
-            DisplayCards[0]/* ! */.dataset.occupied = DisplayCards[1]?.dataset.occupied;
-            DisplayCards[1]/* ! */.innerHTML = temp_html || "";
-            DisplayCards[1]/* ! */.dataset.occupied = temp_state;
-        }
-    }
+    // const keypressSwitch1 = (key/* :any */) => {
+    //     if(key.key == '1' || key.key== '/* ! */'){
+    //         console.log('switch1');
+    //         const temp_state = DisplayCards[0]?.dataset.occupied;
+    //         const temp_html = DisplayCards[0]?.innerHTML;
+    //         DisplayCards[0]/* ! */.innerHTML = DisplayCards[1]?.innerHTML || "";
+    //         DisplayCards[0]/* ! */.dataset.occupied = DisplayCards[1]?.dataset.occupied;
+    //         DisplayCards[1]/* ! */.innerHTML = temp_html || "";
+    //         DisplayCards[1]/* ! */.dataset.occupied = temp_state;
+    //     }
+    // }
 
-    const keypressSwitch2 = (key/* :any */) => {
-        if(key.key == '2' || key.key== '@'){
-            console.log('switch2');
-            const temp_state = DisplayCards[1]?.dataset.occupied;
-            const temp_html = DisplayCards[1]?.innerHTML;
-            DisplayCards[1]/* ! */.innerHTML = DisplayCards[Number(1)+1]?.innerHTML || "";
-            DisplayCards[1]/* ! */.dataset.occupied = DisplayCards[Number(1)+1]?.dataset.occupied;
-            DisplayCards[Number(1)+1]/* ! */.innerHTML = temp_html || "";
-            DisplayCards[Number(1)+1]/* ! */.dataset.occupied = temp_state;
-        }
-    }
+    // const keypressSwitch2 = (key/* :any */) => {
+    //     if(key.key == '2' || key.key== '@'){
+    //         console.log('switch2');
+    //         const temp_state = DisplayCards[1]?.dataset.occupied;
+    //         const temp_html = DisplayCards[1]?.innerHTML;
+    //         DisplayCards[1]/* ! */.innerHTML = DisplayCards[Number(1)+1]?.innerHTML || "";
+    //         DisplayCards[1]/* ! */.dataset.occupied = DisplayCards[Number(1)+1]?.dataset.occupied;
+    //         DisplayCards[Number(1)+1]/* ! */.innerHTML = temp_html || "";
+    //         DisplayCards[Number(1)+1]/* ! */.dataset.occupied = temp_state;
+    //     }
+    // }
 
-    const keypressSwitch3 = (key/* :any */) => {
-        if(key.key == '3' || key.key== '#'){
-            console.log('switch3');
-            const temp_state = DisplayCards[2]?.dataset.occupied;
-            const temp_html = DisplayCards[2]?.innerHTML;
-            DisplayCards[2]/* ! */.innerHTML = DisplayCards[Number(2)+1]?.innerHTML || "";
-            DisplayCards[2]/* ! */.dataset.occupied = DisplayCards[Number(2)+1]?.dataset.occupied;
-            DisplayCards[Number(2)+1]/* ! */.innerHTML = temp_html || "";
-            DisplayCards[Number(2)+1]/* ! */.dataset.occupied = temp_state;
-        }
-    }
+    // const keypressSwitch3 = (key/* :any */) => {
+    //     if(key.key == '3' || key.key== '#'){
+    //         console.log('switch3');
+    //         const temp_state = DisplayCards[2]?.dataset.occupied;
+    //         const temp_html = DisplayCards[2]?.innerHTML;
+    //         DisplayCards[2]/* ! */.innerHTML = DisplayCards[Number(2)+1]?.innerHTML || "";
+    //         DisplayCards[2]/* ! */.dataset.occupied = DisplayCards[Number(2)+1]?.dataset.occupied;
+    //         DisplayCards[Number(2)+1]/* ! */.innerHTML = temp_html || "";
+    //         DisplayCards[Number(2)+1]/* ! */.dataset.occupied = temp_state;
+    //     }
+    // }
 
     useEffect( () => {
             document.addEventListener("keydown", keypressPlay);
@@ -90,9 +90,6 @@ export const Header = () => {
 
 
     const {PlayFuncs, StopFuncs} = useGetSoundPlayer();
-    // const getNoteList = useGetNoteList(); //もう要らん
-    // const playChord = usePlay(PlayFuncs); //もう要らん
-    // const stopChord = useStop(StopFuncs); //もう要らん
 
     const cleanDisplay = () =>{ //表示されている要素を全て消す
         for(let i=0; i<4; i++){
@@ -111,43 +108,27 @@ export const Header = () => {
                     break;
                 }
                 setTimeout( () =>{
-                    // console.log(DisplayCards[i-1])
                     DisplayCards[i-1]/* ! */.style.backgroundColor = "#FFFFFF";
-                    // stopChord(getNoteList(DisplayCards[i-1]/* ! */.innerHTML));
-                    // linedDistsArr[i-1].forEach(dist => StopFuncs[dist]());
-                    
                 }, i * 1000) //選んだカードの一番後ろのオレンジ灯火を戻すための処理
                 break;
             }
             if(i == 0){ //一個目はすぐに色を変える
                 DisplayCards[i]/* ! */.style.backgroundColor = "orange";
-                // playChord(getNoteList(DisplayCards[i]/* ! */.innerHTML))
-                // linedDistsArr[i].forEach(dist => PlayFuncs[dist]());
                 setIsSelectedArr(() => [...linedDistsArr[i]]);
             }else if(i < 3){ //初回、最終回以外の処理はここ
                 setTimeout( () =>{
                     DisplayCards[i-1]/* ! */.style.backgroundColor = "#FFFFFF";
-                    // stopChord(getNoteList(DisplayCards[i-1]/* ! */.innerHTML))
-                    // linedDistsArr[i-1].forEach(dist => StopFuncs[dist]());
                     DisplayCards[i]/* ! */.style.backgroundColor = "orange";
-                    // playChord(getNoteList(DisplayCards[i]/* ! */.innerHTML))
-                    // linedDistsArr[i].forEach(dist => PlayFuncs[dist]());
                     setIsSelectedArr(() => [...linedDistsArr[i]]);
                 }, i * 1000); //二つ目は１秒、三つ目は２秒待つ... とすることで１秒ごと動作させる
             } else if(i == 3){
                 setTimeout( () =>{
                     DisplayCards[i-1]/* ! */.style.backgroundColor = "#FFFFFF";
-                    // stopChord(getNoteList(DisplayCards[i-1]/* ! */.innerHTML));
-                    // linedDistsArr[i-1].forEach(dist => StopFuncs[dist]());
                     DisplayCards[i]/* ! */.style.backgroundColor = "orange";
-                    // playChord(getNoteList(DisplayCards[i]/* ! */.innerHTML));
-                    // linedDistsArr[i].forEach(dist => PlayFuncs[dist]());
                     setIsSelectedArr(() => [...linedDistsArr[i]]);
                 }, i * 1000); //二つ目は１秒、三つ目は２秒待つ... とすることで１秒ごと動作させる
                 setTimeout( () =>{
                     DisplayCards[i]/* ! */.style.backgroundColor = "#FFFFFF";
-                    // stopChord(getNoteList(DisplayCards[i]/* ! */.innerHTML)); 
-                    // linedDistsArr[i].forEach(dist => StopFuncs[dist]()); 
                 }, (i+1) * 1000);
             }
             
@@ -156,16 +137,16 @@ export const Header = () => {
         
     }
 
-    const switchCard = (event/* :any */) => { //ボタンをクリックして前後を入れ替える
-        const id = event.currentTarget.id;
-        const temp_state = DisplayCards[id]?.dataset.occupied;
-        console.log(temp_state);
-        const temp_html = DisplayCards[id]/* ! */.innerHTML;
-        DisplayCards[id]/* ! */.innerHTML = DisplayCards[Number(id)+1]?.innerHTML || "";
-        DisplayCards[id]/* ! */.dataset.occupied = DisplayCards[Number(id)+1]?.dataset.occupied;
-        DisplayCards[Number(id)+1]/* ! */.innerHTML = temp_html;
-        DisplayCards[Number(id)+1]/* ! */.dataset.occupied = temp_state;
-    }
+    // const switchCard = (event/* :any */) => { //ボタンをクリックして前後を入れ替える
+    //     const id = event.currentTarget.id;
+    //     const temp_state = DisplayCards[id]?.dataset.occupied;
+    //     console.log(temp_state);
+    //     const temp_html = DisplayCards[id]/* ! */.innerHTML;
+    //     DisplayCards[id]/* ! */.innerHTML = DisplayCards[Number(id)+1]?.innerHTML || "";
+    //     DisplayCards[id]/* ! */.dataset.occupied = DisplayCards[Number(id)+1]?.dataset.occupied;
+    //     DisplayCards[Number(id)+1]/* ! */.innerHTML = temp_html;
+    //     DisplayCards[Number(id)+1]/* ! */.dataset.occupied = temp_state;
+    // }
 
     
 
