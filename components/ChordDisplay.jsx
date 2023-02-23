@@ -442,7 +442,7 @@ export const ChordDisplay = (props) => {
                             {splited_element[1]}
                         </div>
                         <div style={{fontSize: "15px", margin: "0px"}}>
-                            (重複数:{splited_element[0]})
+                        (重複数:{Number(splited_element[0])+1 })
                         </div>
                     </span>;
                     
