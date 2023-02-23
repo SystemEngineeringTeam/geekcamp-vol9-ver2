@@ -337,11 +337,21 @@ export const ChordDisplay = (props) => {
     //cardよりコピペ
     const addToDisplay = (chord) => { //カードがクリックされたら、ヘッダーにクリックされたカードの要素名を追加。 ヘッダーを親要素としてspanタグを子要素に加えて追加していく。
         const targetOfHeader = document.getElementById("lined-chords"); 
-        const childrenNum = targetOfHeader.childElementCount; //カードをクリックした時点で、ディスプレイに表示されている要素数を数える
         const createDiv = document.createElement("div"); //ヘッダーに表示する文字ごとにdiv要素を作る 
-        createDiv.className = "DisplayCards"; //クラス名をDisplayCardsにしてcssでデザインを指定.
-        createDiv.innerHTML = chord;
-        console.log("コード名" + chord);
+        createDiv.className = "DisplayCards"; //クラス名をDisplayCardsにしてcssでデザインを指定
+        if(chord.length > 7 && chord.includes("(")){ //　8文字以上で、コード名に'()'があるとき、'()'以降を改行して表示する。ただし '/'があれば'/'でする
+            if(chord.includes("/")){
+                const chord_name = chord.split("/"); // '/'を含む場合
+                createDiv.innerHTML = chord_name[0] + "<br>" + "/" + chord_name[1]; // "<br>"で間に改行を挟む "/" を足すのはsplitで消されてしまうから
+            }
+            else{
+                const chord_name = chord.split("("); // '('のみの場合
+                createDiv.innerHTML = chord_name[0] + "<br>" + "(" + chord_name[1]; // "<br>"で間に改行を挟む "(" を足すのはsplitで消されてしまうから
+            }
+            
+        }else{ //()を含まないとき
+            createDiv.innerHTML = chord;
+        }
         targetOfHeader.appendChild(createDiv); //header要素に子要素として作ったspanを追加
         //setLinedDistsArr((prev) => [...prev, Dists[thisStruct].map(dist => dist + Roots[thisRoot])]);
         // setLinedDistsArr((prev) => [...prev, isTempSelectedArr]);
