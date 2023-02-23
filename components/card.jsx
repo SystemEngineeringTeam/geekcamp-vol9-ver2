@@ -159,10 +159,21 @@ export default function Card(props/*:Props*/){
 
     const ClickEvent = () => { //カードがクリックされたら、ヘッダーにクリックされたカードの要素名を追加。
         const targetOfHeader = document.getElementById("lined-chords"); 
-        const childrenNum = targetOfHeader.childElementCount; //カードをクリックした時点で、ディスプレイに表示されている要素数を数える
         const createDiv = document.createElement("div"); //ヘッダーに表示する文字ごとにdiv要素を作る 
         createDiv.className = "DisplayCards"; //クラス名をDisplayCardsにしてcssでデザインを指定
-        createDiv.innerHTML = props.children;
+        if(props.children.length > 7 && props.children.includes("(")){ //　8文字以上で、コード名に'()'があるとき、'()'以降を改行して表示する。ただし '/'があれば'/'でする
+            if(props.children.includes("/")){
+                const chord_name = props.children.split("/"); // '/'を含む場合
+                createDiv.innerHTML = chord_name[0] + "<br>" + "/" + chord_name[1]; // "<br>"で間に改行を挟む "/" を足すのはsplitで消されてしまうから
+            }
+            else{
+                const chord_name = props.children.split("("); // '('のみの場合
+                createDiv.innerHTML = chord_name[0] + "<br>" + "(" + chord_name[1]; // "<br>"で間に改行を挟む "(" を足すのはsplitで消されてしまうから
+            }
+            
+        }else{ //()を含まないとき
+            createDiv.innerHTML = props.children;
+        }
         targetOfHeader.appendChild(createDiv); //header要素に子要素として作ったspanを追加
 
         //テスト
