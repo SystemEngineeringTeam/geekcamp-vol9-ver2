@@ -17,9 +17,21 @@ export const ChordDisplay = (props) => {
         { value: "simi", label: "類似" },
     ];
     /*ソート方法*/
-    // const 
+    const firstSortOptions = [
+        { value: "keyNum", label: "キー数" },
+        { value: "hitNum", label: "重複数" },
+        { value: "rootIndex", label: "ルート音" },
+    ];
 
-    const [selectBoxValue, setSelectBoxValue] = useState(narDownOptions[0]);
+    const secondSortOptions = [
+        { value: "keyNum", label: "キー数" },
+        { value: "hitNum", label: "重複数" },
+        { value: "rootIndex", label: "ルート音" },
+    ];
+
+
+    const [selectBoxValue, setSelectBoxValue] = useState(narDownOptions[0]); //絞り込み
+    const [sortTypeArr, setSortTypeArr] = useState([firstSortOptions[0], secondSortOptions[1]]); //ソート
     
 
     //ルート配列
@@ -298,16 +310,28 @@ export const ChordDisplay = (props) => {
                         .map(i => new RegExp(`[ ]${String(i)}([^0-9]|,|$)`, "d")) //正規表現の配列 //reg:正規表現
                         .reduce((result, reg) => result + (k.match(reg) !== null? 1:0), 1)}:${k}`) //一致数導出 //初期値1はルート音重複
                     .filter(s => s.split(":")[0] !== "1") //不一致除外(1はルート音)
+                    .map(s =>`${s.split(":")[0]}:${RootsArr[originRoot]}${Chords[s.split(":")[1]]}`) //連想配列にkeyを与えてコードを取り出す //3:CM7
                     .sort((s1, s2) => {
-                        //第一ソート(dist配列文字数-昇順)
-                        if (s1.split(":")[1].length > s2.split(":")[1].length) return 1;
-                        if (s1.split(":")[1].length < s2.split(":")[1].length) return -1;
-                        //第二ソート(重複数-降順)
-                        if (s1.split(":")[0] > s2.split(":")[0]) return -1;
-                        if (s1.split(":")[0] < s2.split(":")[0]) return 1;
+                        for (let i = 0; i < 2; i++) {
+                            if (sortTypeArr[i].value === "keyNum") { //キー数昇順
+                                const { structure:structure1 } = splitChord(s1.split(":")[1]);
+                                const { structure:structure2 } = splitChord(s2.split(":")[1]);
+                                if (Dists[structure1].length > Dists[structure2].length) return 1;
+                                if (Dists[structure1].length < Dists[structure2].length) return -1;
+                            } else if (sortTypeArr[i].value === "hitNum") { //重複数(降順)
+                                if (s1.split(":")[0] > s2.split(":")[0]) return -1;
+                                if (s1.split(":")[0] < s2.split(":")[0]) return 1;
+                            } else if (sortTypeArr[i].value === "rootIndex") { //ルート音昇順
+                                const { root:root1 } = splitChord(s1.split(":")[1]);
+                                const { root:root2 } = splitChord(s2.split(":")[1]);
+                                if (RootsArr.indexOf(root1) > RootsArr.indexOf(root2)) return 1;
+                                if (RootsArr.indexOf(root1) < RootsArr.indexOf(root2)) return -1;
+                            } else {
+                                return 1;
+                            }
+                        }
                         return 1;
                     }) //一致数降順ソート
-                    .map(s =>`${s.split(":")[0]}:${RootsArr[originRoot]}${Chords[s.split(":")[1]]}`) //連想配列にkeyを与えてコードを取り出す //3:CM7
                     
 
                 } else if (selectBoxValue.value === "simi") { //類似
@@ -318,25 +342,32 @@ export const ChordDisplay = (props) => {
                         return resultObj; //allParaDists, 全てのdistsパターン、ここまでは定数化してもいいかも、chordDisplayの親からpropsとして渡しても良い
                     },{}); //なぜか[]でも動いてた
                     
-
-                preChordNameList = Object.keys(allParaDistsObj)
-                    .map(chord => `${allParaDistsObj[chord]
-                            .reduce((resultMatchNum, dist) => resultMatchNum + (Number(isSelectedArr
-                                .some((select) => select === dist+isSelectedArr[0]))),0)}:${chord}`) //allParaDistsObj[chord].join(", ")
-                    .filter(s => s.split(":")[0] !== "0") //不一致除外
-                    .sort((s1, s2) => {
-                        //第一ソート(重複数-降順) //重複数最優先、その次にコードの簡単さでソートしたい
-                        if (s1.split(":")[0] > s2.split(":")[0]) return -1;
-                        if (s1.split(":")[0] < s2.split(":")[0]) return 1;
-                        //第二ソート(dist配列文字数-昇順)
-                        if (s1.split(":")[1].length > s2.split(":")[1].length) return 1;
-                        if (s1.split(":")[1].length < s2.split(":")[1].length) return -1;
-                        
-                        return 1;
-                    })
-                    // .map(s =>`${s.split(":")[0]}:${RootsArr[originRoot]}${Chords[s.split(":")[1]]}`) //連想配列にkeyを与えてコードを取り出す //3:CM7
-
-                    // console.log(tesutodesu);
+                    preChordNameList = Object.keys(allParaDistsObj)
+                        .map(chord => `${allParaDistsObj[chord]
+                                .reduce((resultMatchNum, dist) => resultMatchNum + (Number(isSelectedArr
+                                    .some((select) => select === dist+isSelectedArr[0]))),0)}:${chord}`) //allParaDistsObj[chord].join(", ")
+                        .filter(s => s.split(":")[0] !== "0") //不一致除外
+                        .sort((s1, s2) => {
+                            for (let i = 0; i < 2; i++) {
+                                if (sortTypeArr[i].value === "keyNum") { //キー数昇順
+                                    const { structure:structure1 } = splitChord(s1.split(":")[1]);
+                                    const { structure:structure2 } = splitChord(s2.split(":")[1]);
+                                    if (Dists[structure1].length > Dists[structure2].length) return 1;
+                                    if (Dists[structure1].length < Dists[structure2].length) return -1;
+                                } else if (sortTypeArr[i].value === "hitNum") { //重複数(降順)
+                                    if (s1.split(":")[0] > s2.split(":")[0]) return -1;
+                                    if (s1.split(":")[0] < s2.split(":")[0]) return 1;
+                                } else if (sortTypeArr[i].value === "rootIndex") { //ルート音昇順
+                                    const { root:root1 } = splitChord(s1.split(":")[1]);
+                                    const { root:root2 } = splitChord(s2.split(":")[1]);
+                                    if (RootsArr.indexOf(root1) > RootsArr.indexOf(root2)) return 1;
+                                    if (RootsArr.indexOf(root1) < RootsArr.indexOf(root2)) return -1;
+                                } else {
+                                    return 1;
+                                }
+                            }
+                            return 1;
+                        })
                 }
 
                 
@@ -408,7 +439,7 @@ export const ChordDisplay = (props) => {
         setHitChords(() => [...hitChordNameList]);
         setPreChords(() => [...preChordNameList]);
 
-    }, [isSelectedArr, selectBoxValue]);
+    }, [isSelectedArr, selectBoxValue, sortTypeArr]); //Selectで使用するuseState変数はここにぶち込んでおく
 
     /*Chordをrootとstructureに分解する関数*/
     const splitChord = (chord) => {
@@ -627,10 +658,25 @@ export const ChordDisplay = (props) => {
             </p>
             <div style={{ width: "250px", marginBottom: "10px"}}>
                 <Select
-                    narDownOptions={narDownOptions}
+                    options={narDownOptions}
                     defaultValue={selectBoxValue}
                     onChange={(value) => {
                     value ? setSelectBoxValue(value) : null;
+                    }}
+                />
+
+                <Select
+                    options={firstSortOptions}
+                    defaultValue={sortTypeArr[0]}
+                    onChange={(value) => {
+                    value ? setSortTypeArr((prev) => [value, prev[1]]) : null;
+                    }}
+                />
+                <Select
+                    options={secondSortOptions}
+                    defaultValue={sortTypeArr[1]}
+                    onChange={(value) => {
+                    value ? setSortTypeArr((prev) => [prev[0], value]) : null;
                     }}
                 />
             </div>
