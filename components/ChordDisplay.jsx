@@ -5,14 +5,25 @@ import { KeyTempSelectedContext } from "./startPage"
 import { IsTempContext } from "./pianoPage"
 import { useEffect, useContext, useState } from "react";
 import { LinedDistsContext } from "./startPage";
+import Select from "react-select";
 
 export const ChordDisplay = (props) => {
-    console.log("MainDisplayレンダリング");
+    console.log("ChordDisplayレンダリング");
 
     const { linedDistsArr, setLinedDistsArr } = useContext(LinedDistsContext);
+    /*絞り込み方法*/
+    const narDownOptions = [
+        { value: "simiR", label: "類似(ルート音固定)" },
+        { value: "simi", label: "類似" },
+    ];
+    /*ソート方法*/
+    // const 
 
-    //ルートリスト
-    const Roots = [
+    const [selectBoxValue, setSelectBoxValue] = useState(narDownOptions[0]);
+    
+
+    //ルート配列
+    const RootsArr = [
         "C", //0
         "Db", //1
         "D", //2
@@ -26,6 +37,46 @@ export const ChordDisplay = (props) => {
         "Bb", //10
         "B", //11
     ]; //全12個
+
+
+    const AdjustRootsArr = [
+        "F", //-7
+        "Gb", //-6
+        "G", //-5
+        "Ab", //-4
+        "A", //-3
+        "Bb", //-2
+        "B", //-1
+        "C", //0
+        "Db", //1
+        "D", //2
+        "Eb", //3
+        "E", //4
+    ]
+
+    //ファからシを1オクターブ下げたもの
+    const KeyboardRoots = {
+        "F": 29, //-7
+        "F#": 30,
+        "Gb": 30,
+        "G": 31,
+        "G#": 32,
+        "Ab": 32,
+        "A": 33,
+        "A#": 34,
+        "Bb": 34,
+        "B": 35,
+        "C": 36, //基準
+        "C#": 37,
+        "Db": 37,
+        "D": 38,
+        "D#": 39,
+        "Eb": 39,
+        "E": 40, //+4
+//全12個
+    };
+
+
     
     //コードリスト //配列をcsv文字列に変換して利用する
     const Chords = { //数字はルートからの半音の距離
@@ -184,6 +235,12 @@ export const ChordDisplay = (props) => {
 
     let hitChordNameList = []; //一致コード名リスト
     let preChordNameList = []; //予測コードリスト
+
+    //valueからkeyを取得する関数
+    const getKeyByValue = (object, value) => {
+        return Object.keys(object).find((key) => object[key] === value)
+    }
+
     /*コードの表示*/
     useEffect(() => {
         let octave;
@@ -221,51 +278,137 @@ export const ChordDisplay = (props) => {
             //配列をcsv文字例に変換
             strArray = calcFormChordArray.join(", ");
             //一致するコードのリストを生成
-            originRoot = (12+(calcNowChordArray[0]%12))%12; //正の値でRootsに対応するように //FonCが表示されなかった原因
-            if (Roots[originRoot] !== undefined && Chords[strArray] !== undefined) { //存在しない場合弾かれる
-                if ((i === calcArray.length) || ((Roots[originRoot] !== Roots[nowChordArray[0]]) && (i !== calcArray.length))) { //ConCなどを防ぐ
-                    lowestKey = (i === calcArray.length) ? "" : `/${Roots[nowChordArray[0]]}` //初回のみonはなし
-                    chordName = `${Roots[originRoot]}${Chords[strArray]}` + lowestKey;
+            originRoot = (12+(calcNowChordArray[0]%12))%12; //正の値でRootsArrに対応するように //FonCが表示されなかった原因
+            if (RootsArr[originRoot] !== undefined && Chords[strArray] !== undefined) { //存在しない場合弾かれる
+                if ((i === calcArray.length) || ((RootsArr[originRoot] !== RootsArr[nowChordArray[0]]) && (i !== calcArray.length))) { //ConCなどを防ぐ
+                    lowestKey = (i === calcArray.length) ? "" : `/${RootsArr[nowChordArray[0]]}` //初回のみonはなし
+                    chordName = `${RootsArr[originRoot]}${Chords[strArray]}` + lowestKey;
                     hitChordNameList.push(chordName);
                     if (Chords[strArray] === "dim") { //dimのみ、m(b5)の要素も作成する
-                        chordName = `${Roots[originRoot]}m(b5)` + lowestKey;
+                        chordName = `${RootsArr[originRoot]}m(b5)` + lowestKey;
                         hitChordNameList.push(chordName);
                     }
                 }
             //予測されたコードのリストを生成
             }
-            if (Roots[originRoot] !== undefined && i === calcArray.length) { //structは完全一致しないけど、一部一致したものを探そう(転回系は考えない)
-                
-                preChordNameList = Object.keys(Chords)
-                    .map(k => `${calcFormChordArray //一致数:distの配列
-                        .map(i => new RegExp(`[ ]${String(i)}([^0-9]|,|$)`, "d")) //正規表現の配列
-                        .reduce((result, reg) => result + (k.match(reg)!==null?1:0), 0)}:${k}`) //一致数導出
-                    .filter(s => s.split(":")[0] !== "0") //不一致除外
+            if (RootsArr[originRoot] !== undefined && i === calcArray.length) { //structは完全一致しないけど、一部一致したものを探そう(転回系は考えない)
+                if (selectBoxValue.value === "simiR") { //類似(ルート音固定)
+                    preChordNameList = Object.keys(Chords)
+                    .map(k => `${calcFormChordArray //一致数:構造distの配列
+                        .map(i => new RegExp(`[ ]${String(i)}([^0-9]|,|$)`, "d")) //正規表現の配列 //reg:正規表現
+                        .reduce((result, reg) => result + (k.match(reg) !== null? 1:0), 1)}:${k}`) //一致数導出 //初期値1はルート音重複
+                    .filter(s => s.split(":")[0] !== "1") //不一致除外(1はルート音)
                     .sort((s1, s2) => {
-                        //第二ソート(dist配列文字数-昇順)
+                        //第一ソート(dist配列文字数-昇順)
                         if (s1.split(":")[1].length > s2.split(":")[1].length) return 1;
                         if (s1.split(":")[1].length < s2.split(":")[1].length) return -1;
-                        //第一ソート(重複数-降順)
+                        //第二ソート(重複数-降順)
                         if (s1.split(":")[0] > s2.split(":")[0]) return -1;
                         if (s1.split(":")[0] < s2.split(":")[0]) return 1;
                         return 1;
                     }) //一致数降順ソート
-                    .map(s =>`${s.split(":")[0]}:${Roots[originRoot]}${Chords[s.split(":")[1]]}`) //連想配列にkeyを与えてコードを取り出す //3:CM7
+                    .map(s =>`${s.split(":")[0]}:${RootsArr[originRoot]}${Chords[s.split(":")[1]]}`) //連想配列にkeyを与えてコードを取り出す //3:CM7
+                    
 
-                    // preChordNameList = Object.keys(Chords)
-                    // .map(k => `${calcFormChordArray //一致数:distの配列
+                } else if (selectBoxValue.value === "simi") { //類似
+                    const allParaDistsObj = Object.values(Dists)
+                    .reduce((resultObj, distsArr) => {
+                        for (let i = -7; i < 4; i++)
+                            resultObj[AdjustRootsArr[i+7]+getKeyByValue(Dists, distsArr)] = distsArr.map(dist => dist+i); //オブジェクト[コード名] = dist配列
+                        return resultObj; //allParaDists, 全てのdistsパターン、ここまでは定数化してもいいかも、chordDisplayの親からpropsとして渡しても良い
+                    },{}); //なぜか[]でも動いてた
+                    
+
+                preChordNameList = Object.keys(allParaDistsObj)
+                    .map(chord => `${allParaDistsObj[chord]
+                            .reduce((resultMatchNum, dist) => resultMatchNum + (Number(isSelectedArr
+                                .some((select) => select === dist+isSelectedArr[0]))),0)}:${chord}`) //allParaDistsObj[chord].join(", ")
+                    .filter(s => s.split(":")[0] !== "0") //不一致除外
+                    .sort((s1, s2) => {
+                        //第一ソート(重複数-降順) //重複数最優先、その次にコードの簡単さでソートしたい
+                        if (s1.split(":")[0] > s2.split(":")[0]) return -1;
+                        if (s1.split(":")[0] < s2.split(":")[0]) return 1;
+                        //第二ソート(dist配列文字数-昇順)
+                        if (s1.split(":")[1].length > s2.split(":")[1].length) return 1;
+                        if (s1.split(":")[1].length < s2.split(":")[1].length) return -1;
+                        
+                        return 1;
+                    })
+                    // .map(s =>`${s.split(":")[0]}:${RootsArr[originRoot]}${Chords[s.split(":")[1]]}`) //連想配列にkeyを与えてコードを取り出す //3:CM7
+
+                    // console.log(tesutodesu);
+                }
+
+                
+                
+                    // let allParaDists = []; //isSelectedArr(選択されているキー)を全てのルートを通るように平行移動したdistの配列
+                    // for (let i = -7; i < 4; i++) 
+                    //     allParaDists.push(isSelectedArr.map(dist => dist + i));
+                    
+                    // let testdesu = allParaDists.map(arr => arr
+                    //     .map(k => `${calcFormChordArray //一致数:構造distの配列
                     //     .map(i => new RegExp(`[ ]${String(i)}([^0-9]|,|$)`, "d")) //正規表現の配列
-                    //     .reduce((result, reg) => result + (k.match(reg)!==null?1:0), 0)}:${k}`) //一致数導出
+                    //     .reduce((result, reg) => result + (k.match(reg)!==null?1:0), 0)}
+                    //     :${k}`) //一致数導出
+                    //     )
+                    
+                    //     console.log(testdesu);
+                
+                
+
+                
+
+                    // console.log(tesutodesu);
+                    // console.log(preChordNameList)
+                    // .map(s =>`${s.split(":")[0]}:${RootsArr[originRoot]}${Chords[s.split(":")[1]]}`) //連想配列にkeyを与えてコードを取り出す //3:CM7
+
+                    // .map(distsArr => `${distsArr
+                    //     .reduce((resultMatchNum, dist) => resultMatchNum + (Number(isSelectedArr
+                    //         .some((select) => select === dist+isSelectedArr[0])))
+                    //         ,0)}:${Chords[distsArr.join(",")]}`);
+
+                    // .reduce((resultMatchNum, distsArr) => resultMatchNum + )
+                    
+
+
+
+                    // let tesutodesu = Object.values(Dists)
+                    // .reduce((resultArr, distsArr) => {
+                    //     for (let i = -7; i < 4; i++)
+                    //         resultArr.push(distsArr.map(dist => dist+i));
+                    //     return resultArr; //allParaDists, 全てのdistsパターン、ここまでは定数化してもいいかも、chordDisplayの親からpropsとして渡しても良い
+                    // },[]) //{} //文字例dist:るーと？
+                    // .map(distsArr => `${distsArr
+                    //     .reduce((resultMatchNum, dist) => resultMatchNum + (Number(isSelectedArr
+                    //         .some((select) => select === dist+isSelectedArr[0])))
+                    //         ,0)}:${Chords[distsArr.join(",")]}`);
+
+
+
+                    // .map(k => `${calcFormChordArray //一致数:構造distの配列
+                    //     .map(i => new RegExp(`[ ]${String(i)}([^0-9]|,|$)`, "d")) //正規表現の配列
+                    //     .reduce((result, reg) => result + (k.match(reg)!==null?1:0), 0)}
+                    //     :${k}`) //一致数導出
                     // .filter(s => s.split(":")[0] !== "0") //不一致除外
-                    // .sort((s1, s2) => s2.split(":")[0] - s1.split(":")[0]) //一致数降順ソート
-                    // .map(s =>`${s.split(":")[0]}:${Roots[originRoot]}${Chords[s.split(":")[1]]}`) //連想配列にkeyを与えてコードを取り出す //3:CM7
+                    // .sort((s1, s2) => {
+                    //     //第二ソート(dist配列文字数-昇順)
+                    //     if (s1.split(":")[1].length > s2.split(":")[1].length) return 1;
+                    //     if (s1.split(":")[1].length < s2.split(":")[1].length) return -1;
+                    //     //第一ソート(重複数-降順)
+                    //     if (s1.split(":")[0] > s2.split(":")[0]) return -1;
+                    //     if (s1.split(":")[0] < s2.split(":")[0]) return 1;
+                    //     return 1;
+                    // }) //一致数降順ソート
+                    // .map(s =>`${s.split(":")[0]}:${RootsArr[originRoot]}${Chords[s.split(":")[1]]}`) //連想配列にkeyを与えてコードを取り出す //3:CM7
+                    
+                
             }
         }
 
         setHitChords(() => [...hitChordNameList]);
         setPreChords(() => [...preChordNameList]);
 
-    }, [isSelectedArr]);
+    }, [isSelectedArr, selectBoxValue]);
 
     /*Chordをrootとstructureに分解する関数*/
     const splitChord = (chord) => {
@@ -281,15 +424,25 @@ export const ChordDisplay = (props) => {
 
     /*コードを選択*/
     const registChord = (chord) => {
-        if (chord.indexOf("/") !== -1) {
+        if (chord.indexOf("/") !== -1) { //転回系か
             [ chord ] = chord.split("/");
             setIsSelectedArr((prev) => [...prev]); //転回系は確定で前鳴ったやつと同じ
         } else {
-            const { structure } = splitChord(chord); //このときルートは必要ない
-            //上書き用の配列を作成
-            const newSelectedArr = [...Dists[structure]]; //0,3,7
-            if (newSelectedArr !== null || newSelectedArr !== undefined) {
-                setIsSelectedArr(() => [...newSelectedArr.map(dist => dist + isSelectedArr[0])]);
+            const { root, structure } = splitChord(chord);
+            
+            if (root === RootsArr[isSelectedArr[0]%12]) { //キーボードから選択されたルート音とカードに記入されたコード名のルート音は等しいか
+                //上書き用の配列を作成
+                const newSelectedArr = [...Dists[structure]]; //0,3,7
+                if (newSelectedArr !== null || newSelectedArr !== undefined) {
+                    setIsSelectedArr(() => [...newSelectedArr.map(dist => dist + isSelectedArr[0])]); //キーボードから選択されたルート音を足す
+                }
+            } else {
+                // KeyboardRoots[root] //キーボード上でのルート音、これを全部のdistに足していけば良い
+                //上書き用の配列を作成
+                const newSelectedArr = [...Dists[structure]]; //0,3,7
+                if (newSelectedArr !== null || newSelectedArr !== undefined) {
+                    setIsSelectedArr(() => [...newSelectedArr.map(dist => dist + KeyboardRoots[root])]);
+                }
             }
         }
     }
@@ -300,11 +453,27 @@ export const ChordDisplay = (props) => {
             [ chord ] = chord.split("/");
             setIsTempSelectedArr(() => [...isSelectedArr]); //ここ違うので注意、本選択と同じ
         } else {
-            const { structure } = splitChord(chord); //このときルートは必要ない
-            //上書き用の配列を作成
-            const newSelectedArr = [...Dists[structure]]; //0,3,7
-            if (newSelectedArr !== null || newSelectedArr !== undefined) {
-                setIsTempSelectedArr(() => [...newSelectedArr.map(dist => dist + isSelectedArr[0])]);
+            // const { structure } = splitChord(chord); //このときルートは必要ない
+            // //上書き用の配列を作成
+            // const newSelectedArr = [...Dists[structure]]; //0,3,7
+            // if (newSelectedArr !== null || newSelectedArr !== undefined) {
+            //     setIsTempSelectedArr(() => [...newSelectedArr.map(dist => dist + isSelectedArr[0])]);
+            // }
+            const { root, structure } = splitChord(chord);
+            
+            if (root === RootsArr[isSelectedArr[0]%12]) { //キーボードから選択されたルート音とカードに記入されたコード名のルート音は等しいか
+                //上書き用の配列を作成
+                const newSelectedArr = [...Dists[structure]]; //0,3,7
+                if (newSelectedArr !== null || newSelectedArr !== undefined) {
+                    setIsTempSelectedArr(() => [...newSelectedArr.map(dist => dist + isSelectedArr[0])]); //キーボードから選択されたルート音を足す
+                }
+            } else {
+                // KeyboardRoots[root] //キーボード上でのルート音、これを全部のdistに足していけば良い
+                //上書き用の配列を作成
+                const newSelectedArr = [...Dists[structure]]; //0,3,7
+                if (newSelectedArr !== null || newSelectedArr !== undefined) {
+                    setIsTempSelectedArr(() => [...newSelectedArr.map(dist => dist + KeyboardRoots[root])]);
+                }
             }
         }
         setIsTemp(() => true);
@@ -343,7 +512,7 @@ export const ChordDisplay = (props) => {
         createDiv.innerHTML = chord;
         console.log("コード名" + chord);
         targetOfHeader.appendChild(createDiv); //header要素に子要素として作ったspanを追加
-        //setLinedDistsArr((prev) => [...prev, Dists[thisStruct].map(dist => dist + Roots[thisRoot])]);
+        //setLinedDistsArr((prev) => [...prev, Dists[thisStruct].map(dist => dist + RootsArr[thisRoot])]);
         // setLinedDistsArr((prev) => [...prev, isTempSelectedArr]);
         setLinedDistsArr((prev) => {
             prev[chord] = [...isTempSelectedArr];
@@ -425,14 +594,14 @@ export const ChordDisplay = (props) => {
                                 cancelTempSelect(splited_element[1]);
                                             }
                             }
-                            onDoubleClick={() => registChord(splited_element[1])}
+                            onDoubleClick={() => registChord(splited_element[1])} /* 推測コード名が入ってるはず */
                             onClick={() => addToDisplay(splited_element[1])}
                             style={subChordsStyle}>
                         <div style={{height: "30px"}}>
                             {splited_element[1]}
                         </div>
                         <div style={{fontSize: "15px", margin: "0px"}}>
-                            (重複数:{Number(splited_element[0])+1 })
+                            (重複数:{Number(splited_element[0]) }) {/* あとでなおす */}
                         </div>
                     </span>;
                     
@@ -444,6 +613,8 @@ export const ChordDisplay = (props) => {
     });
 
 
+    
+    
 
 //{elemArr.map(e => e)}
 //後でCSS持ってくる
@@ -454,6 +625,15 @@ export const ChordDisplay = (props) => {
             <p id="main-display">
                 {hitElemArr.map(e => e)}
             </p>
+            <div style={{ width: "250px", marginBottom: "10px"}}>
+                <Select
+                    narDownOptions={narDownOptions}
+                    defaultValue={selectBoxValue}
+                    onChange={(value) => {
+                    value ? setSelectBoxValue(value) : null;
+                    }}
+                />
+            </div>
             <div className="display_status">類似するコード({preChords.length}個):</div>
             <p id="sub-display">
                 {preElemArr.map(e => e)}
