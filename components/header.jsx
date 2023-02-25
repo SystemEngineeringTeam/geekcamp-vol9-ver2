@@ -8,6 +8,7 @@ import { LinedDistsContext } from "./startPage";
 // import { KeyTempSelectedContext } from "./startPage";
 import { KeySelectedContext } from "./startPage";
 // import { SortChordArrContext } from "./startPage";
+import { selectBoxValueContext } from "./startPage";
 
 
 export const Header = () => {
@@ -16,7 +17,13 @@ export const Header = () => {
     const { linedDistsArr, setLinedDistsArr } = useContext(LinedDistsContext);
     // const { sortChordArr, setSortChordArr } = useContext(SortChordArrContext);
     const { isSelectedArr, setIsSelectedArr } = useContext(KeySelectedContext); //本
+    const {selectBoxValue, setSelectBoxValue} = useContext(selectBoxValueContext); //絞り込み
     
+    // /*絞り込み方法*/ //startpageに移動
+    const narDownOptions = [
+        { value: "simiR", label: "類似(ルート音固定)" },
+        { value: "simi", label: "類似" },
+    ];
 
     const styleDisplayCardDummy/* : { [key: string]: string }  */= {
         position: "relative",
@@ -80,6 +87,8 @@ export const Header = () => {
     const playDisplay = () => { //表示されている要素にひとつずつイベントを起こしていく
         const nowIndexArr = document.getElementsByClassName("DisplayCards"); //今の順番を取得
         const NumOfDisplayCrads = nowIndexArr.length; //今のディスプレイカードの枚数を保持する
+        setSelectBoxValue(() => narDownOptions[0]); //再生したら、絞り込みをルート固定にする
+
         for(let i=0; i<NumOfDisplayCrads; i++) { //DisplayCardを上から順に取得して処理をしていく
             if(i == 0){ //一個目はすぐに色を変える
                 nowIndexArr[i].style.backgroundColor = "orange";
@@ -107,7 +116,6 @@ export const Header = () => {
                     nowIndexArr[i]/* ! */.style.backgroundColor = "#FFFFFF";
                 }, (i+1) * 1000);
             }
-            
             
         }
         

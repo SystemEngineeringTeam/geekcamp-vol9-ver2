@@ -10,14 +10,21 @@ export const LinedDistsContext = createContext({});
 export const KeySelectedContext = createContext({});
 export const KeyTempSelectedContext = createContext({});
 export const SortChordArrContext = createContext({});
-
+export const selectBoxValueContext = createContext({});
 
 export default function StartPage(){
+    /*絞り込み方法*/
+    const narDownOptions = [
+        { value: "simiR", label: "類似(ルート音固定)" },
+        { value: "simi", label: "類似" },
+    ];
+
     const [mode, setMode] = useState(0); // 0:辞書モード, 1:ピアノモード upperHeaderとgridとpianoに渡す upperHeaderでsetしてその状態によってgrid, Pianoの状態を管理する
     const [ linedDistsArr, setLinedDistsArr ] = useState({}); //dist参照用連想配列
     const [sortChordArr, setSortChordArr] = useState([]); //ソート用キー配列、上に与える
     const [isSelectedArr, setIsSelectedArr] = useState([]); //本
     const [isTempSelectedArr, setIsTempSelectedArr] = useState([]); //仮
+    const [selectBoxValue, setSelectBoxValue] = useState(narDownOptions[0]); //絞り込み
     
     const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -82,6 +89,7 @@ export default function StartPage(){
 
     return( 
         <>
+            <selectBoxValueContext.Provider value={{selectBoxValue, setSelectBoxValue}}>
                 <SortChordArrContext.Provider value={{sortChordArr, setSortChordArr}}>
                     <KeySelectedContext.Provider value={{isSelectedArr, setIsSelectedArr}}>
                         <KeyTempSelectedContext.Provider value={{isTempSelectedArr, setIsTempSelectedArr}}>
@@ -131,6 +139,7 @@ export default function StartPage(){
                         </KeyTempSelectedContext.Provider>
                     </KeySelectedContext.Provider>
                 </SortChordArrContext.Provider>
+            </selectBoxValueContext.Provider>
         </>
         
     )

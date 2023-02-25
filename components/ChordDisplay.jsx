@@ -5,13 +5,15 @@ import { KeyTempSelectedContext } from "./startPage"
 import { IsTempContext } from "./pianoPage"
 import { useEffect, useContext, useState } from "react";
 import { LinedDistsContext } from "./startPage";
+import { selectBoxValueContext } from "./startPage";
 import Select from "react-select";
+
 
 export const ChordDisplay = (props) => {
     console.log("ChordDisplayレンダリング");
 
     const { linedDistsArr, setLinedDistsArr } = useContext(LinedDistsContext);
-    /*絞り込み方法*/
+    // /*絞り込み方法*/ //startpageに移動
     const narDownOptions = [
         { value: "simiR", label: "類似(ルート音固定)" },
         { value: "simi", label: "類似" },
@@ -30,7 +32,7 @@ export const ChordDisplay = (props) => {
     ];
 
 
-    const [selectBoxValue, setSelectBoxValue] = useState(narDownOptions[0]); //絞り込み
+    const {selectBoxValue, setSelectBoxValue} = useContext(selectBoxValueContext); //絞り込み
     const [sortTypeArr, setSortTypeArr] = useState([firstSortOptions[0], secondSortOptions[1]]); //ソート
     
 
@@ -348,6 +350,8 @@ export const ChordDisplay = (props) => {
                                     .some((select) => select === dist+isSelectedArr[0]))),0)}:${chord}`) //allParaDistsObj[chord].join(", ")
                         .filter(s => s.split(":")[0] !== "0") //不一致除外
                         .sort((s1, s2) => {
+                            const { root:root1 } = splitChord(s1.split(":")[1]);
+                            const { root:root2 } = splitChord(s2.split(":")[1]);
                             for (let i = 0; i < 2; i++) {
                                 if (sortTypeArr[i].value === "keyNum") { //キー数昇順
                                     const { structure:structure1 } = splitChord(s1.split(":")[1]);
@@ -358,14 +362,16 @@ export const ChordDisplay = (props) => {
                                     if (s1.split(":")[0] > s2.split(":")[0]) return -1;
                                     if (s1.split(":")[0] < s2.split(":")[0]) return 1;
                                 } else if (sortTypeArr[i].value === "rootIndex") { //ルート音昇順
-                                    const { root:root1 } = splitChord(s1.split(":")[1]);
-                                    const { root:root2 } = splitChord(s2.split(":")[1]);
+                                    // const { root:root1 } = splitChord(s1.split(":")[1]);
+                                    // const { root:root2 } = splitChord(s2.split(":")[1]);
                                     if (RootsArr.indexOf(root1) > RootsArr.indexOf(root2)) return 1;
                                     if (RootsArr.indexOf(root1) < RootsArr.indexOf(root2)) return -1;
                                 } else {
                                     return 1;
                                 }
                             }
+                            if (RootsArr.indexOf(root1) > RootsArr.indexOf(root2)) return 1; //第三ソートにルート音ソート
+                            if (RootsArr.indexOf(root1) < RootsArr.indexOf(root2)) return -1;
                             return 1;
                         })
                 }
@@ -606,12 +612,14 @@ export const ChordDisplay = (props) => {
         else if (nameOfChord.includes("B")) return "#FFE0F0";
     }
 
-    const subChordsStyle = {
-    };
+    // const subChordsStyle = {
+    // };
 
     preChords.map(s => s.split(":")).forEach((splited_element, i) => { //splited_elementの中はString型のarray [重複数, 推測コード名]
+        const subChordsStyle = {};
+
         //----コードによって表示する背景を変える↓--------
-        subChordsStyle["backgroundColor"] = judge_color(splited_element[1]);
+        subChordsStyle["backgroundColor"] = judge_color(splited_element[1]); //正常な値
         //----コードによって表示する背景を変える↑--------
         const elem = <span key={i}
                             className="sub"
@@ -627,7 +635,7 @@ export const ChordDisplay = (props) => {
                             }
                             onDoubleClick={() => registChord(splited_element[1])} /* 推測コード名が入ってるはず */
                             onClick={() => addToDisplay(splited_element[1])}
-                            style={subChordsStyle}>
+                            style={subChordsStyle}> {/* 上書きされてる? */}
                         <div style={{height: "30px"}}>
                             {splited_element[1]}
                         </div>
@@ -646,6 +654,11 @@ export const ChordDisplay = (props) => {
 
     
     
+    // const preChords_in_html = document.getElementByClassName('sub');
+    // Array.prototype.forEach.call(preChords_in_html, () => {
+    //     const chord_color = judge_color(preChords_card.innerHTML);
+    //     preChords_card.style.backgroundColor = chord_color;
+    // });
 
 //{elemArr.map(e => e)}
 //後でCSS持ってくる
