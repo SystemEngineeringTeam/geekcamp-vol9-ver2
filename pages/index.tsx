@@ -7,8 +7,9 @@ import { render } from 'react-dom';
 import  StartPage  from "../components/startPage";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+// document.oncontextmenu = () => false; //右クリック禁止
+
 export default function Home() {
-    
     return (
     <>
         <Head>

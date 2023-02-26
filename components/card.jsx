@@ -187,17 +187,19 @@ export default function Card(props/*:Props*/){
     const ClickEvent = () => { //カードがクリックされたら、ヘッダーにクリックされたカードの要素名を追加。
         const targetOfHeader = document.getElementById("lined-chords"); 
         const childrenNum = targetOfHeader.childElementCount; //カードをクリックした時点で、ディスプレイに表示されている要素数を数える
-        const liElem = document.createElement("li"); //ソート用のリスト、この中に下のdiv要素を追加する
-        liElem.draggable = true;
-        // addDragFuncs(liElem);
         const createDiv = document.createElement("div"); //ヘッダーに表示する文字ごとにdiv要素を作る 
         createDiv.className = "DisplayCards"; //クラス名をDisplayCardsにしてcssでデザインを指定
         createDiv.innerHTML = props.children;
+        //////
+        const liElem = document.createElement("li"); //ソート用のリスト、この中に下のdiv要素を追加する
+        liElem.draggable = true;
         liElem.appendChild(createDiv);
         const dummyElem = document.getElementById("dummy"); //ダミー取得
-        dummyElem.before(liElem);
-        // targetOfHeader.appendChild(liElem); //header要素に子要素として作ったspanを追加 //ダミーの前に設置したい
+        dummyElem.before(liElem); //ダミーの前に追加
         document.querySelectorAll("#lined-chords li").forEach(addDragFuncs); //drag関数を付与、更新
+        //////
+        // targetOfHeader.appendChild(liElem); //header要素に子要素として作ったspanを追加 //ダミーの前に設置したい
+        
         // targetOfHeader.appendChild(createDiv); //header要素に子要素として作ったspanを追加
         //テスト
         const { root:thisRoot, structure:thisStruct } = splitChord(props.children);

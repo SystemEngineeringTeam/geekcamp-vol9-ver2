@@ -10,6 +10,7 @@ import Select from "react-select";
 
 
 export const ChordDisplay = (props) => {
+    let DraggingElem;
     console.log("ChordDisplayレンダリング");
 
     const { linedDistsArr, setLinedDistsArr } = useContext(LinedDistsContext);
@@ -540,6 +541,33 @@ export const ChordDisplay = (props) => {
         lineHeight: "100px", /* 重なり回避用 */
     };
 
+    /*dragに関する4つの関数を付与する関数*/
+    const addDragFuncs = (elem) => { //4つの関数を付与
+        elem.ondragstart = () => { //ドラッグスタート
+            event.dataTransfer.setData('text/plain', event.target.id);
+            DraggingElem = elem;
+        };
+
+        elem.ondragover = () => { //どこにドロップするかの目印をつける
+            event.preventDefault();
+            elem.style.marginLeft = '10px';
+        };
+
+        elem.ondragleave = () => { //目印解除
+            elem.style.marginLeft = '';
+        };
+
+        elem.ondrop = () => {
+            event.preventDefault();
+            // let id = event.dataTransfer.getData('text/plain');
+            const listElem = document.getElementById("lined-chords");
+            // console.log(listElem);
+            // console.log(elem);
+            listElem.insertBefore(DraggingElem, elem);
+            elem.style.marginLeft = '';
+        };
+    }
+
     //cardよりコピペ
     const addToDisplay = (chord) => { //カードがクリックされたら、ヘッダーにクリックされたカードの要素名を追加。 ヘッダーを親要素としてspanタグを子要素に加えて追加していく。
         const targetOfHeader = document.getElementById("lined-chords"); 
@@ -548,7 +576,13 @@ export const ChordDisplay = (props) => {
         createDiv.className = "DisplayCards"; //クラス名をDisplayCardsにしてcssでデザインを指定.
         createDiv.innerHTML = chord;
         console.log("コード名" + chord);
-        targetOfHeader.appendChild(createDiv); //header要素に子要素として作ったspanを追加
+        const liElem = document.createElement("li"); //ソート用のリスト、この中に下のdiv要素を追加する
+        liElem.draggable = true;
+        liElem.appendChild(createDiv);
+        const dummyElem = document.getElementById("dummy"); //ダミー取得
+        dummyElem.before(liElem); //ダミーの前に追加
+        document.querySelectorAll("#lined-chords li").forEach(addDragFuncs); //drag関数を付与、更新
+        // targetOfHeader.appendChild(createDiv); //header要素に子要素として作ったspanを追加
         //setLinedDistsArr((prev) => [...prev, Dists[thisStruct].map(dist => dist + RootsArr[thisRoot])]);
         // setLinedDistsArr((prev) => [...prev, isTempSelectedArr]);
         setLinedDistsArr((prev) => {
