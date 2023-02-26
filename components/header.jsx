@@ -150,8 +150,9 @@ export const Header = () => {
                 <Button variant="success" style={styleButton} onClick={playDisplay} >再生<div>sキー</div></Button>
                 <Button variant="danger" style={styleButton} onClick={cleanDisplay} >リセット<div>cキー</div></Button>
                 <span></span>
+                <div style={{height: "30px"}}></div>
                 <ul id="lined-chords">
-                <div style={styleDisplayCardDummy}></div> {/* ダミー */}
+                <li id='dummy'><div style={styleDisplayCardDummy}></div></li> {/* ダミー */}
                 </ul>
             </div>
             <div id="adjust"></div>

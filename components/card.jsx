@@ -17,7 +17,7 @@ import { ReactDOM } from "react";
 
 
 export default function Card(props/*:Props*/){
-
+    let DraggingElem;
     const [isHovered, setIsHovered] = useState(false);
 
     const { linedDistsArr, setLinedDistsArr } = useContext(LinedDistsContext);
@@ -145,6 +145,33 @@ export default function Card(props/*:Props*/){
         margin : "0px 16px",
     }
 
+    /*dragに関する4つの関数を付与する関数*/
+    const addDragFuncs = (elem) => { //4つの関数を付与
+        elem.ondragstart = () => { //ドラッグスタート
+            event.dataTransfer.setData('text/plain', event.target.id);
+            DraggingElem = elem;
+        };
+
+        elem.ondragover = () => { //どこにドロップするかの目印をつける
+            event.preventDefault();
+            elem.style.marginLeft = '10px';
+        };
+
+        elem.ondragleave = () => { //目印解除
+            elem.style.marginLeft = '';
+        };
+
+        elem.ondrop = () => {
+            event.preventDefault();
+            // let id = event.dataTransfer.getData('text/plain');
+            const listElem = document.getElementById("lined-chords");
+            // console.log(listElem);
+            // console.log(elem);
+            listElem.insertBefore(DraggingElem, elem);
+            elem.style.marginLeft = '';
+        };
+    }
+
     /*Chordをrootとstructureに分解する関数*/
     const splitChord = (chord) => {
         let root = chord.slice(0, 2); //先頭2文字 //仮のルート、実際は使わない
@@ -160,11 +187,18 @@ export default function Card(props/*:Props*/){
     const ClickEvent = () => { //カードがクリックされたら、ヘッダーにクリックされたカードの要素名を追加。
         const targetOfHeader = document.getElementById("lined-chords"); 
         const childrenNum = targetOfHeader.childElementCount; //カードをクリックした時点で、ディスプレイに表示されている要素数を数える
+        const liElem = document.createElement("li"); //ソート用のリスト、この中に下のdiv要素を追加する
+        liElem.draggable = true;
+        // addDragFuncs(liElem);
         const createDiv = document.createElement("div"); //ヘッダーに表示する文字ごとにdiv要素を作る 
         createDiv.className = "DisplayCards"; //クラス名をDisplayCardsにしてcssでデザインを指定
         createDiv.innerHTML = props.children;
-        targetOfHeader.appendChild(createDiv); //header要素に子要素として作ったspanを追加
-
+        liElem.appendChild(createDiv);
+        const dummyElem = document.getElementById("dummy"); //ダミー取得
+        dummyElem.before(liElem);
+        // targetOfHeader.appendChild(liElem); //header要素に子要素として作ったspanを追加 //ダミーの前に設置したい
+        document.querySelectorAll("#lined-chords li").forEach(addDragFuncs); //drag関数を付与、更新
+        // targetOfHeader.appendChild(createDiv); //header要素に子要素として作ったspanを追加
         //テスト
         const { root:thisRoot, structure:thisStruct } = splitChord(props.children);
         // linedDistsArr[props.children] = Dists[thisStruct].map(dist => dist + Roots[thisRoot])

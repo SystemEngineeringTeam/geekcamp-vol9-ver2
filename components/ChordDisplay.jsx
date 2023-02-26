@@ -557,6 +557,10 @@ export const ChordDisplay = (props) => {
         });
     }
 
+    const resetKeys = () => {
+        setIsSelectedArr(() => []);
+    }
+
 
     hitChords.forEach((chord, i) => {
         //----コードによって表示する背景を変える↓--------
@@ -652,19 +656,12 @@ export const ChordDisplay = (props) => {
     });
 
 
-    
-    
-    // const preChords_in_html = document.getElementByClassName('sub');
-    // Array.prototype.forEach.call(preChords_in_html, () => {
-    //     const chord_color = judge_color(preChords_card.innerHTML);
-    //     preChords_card.style.backgroundColor = chord_color;
-    // });
-
 //{elemArr.map(e => e)}
 //後でCSS持ってくる
 
     return (
         <>
+            <button onClick={() => resetKeys()}>キー選択解除</button>
             <div className="display_status">一致するコード:</div>
             <p id="main-display">
                 {hitElemArr.map(e => e)}
