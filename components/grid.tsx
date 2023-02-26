@@ -1,6 +1,7 @@
 import Card from "./card"
 import { useGetSoundPlayer } from "../hooks/useGetSoundPlayer";
 import { useGetNoteList, usePlay, useStop } from '../hooks/useChordPlayer';
+import { createContext, useState } from "react";
 
 
 export const Grid = (props:any) => {
@@ -255,7 +256,7 @@ export const Grid = (props:any) => {
 
     return (
         <div id="gridParent" style={gridStyle}>
-            {CardArr.map(e => e)}
+        {CardArr.map(e => e)}
         </div>
     );
         

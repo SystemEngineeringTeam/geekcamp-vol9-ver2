@@ -1,12 +1,19 @@
 
 import { Key } from "./Key";
-import { memo, useContext  } from "react";
-import { KeySelectedContext } from "./pianoPage";
+import { memo, useContext } from "react";
+import { useRef, useEffect } from "react";
+import { KeySelectedContext } from "./startPage";
+import { KeyTempSelectedContext } from "./startPage";
+import { useGetSoundPlayer } from "../hooks/useGetSoundPlayer";
+
 
 //ここから音が出てる
 export const Keyboard = memo(() => {
     console.log("Keyboardレンダリング");
     // const keyboard = document.getElementById('pianokeyboard');
+const {PlayFuncs, StopFuncs} = useGetSoundPlayer();
+    const { isSelectedArr, setIsSelectedArr } = useContext(KeySelectedContext);
+    const { isTempSelectedArr, setIsTempSelectedArr } = useContext(KeyTempSelectedContext);
     
     const cofList = [
         "Gb", //0
@@ -44,6 +51,59 @@ export const Keyboard = memo(() => {
     const blackwidth = 27; //width + 2
     const blackoffsets = Array(5).fill(blackwidth)
         .map((w, i) => i > 1 ? (w / i) : (w - w / (4 - i))); //黒鍵ずらし
+
+
+    //selectが変更された時にplay実行
+    const prevArrRef = useRef([]);
+    const prevArr = prevArrRef.current; //前のArrを保持
+
+    useEffect(() => {
+        console.log("今の音: " + isSelectedArr);
+        console.log("前の音: " + prevArr);
+        prevArr
+            .filter(dist1 => !(isSelectedArr
+                .reduce((result, dist2) => result || (dist1 === dist2), false)))
+            .forEach((dist) => {
+                console.log(dist);
+                StopFuncs[dist]()
+            });
+
+        isSelectedArr.sort(); //昇順ソート
+        // if (isSelectedArr.length > prevArr.length)
+            isSelectedArr.forEach((dist) => PlayFuncs[dist]()); //再生
+        prevArrRef.current = [...isSelectedArr];console.log("今の音: " + isSelectedArr);
+
+        /*
+        console.log("前の音: " + prevArr);
+        prevArr.forEach((dist) => StopFuncs[dist]()); //前の音を止める
+        isSelectedArr.sort(); //昇順ソート
+        if (isSelectedArr.length > prevArr.length)
+            isSelectedArr.forEach((dist) => PlayFuncs[dist]()); //再生
+        prevArrRef.current = [...isSelectedArr];// displayChord(isSelectedArr);
+        */
+
+    }, [isSelectedArr]);
+    //[isSelectedArr]いらないっぽい //※要ります
+    
+    /*音を鳴らす(仮)*/
+    useEffect(() => {
+        console.log("今の音: " + isTempSelectedArr);
+        console.log("前の音: " + prevArr);
+        prevArr
+            .filter(dist1 => !(isTempSelectedArr
+                .reduce((result, dist2) => result || (dist1 === dist2), false)))
+            .forEach((dist) => {
+                console.log(dist);
+                StopFuncs[dist]()
+            });
+
+        isTempSelectedArr.sort(); //昇順ソート
+        // if (isTempSelectedArr.length > prevArr.length)
+            isTempSelectedArr.forEach((dist) => PlayFuncs[dist]()); //再生
+        prevArrRef.current = [...isTempSelectedArr];
+        console.log("今の音: " + isTempSelectedArr);
+
+    }, [isTempSelectedArr]);
 
     //キーボード描画
     //Array(要素数).fill()で初期化

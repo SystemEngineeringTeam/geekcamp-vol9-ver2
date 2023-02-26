@@ -1,13 +1,31 @@
 import { Grid } from "./grid";
 import  Header  from "./header";
 import UpperHeader from "./upperHeader";
-import { useState, useRef } from "react";
+import { useState, useRef, createContext } from "react";
 import { Player, PlayerEvent } from "@lottiefiles/react-lottie-player";
 import { Button } from 'react-bootstrap';
 import PianoPage from "./pianoPage";
 
+export const LinedDistsContext = createContext({});
+export const KeySelectedContext = createContext({});
+export const KeyTempSelectedContext = createContext({});
+export const SortChordArrContext = createContext({});
+export const selectBoxValueContext = createContext({});
+
 export default function StartPage(){
+    /*絞り込み方法*/
+    const narDownOptions = [
+        { value: "simiR", label: "類似(ルート音固定)" },
+        { value: "simi", label: "類似" },
+    ];
+
     const [mode, setMode] = useState(0); // 0:辞書モード, 1:ピアノモード upperHeaderとgridとpianoに渡す upperHeaderでsetしてその状態によってgrid, Pianoの状態を管理する
+    const [ linedDistsArr, setLinedDistsArr ] = useState({}); //dist参照用連想配列
+    const [sortChordArr, setSortChordArr] = useState([]); //ソート用キー配列、上に与える
+    const [isSelectedArr, setIsSelectedArr] = useState([]); //本
+    const [isTempSelectedArr, setIsTempSelectedArr] = useState([]); //仮
+    const [selectBoxValue, setSelectBoxValue] = useState(narDownOptions[0]); //絞り込み
+    
     const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
     const playerRef = useRef<Player>(null);
@@ -71,48 +89,57 @@ export default function StartPage(){
 
     return( 
         <>
+            <selectBoxValueContext.Provider value={{selectBoxValue, setSelectBoxValue}}>
+                <SortChordArrContext.Provider value={{sortChordArr, setSortChordArr}}>
+                    <KeySelectedContext.Provider value={{isSelectedArr, setIsSelectedArr}}>
+                        <KeyTempSelectedContext.Provider value={{isTempSelectedArr, setIsTempSelectedArr}}>
+                            <LinedDistsContext.Provider value={{linedDistsArr, setLinedDistsArr}}>
+                                <Player
+                                    autoplay
+                                    loop
+                                    className="loading"
+                                    src="https://assets1.lottiefiles.com/datafiles/DlRM2jtACyr4IX1u6l5rqtW1QWZKLCkNoBIXWeyH/loading.json"
+                                    style={
+                                        loadingStyle
+                                    }
+                                    ref={
+                                        playerRef
+                                    }
+                                    onEvent={
+                                        endLoading
+                                    }
+                                />
 
-            <Player
-                autoplay
-                loop
-                className="loading"
-                src="https://assets1.lottiefiles.com/datafiles/DlRM2jtACyr4IX1u6l5rqtW1QWZKLCkNoBIXWeyH/loading.json"
-                style={
-                    loadingStyle
-                }
-                ref={
-                    playerRef
-                }
-                onEvent={
-                    endLoading
-                }
-            />
+                                <Button 
+                                    variant="primary"
+                                    style={
+                                        styleButton
+                                    } 
+                                    ref={
+                                        buttonEL
+                                    }
+                                    onClick={
+                                        removeStartPage
+                                    }
+                                    className="disappered"
+                                    id="startButton"
+                                >
+                                    START
+                                </Button>
 
-            <Button 
-                variant="primary"
-                style={
-                    styleButton
-                } 
-                ref={
-                    buttonEL
-                }
-                onClick={
-                    removeStartPage
-                }
-                className="disappered"
-                id="startButton"
-            >
-                START
-            </Button>
-
-            <div style={startPage} ref={startPageEL} className="disappered"></div>
-            
-            <div className="d-flex flex-row w-100" style={{zIndex: "0",position: "absolute" , width: "100%"}}>
-                <UpperHeader setMode={setMode}/>
-                <Header/>
-                <Grid mode={mode}/>
-                <PianoPage mode={mode}/>
-            </div>
+                                <div style={startPage} ref={startPageEL} className="disappered"></div>
+                                
+                                <div className="d-flex flex-row w-100" style={{zIndex: "0",position: "absolute" , width: "100%"}}>
+                                    <UpperHeader setMode={setMode}/>
+                                    <Header/>
+                                    <Grid mode={mode}/>
+                                    <PianoPage mode={mode}/>
+                                </div>
+                            </LinedDistsContext.Provider>
+                        </KeyTempSelectedContext.Provider>
+                    </KeySelectedContext.Provider>
+                </SortChordArrContext.Provider>
+            </selectBoxValueContext.Provider>
         </>
         
     )

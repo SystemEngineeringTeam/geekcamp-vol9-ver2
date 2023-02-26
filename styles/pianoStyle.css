@@ -81,18 +81,18 @@ li {
 
 .lined-chord,
 .dummy {
-    color: #4d3d3d;
+    /* color: #4d3d3d;
     font-size: 25px;
     font-weight: bold;
     padding: 15px;
     margin-right: 20px;
     border: solid;
     border-color: #af9999;
-    border-radius: 27px;
+    border-radius: 27px; */
 }
 
 .dummy {
-    padding-right: 30px;
+    /* padding-right: 30px; */
 }
 
 .sub {
