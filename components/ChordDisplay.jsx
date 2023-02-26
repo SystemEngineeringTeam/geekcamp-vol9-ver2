@@ -20,21 +20,25 @@ export const ChordDisplay = (props) => {
         { value: "simi", label: "類似" },
     ];
     /*ソート方法*/
-    const firstSortOptions = [
+    const sortOptions = [
         { value: "keyNum", label: "キー数" },
         { value: "hitNum", label: "重複数" },
         { value: "rootIndex", label: "ルート音" },
+        { value: "keyNum hitNum", label: "キー数-重複数" },
+        { value: "hitNum keyNum", label: "重複数-キー数" },
+        { value: "rootIndex hitNum", label: "ルート音-重複数" },
+        { value: "rootIndex keyNum", label: "ルート音-キー数" },
     ];
 
-    const secondSortOptions = [
-        { value: "keyNum", label: "キー数" },
-        { value: "hitNum", label: "重複数" },
-        { value: "rootIndex", label: "ルート音" },
-    ];
+    // const secondSortOptions = [
+    //     { value: "keyNum", label: "キー数" },
+    //     { value: "hitNum", label: "重複数" },
+    //     { value: "rootIndex", label: "ルート音" },
+    // ];
 
 
     const {selectBoxValue, setSelectBoxValue} = useContext(selectBoxValueContext); //絞り込み
-    const [sortTypeArr, setSortTypeArr] = useState([firstSortOptions[0], secondSortOptions[1]]); //ソート
+    const [sortType, setSortType] = useState(sortOptions[0]); //ソート
     
 
     //ルート配列
@@ -317,15 +321,17 @@ export const ChordDisplay = (props) => {
                     .map(s =>`${s.split(":")[0]}:${RootsArr[originRoot]}${Chords[s.split(":")[1]]}`) //連想配列にkeyを与えてコードを取り出す //3:CM7
                     .sort((s1, s2) => {
                         for (let i = 0; i < 2; i++) {
-                            if (sortTypeArr[i].value === "keyNum") { //キー数昇順
+                            if (sortType.value.split(" ")[i] === undefined) continue;
+
+                            if (sortType.value.split(" ")[i] === "keyNum") { //キー数昇順
                                 const { structure:structure1 } = splitChord(s1.split(":")[1]);
                                 const { structure:structure2 } = splitChord(s2.split(":")[1]);
                                 if (Dists[structure1].length > Dists[structure2].length) return 1;
                                 if (Dists[structure1].length < Dists[structure2].length) return -1;
-                            } else if (sortTypeArr[i].value === "hitNum") { //重複数(降順)
+                            } else if (sortType.value.split(" ")[i] === "hitNum") { //重複数(降順)
                                 if (s1.split(":")[0] > s2.split(":")[0]) return -1;
                                 if (s1.split(":")[0] < s2.split(":")[0]) return 1;
-                            } else if (sortTypeArr[i].value === "rootIndex") { //ルート音昇順
+                            } else if (sortType.value.split(" ")[i] === "rootIndex") { //ルート音昇順
                                 const { root:root1 } = splitChord(s1.split(":")[1]);
                                 const { root:root2 } = splitChord(s2.split(":")[1]);
                                 if (RootsArr.indexOf(root1) > RootsArr.indexOf(root2)) return 1;
@@ -355,15 +361,16 @@ export const ChordDisplay = (props) => {
                             const { root:root1 } = splitChord(s1.split(":")[1]);
                             const { root:root2 } = splitChord(s2.split(":")[1]);
                             for (let i = 0; i < 2; i++) {
-                                if (sortTypeArr[i].value === "keyNum") { //キー数昇順
+                                if (sortType.value.split(" ")[i] === undefined) continue;
+                                if (sortType.value.split(" ")[i] === "keyNum") { //キー数昇順
                                     const { structure:structure1 } = splitChord(s1.split(":")[1]);
                                     const { structure:structure2 } = splitChord(s2.split(":")[1]);
                                     if (Dists[structure1].length > Dists[structure2].length) return 1;
                                     if (Dists[structure1].length < Dists[structure2].length) return -1;
-                                } else if (sortTypeArr[i].value === "hitNum") { //重複数(降順)
+                                } else if (sortType.value.split(" ")[i] === "hitNum") { //重複数(降順)
                                     if (s1.split(":")[0] > s2.split(":")[0]) return -1;
                                     if (s1.split(":")[0] < s2.split(":")[0]) return 1;
-                                } else if (sortTypeArr[i].value === "rootIndex") { //ルート音昇順
+                                } else if (sortType.value.split(" ")[i] === "rootIndex") { //ルート音昇順
                                     // const { root:root1 } = splitChord(s1.split(":")[1]);
                                     // const { root:root2 } = splitChord(s2.split(":")[1]);
                                     if (RootsArr.indexOf(root1) > RootsArr.indexOf(root2)) return 1;
@@ -447,7 +454,7 @@ export const ChordDisplay = (props) => {
         setHitChords(() => [...hitChordNameList]);
         setPreChords(() => [...preChordNameList]);
 
-    }, [isSelectedArr, selectBoxValue, sortTypeArr]); //Selectで使用するuseState変数はここにぶち込んでおく
+    }, [isSelectedArr, selectBoxValue, sortType]); //Selectで使用するuseState変数はここにぶち込んでおく
 
     /*Chordをrootとstructureに分解する関数*/
     const splitChord = (chord) => {
@@ -772,19 +779,19 @@ export const ChordDisplay = (props) => {
                 />
 
                 <Select
-                    options={firstSortOptions}
-                    defaultValue={sortTypeArr[0]}
+                    options={sortOptions}
+                    defaultValue={sortType}
                     onChange={(value) => {
-                    value ? setSortTypeArr((prev) => [value, prev[1]]) : null;
+                    value ? setSortType((prev) => value) : null;
                     }}
                 />
-                <Select
+                {/* <Select
                     options={secondSortOptions}
-                    defaultValue={sortTypeArr[1]}
+                    defaultValue={sortType[1]}
                     onChange={(value) => {
-                    value ? setSortTypeArr((prev) => [prev[0], value]) : null;
+                    value ? setSortType((prev) => [prev[0], value]) : null;
                     }}
-                />
+                /> */}
             </div>
             <div className="display_status">類似するコード({preChords.length}個):</div>
             <p id="sub-display">
