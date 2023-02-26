@@ -145,6 +145,7 @@ export default function Card(props/*:Props*/){
         margin : "0px 16px",
     }
 
+
     /*dragに関する4つの関数を付与する関数*/
     const addDragFuncs = (elem) => { //4つの関数を付与
         elem.ondragstart = () => { //ドラッグスタート
@@ -184,13 +185,27 @@ export default function Card(props/*:Props*/){
         return { root, structure };
     }
 
-    const ClickEvent = () => { //カードがクリックされたら、ヘッダーにクリックされたカードの要素名を追加。
+    //再生欄のコードをホバー
+    const hoverSelectedChord = (thisChord) => {
+        console.log(thisChord.innerHTML);
+        thisChord.style.backgroundColor = "orange";
+    }
+
+    //ホバー解除
+    const nonHoverSelectedChord = (thisChord) => {
+        thisChord.style.backgroundColor = "#FFFFFF";
+    }
+
+    const ClickEvent = () => { //カードが(右)クリックされたら、ヘッダーにクリックされたカードの要素名を追加。
         const targetOfHeader = document.getElementById("lined-chords"); 
         const childrenNum = targetOfHeader.childElementCount; //カードをクリックした時点で、ディスプレイに表示されている要素数を数える
         const createDiv = document.createElement("div"); //ヘッダーに表示する文字ごとにdiv要素を作る 
         createDiv.className = "DisplayCards"; //クラス名をDisplayCardsにしてcssでデザインを指定
         createDiv.innerHTML = props.children;
-        //////
+        createDiv.addEventListener("mouseenter", () => hoverSelectedChord(createDiv));
+        createDiv.addEventListener("mouseleave", () => nonHoverSelectedChord(createDiv));
+
+        //////再生欄に追加する作業
         const liElem = document.createElement("li"); //ソート用のリスト、この中に下のdiv要素を追加する
         liElem.draggable = true;
         liElem.appendChild(createDiv);
