@@ -532,15 +532,15 @@ export const ChordDisplay = (props) => {
     const hitElemArr = [];
     const preElemArr = [];
 
-    const mainChordsStyle = {
-        color: "#4d3d3d",
-        fontSize: "50px",
-        fontWeight: "bold",
-        padding: "15px",
-        borderRadius: "27px",
-        boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
-        lineHeight: "100px", /* 重なり回避用 */
-    };
+    // const mainChordsStyle = {
+    //     color: "#4d3d3d",
+    //     fontSize: "50px",
+    //     fontWeight: "bold",
+    //     padding: "15px",
+    //     borderRadius: "27px",
+    //     boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
+    //     lineHeight: "100px", /* 重なり回避用 */
+    // };
 
     
 
@@ -593,6 +593,11 @@ export const ChordDisplay = (props) => {
         setIsTempSelectedArr((prev) => [...prev]);
     }
 
+    /* コードを削除 */
+    const deleteThisChord = (thisChord) => {
+        thisChord.remove();
+    }
+
     //cardよりコピペ
     const addToDisplay = (chord) => { //カードがクリックされたら、ヘッダーにクリックされたカードの要素名を追加。 ヘッダーを親要素としてspanタグを子要素に加えて追加していく。
         const targetOfHeader = document.getElementById("lined-chords"); 
@@ -604,6 +609,7 @@ export const ChordDisplay = (props) => {
         createDiv.addEventListener("mouseleave", () => nonHoverSelectedChord(createDiv));
         createDiv.addEventListener("dblclick", () => dbClickSelectedChord(createDiv));
         createDiv.addEventListener("click", () => playThisChord());
+        createDiv.addEventListener("contextmenu", () => deleteThisChord(createDiv));
         //////再生欄に追加する作業
         const liElem = document.createElement("li"); //ソート用のリスト、この中に下のdiv要素を追加する
         liElem.draggable = true;
@@ -626,9 +632,30 @@ export const ChordDisplay = (props) => {
         setIsSelectedArr(() => []);
     }
 
+    /* 右へ平行移動 */
+    const RightParaMove = () => {
+        if (isSelectedArr.some(dist => dist >= 60)) return 0; //最高音は弾く
+        setIsSelectedArr(prev => [...prev.map(dist => dist + 1)]);
+    }
+
+    /* ◀︎へ平行移動 */
+    const LeftParaMove = () => {
+        if (isSelectedArr.some(dist => dist <= 24)) return 0; //最低音は弾く
+        setIsSelectedArr(prev => [...prev.map(dist => dist - 1)]);
+    }
+
 
 
     hitChords.forEach((chord, i) => {
+        const mainChordsStyle = {
+            color: "#4d3d3d",
+            fontSize: "50px",
+            fontWeight: "bold",
+            padding: "15px",
+            borderRadius: "27px",
+            boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
+            lineHeight: "100px", /* 重なり回避用 */
+        };
         //----コードによって表示する背景を変える↓--------
         if(chord.includes("C")) mainChordsStyle["backgroundColor"] = "#FFE0E0";
         else if (chord.includes("C#")) mainChordsStyle["backgroundColor"] = "#FFF0E0";
@@ -728,6 +755,8 @@ export const ChordDisplay = (props) => {
 
     return (
         <>
+            <button onClick={() => LeftParaMove()}>◀︎</button>
+            <button onClick={() => RightParaMove()}>▶︎</button>
             <button onClick={() => resetKeys()}>キー選択解除</button>
             <div className="display_status">一致するコード:</div>
             <p id="main-display">

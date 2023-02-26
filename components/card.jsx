@@ -210,6 +210,11 @@ export default function Card(props/*:Props*/){
         setIsTempSelectedArr((prev) => [...prev]);
     }
 
+    /* コードを削除 */
+    const deleteThisChord = (thisChord) => {
+        thisChord.remove();
+    }
+
 
     const ClickEvent = () => { //カードが(右)クリックされたら、ヘッダーにクリックされたカードの要素名を追加。
         const targetOfHeader = document.getElementById("lined-chords"); 
@@ -221,6 +226,7 @@ export default function Card(props/*:Props*/){
         createDiv.addEventListener("mouseleave", () => nonHoverSelectedChord(createDiv));
         createDiv.addEventListener("dblclick", () => dbClickSelectedChord(createDiv));
         createDiv.addEventListener("click", () => playThisChord());
+        createDiv.addEventListener("contextmenu", () => deleteThisChord(createDiv));
         //////再生欄に追加する作業
         const liElem = document.createElement("li"); //ソート用のリスト、この中に下のdiv要素を追加する
         liElem.draggable = true;
