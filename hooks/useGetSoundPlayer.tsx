@@ -4,7 +4,7 @@ import useSound from "use-sound";
 //PlayFuncs配列とStopFuncs配列を渡す
 const interruptObj = { interrupt: true };
 export const useGetSoundPlayer = () => {
-    console.log("関数useGetSoundPlayer実行");
+    // console.log("関数useGetSoundPlayer実行");
     const [playC0, { stop: stopC0 }] = useSound("./sounds/C0.mp3", interruptObj);
     const [playDb0, { stop: stopDb0 }] = useSound("./sounds/Db0.mp3", interruptObj);
     const [playD0, { stop: stopD0 }] = useSound("./sounds/D0.mp3", interruptObj);

@@ -12,7 +12,7 @@ import { selectBoxValueContext } from "./startPage";
 
 
 export const Header = () => {
-    console.log("Headerレンダリング");
+    // console.log("Headerレンダリング");
     const {PlayFuncs, StopFuncs} = useGetSoundPlayer();
     const { linedDistsArr, setLinedDistsArr } = useContext(LinedDistsContext);
     // const { sortChordArr, setSortChordArr } = useContext(SortChordArrContext);
@@ -42,14 +42,14 @@ export const Header = () => {
 
     const keypressPlay = (key/* :any */) => {
         if(key.key == 'S' || key.key== 's'){
-            console.log('play');
+            // console.log('play');
             playDisplay();
         }
     }
 
     const keypressClean = (key/* :any */) => {
         if(key.key == 'C' || key.key== 'c'){
-            console.log('clean');
+            // console.log('clean');
             cleanDisplay();
         }
     }
@@ -95,7 +95,7 @@ export const Header = () => {
                 // setIsSelectedArr(() => [...linedDistsArr[i]]);
                 // setIsSelectedArr(() => [...linedDistsArr[nowIndexArr[i].innerHTML]]);
                 setIsSelectedArr(() => [...linedDistsArr[nowIndexArr[i].innerHTML]]);
-                console.log();
+                // console.log();
             }else if(i < NumOfDisplayCrads-1){ //初回、最終回以外の処理はここ
                 setTimeout( () =>{
                     nowIndexArr[i-1]/* ! */.style.backgroundColor = "#FFFFFF";

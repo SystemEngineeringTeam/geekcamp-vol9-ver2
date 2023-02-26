@@ -190,7 +190,7 @@ export default function Card(props/*:Props*/){
 
     /*再生欄のコードをホバー*/
     const hoverSelectedChord = (thisChord) => {
-        console.log(thisChord.innerHTML);
+        // console.log(thisChord.innerHTML);
         thisChord.style.backgroundColor = "orange";
         setIsTempSelectedArr(() => [...linedDistsArr[thisChord.innerHTML]]);
     }

@@ -5,7 +5,7 @@ import { createContext, useState } from "react";
 
 
 export const Grid = (props:any) => {
-    console.log("Gridレンダリング");
+    // console.log("Gridレンダリング");
     const {PlayFuncs, StopFuncs} = useGetSoundPlayer();
     const getNoteList = useGetNoteList();
     const playChord = usePlay(PlayFuncs);

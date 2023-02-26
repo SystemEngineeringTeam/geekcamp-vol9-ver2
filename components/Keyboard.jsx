@@ -9,7 +9,7 @@ import { useGetSoundPlayer } from "../hooks/useGetSoundPlayer";
 
 //ここから音が出てる
 export const Keyboard = memo(() => {
-    console.log("Keyboardレンダリング");
+    // console.log("Keyboardレンダリング");
     // const keyboard = document.getElementById('pianokeyboard');
 const {PlayFuncs, StopFuncs} = useGetSoundPlayer();
     const { isSelectedArr, setIsSelectedArr } = useContext(KeySelectedContext);
@@ -59,19 +59,19 @@ const {PlayFuncs, StopFuncs} = useGetSoundPlayer();
 
     useEffect(() => {
         console.log("今の音: " + isSelectedArr);
-        console.log("前の音: " + prevArr);
+        // console.log("前の音: " + prevArr);
         prevArr
             .filter(dist1 => !(isSelectedArr
                 .reduce((result, dist2) => result || (dist1 === dist2), false)))
             .forEach((dist) => {
-                console.log(dist);
+                // console.log(dist);
                 StopFuncs[dist]()
             });
 
         isSelectedArr.sort(); //昇順ソート
         // if (isSelectedArr.length > prevArr.length)
             isSelectedArr.forEach((dist) => PlayFuncs[dist]()); //再生
-        prevArrRef.current = [...isSelectedArr];console.log("今の音: " + isSelectedArr);
+        prevArrRef.current = [...isSelectedArr];
 
         /*
         console.log("前の音: " + prevArr);
@@ -88,12 +88,12 @@ const {PlayFuncs, StopFuncs} = useGetSoundPlayer();
     /*音を鳴らす(仮)*/
     useEffect(() => {
         console.log("今の音: " + isTempSelectedArr);
-        console.log("前の音: " + prevArr);
+        // console.log("前の音: " + prevArr);
         prevArr
             .filter(dist1 => !(isTempSelectedArr
                 .reduce((result, dist2) => result || (dist1 === dist2), false)))
             .forEach((dist) => {
-                console.log(dist);
+                // console.log(dist);
                 StopFuncs[dist]()
             });
 

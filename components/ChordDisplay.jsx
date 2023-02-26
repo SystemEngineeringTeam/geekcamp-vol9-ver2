@@ -11,7 +11,7 @@ import Select from "react-select";
 
 export const ChordDisplay = (props) => {
     let DraggingElem;
-    console.log("ChordDisplayレンダリング");
+    // console.log("ChordDisplayレンダリング");
 
     const { linedDistsArr, setLinedDistsArr } = useContext(LinedDistsContext);
     // /*絞り込み方法*/ //startpageに移動
@@ -322,7 +322,6 @@ export const ChordDisplay = (props) => {
                     .sort((s1, s2) => {
                         for (let i = 0; i < 2; i++) {
                             if (sortType.value.split(" ")[i] === undefined) continue;
-
                             if (sortType.value.split(" ")[i] === "keyNum") { //キー数昇順
                                 const { structure:structure1 } = splitChord(s1.split(":")[1]);
                                 const { structure:structure2 } = splitChord(s2.split(":")[1]);
@@ -347,46 +346,53 @@ export const ChordDisplay = (props) => {
                 } else if (selectBoxValue.value === "simi") { //類似
                     const allParaDistsObj = Object.values(Dists)
                     .reduce((resultObj, distsArr) => {
-                        for (let i = -7; i < 4; i++)
+                        for (let i = -7; i <= 4; i++)
                             resultObj[AdjustRootsArr[i+7]+getKeyByValue(Dists, distsArr)] = distsArr.map(dist => dist+i); //オブジェクト[コード名] = dist配列
                         return resultObj; //allParaDists, 全てのdistsパターン、ここまでは定数化してもいいかも、chordDisplayの親からpropsとして渡しても良い
                     },{}); //なぜか[]でも動いてた
-                    
+
+
                     preChordNameList = Object.keys(allParaDistsObj)
                         .map(chord => `${allParaDistsObj[chord]
                                 .reduce((resultMatchNum, dist) => resultMatchNum + (Number(isSelectedArr
-                                    .some((select) => select === dist+isSelectedArr[0]))),0)}:${chord}`) //allParaDistsObj[chord].join(", ")
-                        .filter(s => s.split(":")[0] !== "0") //不一致除外
-                        .sort((s1, s2) => {
-                            const { root:root1 } = splitChord(s1.split(":")[1]);
-                            const { root:root2 } = splitChord(s2.split(":")[1]);
-                            for (let i = 0; i < 2; i++) {
-                                if (sortType.value.split(" ")[i] === undefined) continue;
-                                if (sortType.value.split(" ")[i] === "keyNum") { //キー数昇順
-                                    const { structure:structure1 } = splitChord(s1.split(":")[1]);
-                                    const { structure:structure2 } = splitChord(s2.split(":")[1]);
-                                    if (Dists[structure1].length > Dists[structure2].length) return 1;
-                                    if (Dists[structure1].length < Dists[structure2].length) return -1;
-                                } else if (sortType.value.split(" ")[i] === "hitNum") { //重複数(降順)
-                                    if (s1.split(":")[0] > s2.split(":")[0]) return -1;
-                                    if (s1.split(":")[0] < s2.split(":")[0]) return 1;
-                                } else if (sortType.value.split(" ")[i] === "rootIndex") { //ルート音昇順
-                                    // const { root:root1 } = splitChord(s1.split(":")[1]);
-                                    // const { root:root2 } = splitChord(s2.split(":")[1]);
-                                    if (RootsArr.indexOf(root1) > RootsArr.indexOf(root2)) return 1;
+                                    .some((select) => select === dist + 12*Math.floor((isSelectedArr[0]+7)/12)))),0)}:${chord}`) //allParaDistsObj[chord].join(", ")
+                                .filter(s => s.split(":")[0] !== "0") //不一致除外
+                                .sort((s1, s2) => {
+                                    const { root:root1 } = splitChord(s1.split(":")[1]);
+                                    const { root:root2 } = splitChord(s2.split(":")[1]);
+                                    for (let i = 0; i < 2; i++) {
+                                        if (sortType.value.split(" ")[i] === undefined) continue;
+                                        if (sortType.value.split(" ")[i] === "keyNum") { //キー数昇順
+                                            const { structure:structure1 } = splitChord(s1.split(":")[1]);
+                                            const { structure:structure2 } = splitChord(s2.split(":")[1]);
+                                            if (Dists[structure1].length > Dists[structure2].length) return 1;
+                                            if (Dists[structure1].length < Dists[structure2].length) return -1;
+                                        } else if (sortType.value.split(" ")[i] === "hitNum") { //重複数(降順)
+                                            if (s1.split(":")[0] > s2.split(":")[0]) return -1;
+                                            if (s1.split(":")[0] < s2.split(":")[0]) return 1;
+                                        } else if (sortType.value.split(" ")[i] === "rootIndex") { //ルート音昇順
+                                            // const { root:root1 } = splitChord(s1.split(":")[1]);
+                                            // const { root:root2 } = splitChord(s2.split(":")[1]);
+                                            if (RootsArr.indexOf(root1) > RootsArr.indexOf(root2)) return 1;
+                                            if (RootsArr.indexOf(root1) < RootsArr.indexOf(root2)) return -1;
+                                        } else {
+                                            return 1;
+                                        }
+                                    }
+                                    if (RootsArr.indexOf(root1) > RootsArr.indexOf(root2)) return 1; //第三ソートにルート音ソート
                                     if (RootsArr.indexOf(root1) < RootsArr.indexOf(root2)) return -1;
-                                } else {
                                     return 1;
-                                }
-                            }
-                            if (RootsArr.indexOf(root1) > RootsArr.indexOf(root2)) return 1; //第三ソートにルート音ソート
-                            if (RootsArr.indexOf(root1) < RootsArr.indexOf(root2)) return -1;
-                            return 1;
-                        })
+                                })
                 }
 
                 
-                
+                    // .some((select) => {
+                                    //     // console.log(12*Math.floor((isSelectedArr[0]+7)/12));
+                                    //     return select === dist + 12*Math.floor((isSelectedArr[0]+7)/12);
+                                    // }))),0)}:${chord}`) //allParaDistsObj[chord].join(", ")
+                                    
+
+
                     // let allParaDists = []; //isSelectedArr(選択されているキー)を全てのルートを通るように平行移動したdistの配列
                     // for (let i = -7; i < 4; i++) 
                     //     allParaDists.push(isSelectedArr.map(dist => dist + i));
@@ -770,6 +776,7 @@ export const ChordDisplay = (props) => {
                 {hitElemArr.map(e => e)}
             </p>
             <div style={{ width: "250px", marginBottom: "10px"}}>
+                <p>絞り込み</p>
                 <Select
                     options={narDownOptions}
                     defaultValue={selectBoxValue}
@@ -777,7 +784,7 @@ export const ChordDisplay = (props) => {
                     value ? setSelectBoxValue(value) : null;
                     }}
                 />
-
+                <p>並べ替え</p>
                 <Select
                     options={sortOptions}
                     defaultValue={sortType}
