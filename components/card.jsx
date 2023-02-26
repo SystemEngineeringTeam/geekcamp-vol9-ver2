@@ -5,6 +5,8 @@ import { Button } from 'react-bootstrap';
 import { LinedDistsContext } from "./startPage";
 import DisplayCard from "./DisplayCard";
 import { ReactDOM } from "react";
+import { KeySelectedContext } from "./startPage";
+import { KeyTempSelectedContext } from "./startPage";
 // import { SortChordArrContext } from "./startPage";
 
 // type Props = {
@@ -19,7 +21,8 @@ import { ReactDOM } from "react";
 export default function Card(props/*:Props*/){
     let DraggingElem;
     const [isHovered, setIsHovered] = useState(false);
-
+    const { isTempSelectedArr, setIsTempSelectedArr } = useContext(KeyTempSelectedContext); //仮
+    const { isSelectedArr, setIsSelectedArr } = useContext(KeySelectedContext); //本
     const { linedDistsArr, setLinedDistsArr } = useContext(LinedDistsContext);
     // const { sortChordArr, setSortChordArr } = useContext(SortChordArrContext);
 
@@ -185,16 +188,28 @@ export default function Card(props/*:Props*/){
         return { root, structure };
     }
 
-    //再生欄のコードをホバー
+    /*再生欄のコードをホバー*/
     const hoverSelectedChord = (thisChord) => {
         console.log(thisChord.innerHTML);
         thisChord.style.backgroundColor = "orange";
+        setIsTempSelectedArr(() => [...linedDistsArr[thisChord.innerHTML]]);
     }
 
-    //ホバー解除
+    /*ホバー解除*/
     const nonHoverSelectedChord = (thisChord) => {
         thisChord.style.backgroundColor = "#FFFFFF";
     }
+
+    /*ダブルクリックでフォーカス*/
+    const dbClickSelectedChord = (thisChord) => {
+        setIsSelectedArr(() => [...linedDistsArr[thisChord.innerHTML]]);
+    }
+
+    /* もう一度再生 */
+    const playThisChord = () => {
+        setIsTempSelectedArr((prev) => [...prev]);
+    }
+
 
     const ClickEvent = () => { //カードが(右)クリックされたら、ヘッダーにクリックされたカードの要素名を追加。
         const targetOfHeader = document.getElementById("lined-chords"); 
@@ -204,7 +219,8 @@ export default function Card(props/*:Props*/){
         createDiv.innerHTML = props.children;
         createDiv.addEventListener("mouseenter", () => hoverSelectedChord(createDiv));
         createDiv.addEventListener("mouseleave", () => nonHoverSelectedChord(createDiv));
-
+        createDiv.addEventListener("dblclick", () => dbClickSelectedChord(createDiv));
+        createDiv.addEventListener("click", () => playThisChord());
         //////再生欄に追加する作業
         const liElem = document.createElement("li"); //ソート用のリスト、この中に下のdiv要素を追加する
         liElem.draggable = true;

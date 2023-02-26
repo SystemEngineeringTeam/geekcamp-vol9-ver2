@@ -542,6 +542,8 @@ export const ChordDisplay = (props) => {
         lineHeight: "100px", /* 重なり回避用 */
     };
 
+    
+
     /*dragに関する4つの関数を付与する関数*/
     const addDragFuncs = (elem) => { //4つの関数を付与
         elem.ondragstart = () => { //ドラッグスタート
@@ -569,6 +571,28 @@ export const ChordDisplay = (props) => {
         };
     }
 
+    /*再生欄のコードをホバー*/
+    const hoverSelectedChord = (thisChord) => {
+        console.log(thisChord.innerHTML);
+        thisChord.style.backgroundColor = "orange";
+        setIsTempSelectedArr(() => [...linedDistsArr[thisChord.innerHTML]]);
+    }
+
+    /*ホバー解除*/
+    const nonHoverSelectedChord = (thisChord) => {
+        thisChord.style.backgroundColor = "#FFFFFF";
+    }
+
+    /*ダブルクリックでフォーカス*/
+    const dbClickSelectedChord = (thisChord) => {
+        setIsSelectedArr(() => [...linedDistsArr[thisChord.innerHTML]]);
+    }
+
+    /* もう一度再生 */
+    const playThisChord = () => {
+        setIsTempSelectedArr((prev) => [...prev]);
+    }
+
     //cardよりコピペ
     const addToDisplay = (chord) => { //カードがクリックされたら、ヘッダーにクリックされたカードの要素名を追加。 ヘッダーを親要素としてspanタグを子要素に加えて追加していく。
         const targetOfHeader = document.getElementById("lined-chords"); 
@@ -576,13 +600,18 @@ export const ChordDisplay = (props) => {
         const createDiv = document.createElement("div"); //ヘッダーに表示する文字ごとにdiv要素を作る 
         createDiv.className = "DisplayCards"; //クラス名をDisplayCardsにしてcssでデザインを指定.
         createDiv.innerHTML = chord;
-        console.log("コード名" + chord);
+        createDiv.addEventListener("mouseenter", () => hoverSelectedChord(createDiv));
+        createDiv.addEventListener("mouseleave", () => nonHoverSelectedChord(createDiv));
+        createDiv.addEventListener("dblclick", () => dbClickSelectedChord(createDiv));
+        createDiv.addEventListener("click", () => playThisChord());
+        //////再生欄に追加する作業
         const liElem = document.createElement("li"); //ソート用のリスト、この中に下のdiv要素を追加する
         liElem.draggable = true;
         liElem.appendChild(createDiv);
         const dummyElem = document.getElementById("dummy"); //ダミー取得
         dummyElem.before(liElem); //ダミーの前に追加
         document.querySelectorAll("#lined-chords li").forEach(addDragFuncs); //drag関数を付与、更新
+        //////
         // targetOfHeader.appendChild(createDiv); //header要素に子要素として作ったspanを追加
         //setLinedDistsArr((prev) => [...prev, Dists[thisStruct].map(dist => dist + RootsArr[thisRoot])]);
         // setLinedDistsArr((prev) => [...prev, isTempSelectedArr]);
@@ -597,10 +626,6 @@ export const ChordDisplay = (props) => {
         setIsSelectedArr(() => []);
     }
 
-    /* もう一度再生 */
-    const playThisChord = () => {
-        setIsTempSelectedArr((prev) => [...prev]);
-    }
 
 
     hitChords.forEach((chord, i) => {
