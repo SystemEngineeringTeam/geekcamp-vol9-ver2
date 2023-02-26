@@ -260,7 +260,13 @@ export default function Card(props/*:Props*/){
                     draggable="true"
                     className="card"
                     style={HoveredCardStyle}
+                    // onClick={() => {
+                    //     ClickEvent();
+                    // }}
                     onClick={() => {
+                        props.usePlayChord(props.useGetNoteList(props.children));//音を再生する
+                    }}
+                    onContextMenu={() => { //右クリックで追加
                         ClickEvent();
                     }}
                     onMouseLeave={() => {

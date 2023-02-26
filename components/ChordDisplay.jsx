@@ -237,6 +237,7 @@ export const ChordDisplay = (props) => {
     "m7(b5,11)": [0, 3, 6, 10, 17], //Cm7(b5,11)
     "m7(b5,b13)": [0, 3, 6, 10, 20], //Cm7(b5,b13)
     "dim": [0, 3, 6], //Cdim
+    "m(b5)": [0, 3, 6],
     "dim7": [0, 3, 6, 9], //Cdim7
         //Cim(addD)以降はちょっと保留
     };
@@ -460,8 +461,8 @@ export const ChordDisplay = (props) => {
         return { root, structure };
     }
 
-    /*コードを選択*/
-    const registChord = (chord) => {
+    /*選択したコードにフォーカス*/
+    const focusChord = (chord) => {
         if (chord.indexOf("/") !== -1) { //転回系か
             [ chord ] = chord.split("/");
             setIsSelectedArr((prev) => [...prev]); //転回系は確定で前鳴ったやつと同じ
@@ -591,8 +592,14 @@ export const ChordDisplay = (props) => {
         });
     }
 
+    /* キー選択解除 */
     const resetKeys = () => {
         setIsSelectedArr(() => []);
+    }
+
+    /* もう一度再生 */
+    const playThisChord = () => {
+        setIsTempSelectedArr((prev) => [...prev]);
     }
 
 
@@ -625,8 +632,8 @@ export const ChordDisplay = (props) => {
                                             cancelTempSelect(chord);
                                         }
                             }
-                            onDoubleClick={() => registChord(chord)}
-                            onClick={() => addToDisplay(chord)}
+                            onClick={() => playThisChord()}
+                            onContextMenu={() => addToDisplay(chord)}
                         >{chord}</span>
         hitElemArr.push(elem);
         if ((i + 1) % 5 === 0) {
@@ -671,8 +678,9 @@ export const ChordDisplay = (props) => {
                                 cancelTempSelect(splited_element[1]);
                                             }
                             }
-                            onDoubleClick={() => registChord(splited_element[1])} /* 推測コード名が入ってるはず */
-                            onClick={() => addToDisplay(splited_element[1])}
+                            onDoubleClick={() => focusChord(splited_element[1])} /* 推測コード名が入ってるはず */
+                            onClick={() => playThisChord()}
+                            onContextMenu={() => addToDisplay(splited_element[1])} /* () => focusChord(splited_element[1]) */
                             style={subChordsStyle}> {/* 上書きされてる? */}
                         <div style={{height: "30px"}}>
                             {splited_element[1]}

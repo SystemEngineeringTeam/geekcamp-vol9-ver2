@@ -7,7 +7,9 @@ import { render } from 'react-dom';
 import  StartPage  from "../components/startPage";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-// document.oncontextmenu = () => false; //右クリック禁止
+if (typeof window === 'object') {
+    document.oncontextmenu = () => false; //右クリックメニュー非表示
+}
 
 export default function Home() {
     return (
