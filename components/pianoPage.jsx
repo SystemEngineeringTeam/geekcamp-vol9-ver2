@@ -16,16 +16,16 @@ export default function PianoPage(props){ //鍵盤を押すことでコードを
         flexFlow: "row",
         gap: "calc(10 / 430 * 100%)",
         alignItems: "center",
-        width: "100%",
+        width: "1000px",
         padding: "32px",
     }
 
     const keyboardAreaStyle = {
         position: "fixed",
-        top: "70px",
-        left: "335px",
-        width: "950px",
-        height: "200px",
+        top: "60px",
+        left: "150px",
+        width: "1300px",
+        height: "220px",
         backgroundColor: "#87cefa",
         zIndex: "99"
     }
@@ -34,14 +34,14 @@ export default function PianoPage(props){ //鍵盤を押すことでコードを
         zIndex: "99",
         position: "fixed",
         top: "90px",
-        left: "350px",
+        left: "200px",
     }
 
     const predictChordAreaStyle = {
         position: "absolute",
         top: "220px",
         left: "20px",
-        width: "1300px",
+        width: "1265px",
         height: "450px",
     }
 

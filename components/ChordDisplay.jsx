@@ -772,19 +772,19 @@ export const ChordDisplay = (props) => {
             <button onClick={() => RightParaMove()}>▶︎</button>
             <button onClick={() => resetKeys()}>キー選択解除</button>
             <div className="display_status">一致するコード:</div>
-            <p id="main-display">
+            <p id="main-display" style={{width: "1200px"}}>
                 {hitElemArr.map(e => e)}
             </p>
             <div style={{ width: "250px", marginBottom: "10px"}}>
                 <p>絞り込み</p>
                 <RadioButton
-                    option={narDownOptions} //キー value, label をもった連想配列
+                    option={narDownOptions} //キー名 value, label をもった連想配列
                     setFunction={setSelectBoxValue} //ボタンが押されたときに選ばれたボタンのvalueをセットするために使う
                     state={selectBoxValue.value} //現在の状態を認識するためのuseStateを指定
                 />
                 <p>並べ替え</p>
                 <RadioButton
-                    option={sortOptions} //キー value, label をもった連想配列
+                    option={sortOptions} //キー名 value, label をもった連想配列
                     setFunction={setSortType}//ボタンが押されたときに選ばれたボタンのvalueをセットするために使う
                     state={sortType.value} //現在の状態を認識するためのuseStateを指定
                 />
