@@ -6,7 +6,7 @@ import { IsTempContext } from "./pianoPage"
 import { useEffect, useContext, useState } from "react";
 import { LinedDistsContext } from "./startPage";
 import { selectBoxValueContext } from "./startPage";
-import Select from "react-select";
+import  RadioButton  from "./RadioButton";
 
 
 export const ChordDisplay = (props) => {
@@ -777,20 +777,16 @@ export const ChordDisplay = (props) => {
             </p>
             <div style={{ width: "250px", marginBottom: "10px"}}>
                 <p>絞り込み</p>
-                <Select
-                    options={narDownOptions}
-                    defaultValue={selectBoxValue}
-                    onChange={(value) => {
-                    value ? setSelectBoxValue(value) : null;
-                    }}
+                <RadioButton
+                    option={narDownOptions} //キー value, label をもった連想配列
+                    setFunction={setSelectBoxValue} //ボタンが押されたときに選ばれたボタンのvalueをセットするために使う
+                    state={selectBoxValue.value} //現在の状態を認識するためのuseStateを指定
                 />
                 <p>並べ替え</p>
-                <Select
-                    options={sortOptions}
-                    defaultValue={sortType}
-                    onChange={(value) => {
-                    value ? setSortType((prev) => value) : null;
-                    }}
+                <RadioButton
+                    option={sortOptions} //キー value, label をもった連想配列
+                    setFunction={setSortType}//ボタンが押されたときに選ばれたボタンのvalueをセットするために使う
+                    state={sortType.value} //現在の状態を認識するためのuseStateを指定
                 />
                 {/* <Select
                     options={secondSortOptions}
