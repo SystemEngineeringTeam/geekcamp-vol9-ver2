@@ -2,6 +2,8 @@ import { useGetSoundPlayer } from "../hooks/useGetSoundPlayer";
 // import { useGetNoteList, usePlay, useStop } from '../hooks/useChordPlayer';
 import { Keyboard } from './Keyboard'
 import { ChordDisplay } from './ChordDisplay'
+import PianoControler from "./PianoControler"
+import SearchModeSelector from "./SearchModeSelector"
 import { useState, useEffect, createContext, useRef } from "react";
 
 export const IsTempContext = createContext({});
@@ -25,7 +27,7 @@ export default function PianoPage(props){ //鍵盤を押すことでコードを
         top: "60px",
         left: "150px",
         width: "1300px",
-        height: "220px",
+        height: "250px",
         backgroundColor: "#87cefa",
         zIndex: "99"
     }
@@ -39,10 +41,23 @@ export default function PianoPage(props){ //鍵盤を押すことでコードを
 
     const predictChordAreaStyle = {
         position: "absolute",
-        top: "220px",
+        top: "300px",
         left: "20px",
         width: "1265px",
         height: "450px",
+    }
+    const PianoControlerStyle = {
+        zIndex: "99",
+        position: "fixed",
+        top: "90px",
+        left: "1100px",
+        display: "flex"
+    }
+    const SearchModeSelectorStyle = {
+        zIndex: "99",
+        position: "fixed",
+        top: "270px",
+        left: "180px",
     }
 
     if(props.mode == 1){//modeはupperHeaderで決まる //windowやdocumentはブラウザで実行する時にしか使えない定数のため、
@@ -67,6 +82,12 @@ export default function PianoPage(props){ //鍵盤を押すことでコードを
                 <div id="keyboardArea" style={keyboardAreaStyle}>
                     <div id="keyboardSection" style={keyboardSectionStyle}>
                         <Keyboard />
+                    </div>
+                    <div style={PianoControlerStyle}>
+                        <PianoControler/>
+                    </div>
+                    <div style={SearchModeSelectorStyle}>
+                        <SearchModeSelector/>
                     </div>
                 </div>
                 <div id="predictChordArea" style={predictChordAreaStyle}>

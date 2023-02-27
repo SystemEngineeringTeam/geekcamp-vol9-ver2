@@ -1,9 +1,9 @@
 export default function RadioButton(props){
     return(
-        <div className="radio_button area">
+        <div className="radio_button_area">
             {props.option.map(radio => {
                 return (
-                    <form>
+                        <label>
                         <input type="radio" value={radio.value} name={radio.label} checked={radio.value == props.state} onChange={(e) =>{ 
                             const value = {
                                 value: e.currentTarget.value,
@@ -13,10 +13,8 @@ export default function RadioButton(props){
                             console.dir("props.state: " + e.currentTarget.name );
                             }
                         }/>
-                        <label>
-                            {radio.label}
+                            {radio.label}　
                         </label>
-                    </form>
                 )
             })}
         </div>

@@ -6,7 +6,7 @@ import { IsTempContext } from "./pianoPage"
 import { useEffect, useContext, useState } from "react";
 import { LinedDistsContext } from "./startPage";
 import { selectBoxValueContext } from "./startPage";
-import  RadioButton  from "./RadioButton";
+import { sortTypeContext } from "./startPage";
 
 
 export const ChordDisplay = (props) => {
@@ -14,21 +14,6 @@ export const ChordDisplay = (props) => {
     // console.log("ChordDisplayレンダリング");
 
     const { linedDistsArr, setLinedDistsArr } = useContext(LinedDistsContext);
-    // /*絞り込み方法*/ //startpageに移動
-    const narDownOptions = [
-        { value: "simiR", label: "類似(ルート音固定)" },
-        { value: "simi", label: "類似" },
-    ];
-    /*ソート方法*/
-    const sortOptions = [
-        { value: "keyNum", label: "キー数" },
-        { value: "hitNum", label: "重複数" },
-        { value: "rootIndex", label: "ルート音" },
-        { value: "keyNum hitNum", label: "キー数-重複数" },
-        { value: "hitNum keyNum", label: "重複数-キー数" },
-        { value: "rootIndex hitNum", label: "ルート音-重複数" },
-        { value: "rootIndex keyNum", label: "ルート音-キー数" },
-    ];
 
     // const secondSortOptions = [
     //     { value: "keyNum", label: "キー数" },
@@ -38,7 +23,7 @@ export const ChordDisplay = (props) => {
 
 
     const {selectBoxValue, setSelectBoxValue} = useContext(selectBoxValueContext); //絞り込み
-    const [sortType, setSortType] = useState(sortOptions[0]); //ソート
+    const {sortType, setSortType} = useContext(sortTypeContext); //ソート
     
 
     //ルート配列
@@ -640,25 +625,6 @@ export const ChordDisplay = (props) => {
         });
     }
 
-    /* キー選択解除 */
-    const resetKeys = () => {
-        setIsSelectedArr(() => []);
-    }
-
-    /* 右へ平行移動 */
-    const RightParaMove = () => {
-        if (isSelectedArr.some(dist => dist >= 60)) return 0; //最高音は弾く
-        setIsSelectedArr(prev => [...prev.map(dist => dist + 1)]);
-    }
-
-    /* ◀︎へ平行移動 */
-    const LeftParaMove = () => {
-        if (isSelectedArr.some(dist => dist <= 24)) return 0; //最低音は弾く
-        setIsSelectedArr(prev => [...prev.map(dist => dist - 1)]);
-    }
-
-
-
     hitChords.forEach((chord, i) => {
         const mainChordsStyle = {
             color: "#4d3d3d",
@@ -768,26 +734,10 @@ export const ChordDisplay = (props) => {
 
     return (
         <>
-            <button onClick={() => LeftParaMove()}>◀︎</button>
-            <button onClick={() => RightParaMove()}>▶︎</button>
-            <button onClick={() => resetKeys()}>キー選択解除</button>
             <div className="display_status">一致するコード:</div>
             <p id="main-display" style={{width: "1200px"}}>
                 {hitElemArr.map(e => e)}
             </p>
-            <div style={{ width: "250px", marginBottom: "10px"}}>
-                <p>絞り込み</p>
-                <RadioButton
-                    option={narDownOptions} //キー名 value, label をもった連想配列
-                    setFunction={setSelectBoxValue} //ボタンが押されたときに選ばれたボタンのvalueをセットするために使う
-                    state={selectBoxValue.value} //現在の状態を認識するためのuseStateを指定
-                />
-                <p>並べ替え</p>
-                <RadioButton
-                    option={sortOptions} //キー名 value, label をもった連想配列
-                    setFunction={setSortType}//ボタンが押されたときに選ばれたボタンのvalueをセットするために使う
-                    state={sortType.value} //現在の状態を認識するためのuseStateを指定
-                />
                 {/* <Select
                     options={secondSortOptions}
                     defaultValue={sortType[1]}
@@ -795,7 +745,6 @@ export const ChordDisplay = (props) => {
                     value ? setSortType((prev) => [prev[0], value]) : null;
                     }}
                 /> */}
-            </div>
             <div className="display_status">類似するコード({preChords.length}個):</div>
             <p id="sub-display">
                 {preElemArr.map(e => e)}

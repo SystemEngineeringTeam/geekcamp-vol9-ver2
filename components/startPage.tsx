@@ -11,6 +11,7 @@ export const KeySelectedContext = createContext({});
 export const KeyTempSelectedContext = createContext({});
 export const SortChordArrContext = createContext({});
 export const selectBoxValueContext = createContext({});
+export const sortTypeContext = createContext({});
 
 export default function StartPage(){
     /*絞り込み方法*/
@@ -19,12 +20,23 @@ export default function StartPage(){
         { value: "simi", label: "類似" },
     ];
 
+    const sortOptions = [
+        { value: "keyNum", label: "キー数" },
+        { value: "hitNum", label: "重複数" },
+        { value: "rootIndex", label: "ルート音" },
+        { value: "keyNum hitNum", label: "キー数-重複数" },
+        { value: "hitNum keyNum", label: "重複数-キー数" },
+        { value: "rootIndex hitNum", label: "ルート音-重複数" },
+        { value: "rootIndex keyNum", label: "ルート音-キー数" },
+    ];
+
     const [mode, setMode] = useState(0); // 0:辞書モード, 1:ピアノモード upperHeaderとgridとpianoに渡す upperHeaderでsetしてその状態によってgrid, Pianoの状態を管理する
     const [ linedDistsArr, setLinedDistsArr ] = useState({}); //dist参照用連想配列
     const [sortChordArr, setSortChordArr] = useState([]); //ソート用キー配列、上に与える
     const [isSelectedArr, setIsSelectedArr] = useState([]); //本
     const [isTempSelectedArr, setIsTempSelectedArr] = useState([]); //仮
     const [selectBoxValue, setSelectBoxValue] = useState(narDownOptions[0]); //絞り込み
+    const [sortType, setSortType] = useState(sortOptions[0]); //ソート
     
     const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -89,57 +101,59 @@ export default function StartPage(){
 
     return( 
         <>
-            <selectBoxValueContext.Provider value={{selectBoxValue, setSelectBoxValue}}>
-                <SortChordArrContext.Provider value={{sortChordArr, setSortChordArr}}>
-                    <KeySelectedContext.Provider value={{isSelectedArr, setIsSelectedArr}}>
-                        <KeyTempSelectedContext.Provider value={{isTempSelectedArr, setIsTempSelectedArr}}>
-                            <LinedDistsContext.Provider value={{linedDistsArr, setLinedDistsArr}}>
-                                <Player
-                                    autoplay
-                                    loop
-                                    className="loading"
-                                    src="https://assets1.lottiefiles.com/datafiles/DlRM2jtACyr4IX1u6l5rqtW1QWZKLCkNoBIXWeyH/loading.json"
-                                    style={
-                                        loadingStyle
-                                    }
-                                    ref={
-                                        playerRef
-                                    }
-                                    onEvent={
-                                        endLoading
-                                    }
-                                />
+            <sortTypeContext.Provider value={{sortType, setSortType}}>
+                <selectBoxValueContext.Provider value={{selectBoxValue, setSelectBoxValue}}>
+                    <SortChordArrContext.Provider value={{sortChordArr, setSortChordArr}}>
+                        <KeySelectedContext.Provider value={{isSelectedArr, setIsSelectedArr}}>
+                            <KeyTempSelectedContext.Provider value={{isTempSelectedArr, setIsTempSelectedArr}}>
+                                <LinedDistsContext.Provider value={{linedDistsArr, setLinedDistsArr}}>
+                                    <Player
+                                        autoplay
+                                        loop
+                                        className="loading"
+                                        src="https://assets1.lottiefiles.com/datafiles/DlRM2jtACyr4IX1u6l5rqtW1QWZKLCkNoBIXWeyH/loading.json"
+                                        style={
+                                            loadingStyle
+                                        }
+                                        ref={
+                                            playerRef
+                                        }
+                                        onEvent={
+                                            endLoading
+                                        }
+                                    />
 
-                                <Button 
-                                    variant="primary"
-                                    style={
-                                        styleButton
-                                    } 
-                                    ref={
-                                        buttonEL
-                                    }
-                                    onClick={
-                                        removeStartPage
-                                    }
-                                    className="disappered"
-                                    id="startButton"
-                                >
-                                    START
-                                </Button>
+                                    <Button 
+                                        variant="primary"
+                                        style={
+                                            styleButton
+                                        } 
+                                        ref={
+                                            buttonEL
+                                        }
+                                        onClick={
+                                            removeStartPage
+                                        }
+                                        className="disappered"
+                                        id="startButton"
+                                    >
+                                        START
+                                    </Button>
 
-                                <div style={startPage} ref={startPageEL} className="disappered"></div>
-                                
-                                <div className="d-flex flex-row w-100" style={{zIndex: "0",position: "absolute" , width: "100%"}}>
-                                    <UpperHeader setMode={setMode}/>
-                                    <Header/>
-                                    <Grid mode={mode}/>
-                                    <PianoPage mode={mode}/>
-                                </div>
-                            </LinedDistsContext.Provider>
-                        </KeyTempSelectedContext.Provider>
-                    </KeySelectedContext.Provider>
-                </SortChordArrContext.Provider>
-            </selectBoxValueContext.Provider>
+                                    <div style={startPage} ref={startPageEL} className="disappered"></div>
+                                    
+                                    <div className="d-flex flex-row w-100" style={{zIndex: "0",position: "absolute" , width: "100%"}}>
+                                        <UpperHeader setMode={setMode}/>
+                                        <Header/>
+                                        <Grid mode={mode}/>
+                                        <PianoPage mode={mode}/>
+                                    </div>
+                                </LinedDistsContext.Provider>
+                            </KeyTempSelectedContext.Provider>
+                        </KeySelectedContext.Provider>
+                    </SortChordArrContext.Provider>
+                </selectBoxValueContext.Provider>
+            </sortTypeContext.Provider>
         </>
         
     )
