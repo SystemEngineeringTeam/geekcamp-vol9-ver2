@@ -42,35 +42,60 @@ export default function PianoControler(){
     //     height: "160px"
     // }
 
-    const moveButtonStyle = {
+    const moveLeftButtonStyle = {
         width: "125px",
         height: "100px",
         position: "relative",
+        gridArea: "1 / 1 / 2 / 2",
     }
 
-    const moveOctaveButtonStyle = {
+    const moveRightButtonStyle = {
+        width: "125px",
+        height: "100px",
+        position: "relative",
+        gridArea: "1 / 2 / 2 / 3"
+    }
+
+    const moveOctaveLeftButtonStyle = {
         width: "125px",
         height: "60px",
         position: "relative",
+        gridArea: "2 / 1 / 3 / 2"
+    }
+
+    const moveOctaveRightButtonStyle = {
+        width: "125px",
+        height: "60px",
+        position: "relative",
+        gridArea: "2 / 2 / 3 / 3"
     }
 
 
     const clearButtonStyle = {
         width: "60px",
         height: "160px",
-        fontSize: "5px"
+        fontSize: "5px",
+        gridArea: "1 / 3 / 3 / 4"
     }
+
+    const parentStyle =  {
+        display: "grid",
+        gridTemplateColumns: "repeat(3, 1fr)",
+        gridTemplateRows: "repeat(2, 1fr)",
+        gridColumnGap: "0px",
+        gridRowGap: "0px"
+        }
 
 
     return(
         <>
-            <>
-                <button style={moveButtonStyle} onClick={() => LeftParaMove()}>◀︎</button>
-                <button style={moveButtonStyle} onClick={() => RightParaMove()}>▶︎</button>
-                <button style={moveOctaveButtonStyle} onClick={() => LeftParaMoveOctave()}>octave up<br />◀︎</button>
-                <button style={moveOctaveButtonStyle} onClick={() => RightParaMoveOctave()}>octave down<br />▶︎</button>
+            <div style={parentStyle}>
+                <button style={moveLeftButtonStyle} onClick={() => LeftParaMove()}>◀︎</button>
+                <button style={moveRightButtonStyle} onClick={() => RightParaMove()}>▶︎</button>
+                <button style={moveOctaveLeftButtonStyle} onClick={() => LeftParaMoveOctave()}>octave up<br />◀︎</button>
+                <button style={moveOctaveRightButtonStyle} onClick={() => RightParaMoveOctave()}>octave down<br />▶︎</button>
                 <button style={clearButtonStyle} onClick={() => resetKeys()}>キー選択解除</button>
-            </>
+            </div>
         </>
     )
 }
