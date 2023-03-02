@@ -7,6 +7,7 @@ import DisplayCard from "./DisplayCard";
 import { ReactDOM } from "react";
 import { KeySelectedContext } from "./startPage";
 import { KeyTempSelectedContext } from "./startPage";
+import { isMuteHoverContext } from "./startPage";
 // import { SortChordArrContext } from "./startPage";
 
 // type Props = {
@@ -24,6 +25,7 @@ export default function Card(props/*:Props*/){
     const { isTempSelectedArr, setIsTempSelectedArr } = useContext(KeyTempSelectedContext); //仮
     const { isSelectedArr, setIsSelectedArr } = useContext(KeySelectedContext); //本
     const { linedDistsArr, setLinedDistsArr } = useContext(LinedDistsContext);
+    const { isMuteHover, setIsMuteHover } = useContext(isMuteHoverContext) //ミュート用
     // const { sortChordArr, setSortChordArr } = useContext(SortChordArrContext);
 
     //ルーツ
@@ -280,6 +282,7 @@ export default function Card(props/*:Props*/){
                     style={NotHoveredCardStyle}
                     onMouseEnter={() => {
                         setIsHovered(true);//マウスカーソルが上に来たらisHoveredをtrueにする
+                        if (isMuteHover === true) return 0;
                         props.usePlayChord(props.useGetNoteList(props.children));//音を再生する
                     }}
                 >

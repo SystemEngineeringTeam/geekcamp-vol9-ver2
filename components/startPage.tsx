@@ -12,6 +12,7 @@ export const KeyTempSelectedContext = createContext({});
 export const SortChordArrContext = createContext({});
 export const selectBoxValueContext = createContext({});
 export const sortTypeContext = createContext({});
+export const isMuteHoverContext = createContext({});
 
 export default function StartPage(){
     /*絞り込み方法*/
@@ -37,6 +38,7 @@ export default function StartPage(){
     const [isTempSelectedArr, setIsTempSelectedArr] = useState([]); //仮
     const [selectBoxValue, setSelectBoxValue] = useState(narDownOptions[0]); //絞り込み
     const [sortType, setSortType] = useState(sortOptions[0]); //ソート
+    const [isMuteHover, setIsMuteHover] = useState(false); //ミュート
     
     const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -101,59 +103,61 @@ export default function StartPage(){
 
     return( 
         <>
-            <sortTypeContext.Provider value={{sortType, setSortType}}>
-                <selectBoxValueContext.Provider value={{selectBoxValue, setSelectBoxValue}}>
-                    <SortChordArrContext.Provider value={{sortChordArr, setSortChordArr}}>
-                        <KeySelectedContext.Provider value={{isSelectedArr, setIsSelectedArr}}>
-                            <KeyTempSelectedContext.Provider value={{isTempSelectedArr, setIsTempSelectedArr}}>
-                                <LinedDistsContext.Provider value={{linedDistsArr, setLinedDistsArr}}>
-                                    <Player
-                                        autoplay
-                                        loop
-                                        className="loading"
-                                        src="https://assets1.lottiefiles.com/datafiles/DlRM2jtACyr4IX1u6l5rqtW1QWZKLCkNoBIXWeyH/loading.json"
-                                        style={
-                                            loadingStyle
-                                        }
-                                        ref={
-                                            playerRef
-                                        }
-                                        onEvent={
-                                            endLoading
-                                        }
-                                    />
+            <isMuteHoverContext.Provider value={{isMuteHover, setIsMuteHover}}>
+                <sortTypeContext.Provider value={{sortType, setSortType}}>
+                    <selectBoxValueContext.Provider value={{selectBoxValue, setSelectBoxValue}}>
+                        <SortChordArrContext.Provider value={{sortChordArr, setSortChordArr}}>
+                            <KeySelectedContext.Provider value={{isSelectedArr, setIsSelectedArr}}>
+                                <KeyTempSelectedContext.Provider value={{isTempSelectedArr, setIsTempSelectedArr}}>
+                                    <LinedDistsContext.Provider value={{linedDistsArr, setLinedDistsArr}}>
+                                        <Player
+                                            autoplay
+                                            loop
+                                            className="loading"
+                                            src="https://assets1.lottiefiles.com/datafiles/DlRM2jtACyr4IX1u6l5rqtW1QWZKLCkNoBIXWeyH/loading.json"
+                                            style={
+                                                loadingStyle
+                                            }
+                                            ref={
+                                                playerRef
+                                            }
+                                            onEvent={
+                                                endLoading
+                                            }
+                                        />
 
-                                    <Button 
-                                        variant="primary"
-                                        style={
-                                            styleButton
-                                        } 
-                                        ref={
-                                            buttonEL
-                                        }
-                                        onClick={
-                                            removeStartPage
-                                        }
-                                        className="disappered"
-                                        id="startButton"
-                                    >
-                                        START
-                                    </Button>
+                                        <Button 
+                                            variant="primary"
+                                            style={
+                                                styleButton
+                                            } 
+                                            ref={
+                                                buttonEL
+                                            }
+                                            onClick={
+                                                removeStartPage
+                                            }
+                                            className="disappered"
+                                            id="startButton"
+                                        >
+                                            START
+                                        </Button>
 
-                                    <div style={startPage} ref={startPageEL} className="disappered"></div>
-                                    
-                                    <div className="d-flex flex-row w-100" style={{zIndex: "0",position: "absolute" , width: "100%"}}>
-                                        <UpperHeader setMode={setMode}/>
-                                        <Header/>
-                                        <Grid mode={mode}/>
-                                        <PianoPage mode={mode}/>
-                                    </div>
-                                </LinedDistsContext.Provider>
-                            </KeyTempSelectedContext.Provider>
-                        </KeySelectedContext.Provider>
-                    </SortChordArrContext.Provider>
-                </selectBoxValueContext.Provider>
-            </sortTypeContext.Provider>
+                                        <div style={startPage} ref={startPageEL} className="disappered"></div>
+                                        
+                                        <div className="d-flex flex-row w-100" style={{zIndex: "0",position: "absolute" , width: "100%"}}>
+                                            <UpperHeader setMode={setMode}/>
+                                            <Header/>
+                                            <Grid mode={mode}/>
+                                            <PianoPage mode={mode}/>
+                                        </div>
+                                    </LinedDistsContext.Provider>
+                                </KeyTempSelectedContext.Provider>
+                            </KeySelectedContext.Provider>
+                        </SortChordArrContext.Provider>
+                    </selectBoxValueContext.Provider>
+                </sortTypeContext.Provider>
+            </isMuteHoverContext.Provider>
         </>
         
     )

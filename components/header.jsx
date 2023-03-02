@@ -9,6 +9,7 @@ import { LinedDistsContext } from "./startPage";
 import { KeySelectedContext } from "./startPage";
 // import { SortChordArrContext } from "./startPage";
 import { selectBoxValueContext } from "./startPage";
+import { isMuteHoverContext } from "./startPage";
 
 
 export const Header = () => {
@@ -18,6 +19,7 @@ export const Header = () => {
     // const { sortChordArr, setSortChordArr } = useContext(SortChordArrContext);
     const { isSelectedArr, setIsSelectedArr } = useContext(KeySelectedContext); //本
     const {selectBoxValue, setSelectBoxValue} = useContext(selectBoxValueContext); //絞り込み
+    const { isMuteHover, setIsMuteHover } = useContext(isMuteHoverContext) //ミュート用
     
     // /*絞り込み方法*/ //startpageに移動
     const narDownOptions = [
@@ -141,12 +143,16 @@ export const Header = () => {
         fontSize: "10px",
     }
     
-    
+    const muteHover = () => {
+        setIsMuteHover((prev) => !prev);
+        console.log(isMuteHover);
+    }
 
     return (
         <>
             <div style={styleHeader}>
                 <p className="text-light font-size-1">ChordCards</p>
+                <p>ホバー再生をミュート</p><div onClick={() => muteHover()}>チェック</div>
                 <Button variant="success" style={styleButton} onClick={playDisplay} >再生<div>sキー</div></Button>
                 <Button variant="danger" style={styleButton} onClick={cleanDisplay} >リセット<div>cキー</div></Button>
                 <span></span>
