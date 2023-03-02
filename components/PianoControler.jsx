@@ -25,6 +25,24 @@ export default function PianoControler(){
         setIsSelectedArr(prev => [...prev.map(dist => dist - 1)]);
     }
 
+    /* 右へ転回 */
+    const RightTurn = () => {
+        if (isSelectedArr[0] > 48) return 0; //最高音は弾く
+        setIsSelectedArr(prev => {
+            prev[0] += 12;
+            return [...prev];
+        });
+    }
+
+    /* 左へ転回 */
+    const LeftTurn = () => {
+        if (isSelectedArr[isSelectedArr.length - 1] < 36) return 0; //最低音は弾く
+        setIsSelectedArr(prev => {
+            prev[prev.length - 1] -= 12;
+            return [...prev];
+        });
+    }
+
     /* 右へオクターブ平行移動 */
     const RightParaMoveOctave = () => {
         if (isSelectedArr.some(dist => dist > 48)) return 0; //最高音は弾く
@@ -36,6 +54,7 @@ export default function PianoControler(){
         if (isSelectedArr.some(dist => dist < 36)) return 0; //最低音は弾く
         setIsSelectedArr(prev => [...prev.map(dist => dist - 12)]);
     }
+
 
     // const moveButtonStyle = {
     //     width: "125px",
@@ -95,6 +114,8 @@ export default function PianoControler(){
                 <button style={moveOctaveLeftButtonStyle} onClick={() => LeftParaMoveOctave()}>octave up<br />◀︎</button>
                 <button style={moveOctaveRightButtonStyle} onClick={() => RightParaMoveOctave()}>octave down<br />▶︎</button>
                 <button style={clearButtonStyle} onClick={() => resetKeys()}>キー選択解除</button>
+                <button onClick={() => LeftTurn()}>turn left<br />◀︎</button>
+                <button onClick={() => RightTurn()}>turn right<br />▶︎</button>
             </div>
         </>
     )
