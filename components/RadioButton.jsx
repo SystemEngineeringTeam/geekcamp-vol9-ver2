@@ -13,7 +13,7 @@ export default function RadioButton(props){
                             console.dir("props.state: " + e.currentTarget.name );
                             }
                         }/>
-                            {radio.label}
+                            {radio.label}　
                         </label>
                 )
             })}
