@@ -129,7 +129,7 @@ export const Header = () => {
         width: "150px",
         padding: "10px",
         backgroundColor: "#5D99C6",
-        position: "absolute",
+        position: "fixed",
         zIndex: "1"
     }
 
