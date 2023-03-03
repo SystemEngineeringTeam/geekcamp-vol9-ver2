@@ -125,12 +125,12 @@ export const Header = () => {
     
 
     const styleHeader/* :{[key:string]:string} */ = {
-        height: "5420px",
+        height: "750px",
         width: "150px",
         padding: "10px",
         backgroundColor: "#5D99C6",
         position: "fixed",
-        zIndex: "1"
+        zIndex: "1",
     }
 
     const styleButton/* :{[key:string]:string} */ = {
@@ -145,15 +145,17 @@ export const Header = () => {
 
     return (
         <>
-            <div style={styleHeader}>
+            <div id='header' style={styleHeader}>
                 <p className="text-light font-size-1">ChordCards</p>
                 <Button variant="success" style={styleButton} onClick={playDisplay} >再生<div>sキー</div></Button>
                 <Button variant="danger" style={styleButton} onClick={cleanDisplay} >リセット<div>cキー</div></Button>
                 <span></span>
-                <div style={{height: "30px"}}></div>
-                <ul id="lined-chords">
-                <li id='dummy'><div style={styleDisplayCardDummy}></div></li> {/* ダミー */}
-                </ul>
+                <div style={{height: "40px"}}></div>
+                <div style={{height: "520px",overflow: "scroll"}}>
+                    <ul id="lined-chords">
+                    <li id='dummy'><div style={styleDisplayCardDummy}></div></li> {/* ダミー */}
+                    </ul>
+                </div>
             </div>
             <div id="adjust"></div>
         </>
