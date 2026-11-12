@@ -1,34 +1,11 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Chord Cards
 
-## Getting Started
+作曲初心者が、楽譜の知識がなくても感覚的にコード進行（和音の並び）を作れるWebアプリです。700種類以上のコードがカードとして並んでおり、音を聴きながら選んだカードを並べて、続けて再生できます。
 
-First, run the development server:
+このリポジトリは、2022年12月のハッカソン「【オンライン開発合宿vol.9】はじめてのハッカソン」で開発した最初の版を、入賞チームが招待される「【23年3月】技育CAMPアドバンス」に向けて改良した版です。最初の版の「コードが多すぎて目的のものを探しにくい」という反省をもとに、鍵盤を使ってコードを探したり、並べたコードを編集したりする機能を加えました。
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+React、Next.js、TypeScriptで開発し、Vercelで公開しています。
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## 関連リンク
+- [Chord Cards（公開中のアプリ）](https://chord-cards.harutiro.net)
+- [発表スライド（技育CAMPアドバンス）](https://docs.google.com/presentation/d/1r6d-9R3DBKPDfm2yWFo4MuDfvu2k8tNMqf4AEU7ppNA/edit?usp=sharing)
